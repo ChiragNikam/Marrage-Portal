@@ -15,25 +15,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -118,47 +115,69 @@ fun AuthMenus(modifier: Modifier = Modifier, onMobileOTP: @Composable (() -> Uni
         Column(
             modifier = Modifier.weight(0.7f)
         ) {
-            AnimatedVisibility(visible = selectedOption == 1,
+            var animateVisibility by rememberSaveable {
+                mutableStateOf(false)
+            }
+            LaunchedEffect(selectedOption) {
+                animateVisibility = !animateVisibility
+            }
+
+            AnimatedVisibility(visible = animateVisibility,
                 enter = slideInVertically(
                     // Enters by sliding down from offset -fullHeight to 0.
-                    initialOffsetY = { fullHeight -> fullHeight }
+                    initialOffsetY = { fullHeight -> -fullHeight }
                 ),
                 exit = slideOutVertically(
                     // Exits by sliding up from offset 0 to -fullHeight.
-                    targetOffsetY = { fullHeight -> fullHeight }
+                    targetOffsetY = { fullHeight -> -fullHeight }
                 )
             )
             {
-                onMobileOTP()
-            }
-            AnimatedVisibility(visible = selectedOption == 2,
-                enter = slideInVertically(
-                    // Enters by sliding down from offset -fullHeight to 0.
-                    initialOffsetY = { fullHeight -> fullHeight }
-                ),
-                exit = slideOutVertically(
-                    // Exits by sliding up from offset 0 to -fullHeight.
-                    targetOffsetY = { fullHeight -> fullHeight }
-                )
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(text = "eMail/Pass")
+                when (selectedOption) {
+                    1 -> onMobileOTP()
+                    2 -> Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "eMail/Pass")
+                    }
+
+                    3 -> Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Google")
+                    }
                 }
             }
-            AnimatedVisibility(visible = selectedOption == 3,
-                enter = slideInVertically(
-                    // Enters by sliding down from offset -fullHeight to 0.
-                    initialOffsetY = { fullHeight -> fullHeight }
-                ),
-                exit = slideOutVertically(
-                    // Exits by sliding up from offset 0 to -fullHeight.
-                    targetOffsetY = { fullHeight -> fullHeight }
-                )
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(text = "Google")
-                }
-            }
+//            AnimatedVisibility(visible = selectedOption == 2,
+//                enter = slideInVertically(
+//                    // Enters by sliding down from offset -fullHeight to 0.
+//                    initialOffsetY = { fullHeight -> fullHeight }
+//                ),
+//                exit = slideOutVertically(
+//                    // Exits by sliding up from offset 0 to -fullHeight.
+//                    targetOffsetY = { fullHeight -> fullHeight }
+//                )
+//            ) {
+//                Box(modifier = Modifier.fillMaxSize()) {
+//                    Text(text = "eMail/Pass")
+//                }
+//            }
+//            AnimatedVisibility(visible = selectedOption == 3,
+//                enter = slideInVertically(
+//                    // Enters by sliding down from offset -fullHeight to 0.
+//                    initialOffsetY = { fullHeight -> fullHeight }
+//                ),
+//                exit = slideOutVertically(
+//                    // Exits by sliding up from offset 0 to -fullHeight.
+//                    targetOffsetY = { fullHeight -> fullHeight }
+//                )
+//            ) {
+//                Box(modifier = Modifier.fillMaxSize()) {
+//                    Text(text = "Google")
+//                }
+//            }
         }
     }
 }
@@ -176,11 +195,16 @@ fun ProfilePicCircular(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun myTextField(modifier: Modifier = Modifier, hintText: String, keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)): String {
+fun myTextField(
+    modifier: Modifier = Modifier,
+    hintText: String,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+): String {
     val text = remember {
         mutableStateOf("")
     }
-    OutlinedTextField(modifier = modifier, value = text.value, onValueChange = { text.value = it },
+    OutlinedTextField(
+        modifier = modifier, value = text.value, onValueChange = { text.value = it },
         label = {
             Text(text = hintText, fontSize = MaterialTheme.typography.bodySmall.fontSize)
         },

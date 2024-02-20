@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -34,22 +35,25 @@ import com.petukji.marrageportal.ProfilePicCircular
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.myTextField
 
-@Preview(showSystemUi = true)
 @Composable
-fun Login() {
+fun Login(onSendOTP: () -> Unit) {
 
     Surface(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
+
         AuthMenus { // inside column scope
-            MobileOTP()
+            MobileOTP(onSendOTP = {
+                onSendOTP()
+            })
         }
     }
 }
 
 @Composable
-fun MobileOTP(){
+fun MobileOTP(onSendOTP: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -73,22 +77,29 @@ fun MobileOTP(){
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
         )
         Spacer(modifier = Modifier.height(12.dp))
-        myTextField(Modifier.padding(horizontal = 20.dp), hintText = "OTP",
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
+        myTextField(
+            Modifier.padding(horizontal = 20.dp), hintText = "OTP",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
 
         Spacer(modifier = Modifier.height(38.dp))
 
         // Send OTP
-        Button(shape = RoundedCornerShape(12.dp), onClick = { }) {
-            Text(text = "Send OTP")
+        Button(shape = RoundedCornerShape(12.dp), onClick = { onSendOTP() }) {
+            Text(text = "Send OTP", fontSize = 18.sp)
         }
 
         Spacer(modifier = Modifier.height(38.dp))
         Text(text = "00:59", fontSize = 24.sp, fontWeight = FontWeight(900))
         Spacer(modifier = Modifier.height(38.dp))
 
-        Row(modifier = Modifier.padding(horizontal = 24.dp),) {
-            Text(text = "\"", fontSize = 28.sp, fontWeight = FontWeight(900), color = MaterialTheme.colorScheme.primary)
+        Row(modifier = Modifier.padding(horizontal = 24.dp)) {
+            Text(
+                text = "\"",
+                fontSize = 28.sp,
+                fontWeight = FontWeight(900),
+                color = MaterialTheme.colorScheme.primary
+            )
             Text(
                 modifier = Modifier.padding(top = 12.dp),
                 text = stringResource(id = R.string.soulmate_intro),
