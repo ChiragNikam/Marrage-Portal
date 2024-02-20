@@ -50,7 +50,9 @@ fun Home(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(30.dp))
+
             ProfileView()
+
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
@@ -58,11 +60,14 @@ fun Home(modifier: Modifier = Modifier) {
                 fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                 fontWeight = FontWeight(700)
             )
+            Spacer(modifier = Modifier.height(6.dp))
+
             Text(
                 text = "Looking for your future partner\nOur AI will help you to find your perfect match.",
                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                fontWeight = FontWeight(400),
-                textAlign = TextAlign.Center
+                fontWeight = MaterialTheme.typography.bodySmall.fontWeight,
+                textAlign = TextAlign.Center,
+                lineHeight = MaterialTheme.typography.bodySmall.lineHeight
             )
         }
     }
@@ -78,13 +83,11 @@ fun ProfileView(modifier: Modifier = Modifier) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = "Hi! Chirag Nikam",
-                color = Color.Black,
                 fontSize = 18.sp,
                 fontWeight = FontWeight(800)
             )
             Text(
                 text = " ID: 12334234587",
-                color = Color.Black,
                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
                 fontWeight = MaterialTheme.typography.bodySmall.fontWeight
             )
