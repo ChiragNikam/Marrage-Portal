@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -42,6 +44,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -178,7 +183,7 @@ fun ProfilePicCircular(modifier: Modifier = Modifier, imageVector: ImageVector) 
         modifier = modifier
             .background(MaterialTheme.colorScheme.inversePrimary, shape = CircleShape)
             .padding(5.dp),
-         imageVector =  imageVector,
+        imageVector = imageVector,
         contentDescription = "profile pic"
     )
 }
@@ -205,11 +210,22 @@ fun myTextField(
 }
 
 @Composable
-fun AvailableGirlsVerticalGrid(){
-    LazyVerticalGrid(columns = GridCells.Fixed(2), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)){
-        items(8){
-            Icon(painter = painterResource(id = R.drawable.ic_launcher_foreground), contentDescription = "", modifier = Modifier.background(
-                Color.LightGray))
+fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(top = 12.dp)
+    ) {
+        items(8) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                contentDescription = "girl pic",
+                modifier = Modifier.background(
+                    Color.LightGray, shape = RoundedCornerShape(8.dp)
+                ).height(180.dp)
+            )
         }
     }
 }
@@ -221,7 +237,7 @@ fun BottomNav(
     items: List<BottomNavigationItem>,
     navController: NavController,
     onItemClicked: (BottomNavigationItem) -> Unit
-) { // TODO -> have only one among selected or unselected icon from drawable and BottomNavigationItems class
+) {
     NavigationBar(
         modifier = Modifier.shadow(8.dp),
         containerColor = MaterialTheme.colorScheme.onPrimary
@@ -269,6 +285,79 @@ fun BottomNav(
             )
         }
     }
+}
+
+// status view
+@Preview
+@Composable
+fun ProfileStatus(modifier: Modifier = Modifier) {
+//    Box {
+    val localDensity = LocalDensity.current
+
+    var columnHeight by remember {
+        mutableStateOf(10.dp)
+    }
+    Row {
+        Column(
+            modifier = modifier
+                .background(
+                    MaterialTheme.colorScheme.secondary,
+                    RoundedCornerShape(8.dp)
+                )
+                .onGloballyPositioned { layoutCoordinates ->
+                    columnHeight = with(localDensity) { layoutCoordinates.size.height.toDp() }
+                }
+                .padding(horizontal = 10.dp, vertical = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(3.dp)
+        ) {
+            Text(text = "Total Profile Accepted: 50", color = MaterialTheme.colorScheme.onSecondary)
+            Text(
+                text = "Total Profile Rejected by you: 5",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
+            Text(text = "Total Rejected by other: 3", color = MaterialTheme.colorScheme.onSecondary)
+            Text(
+                text = "Total Shortlisted profile: 150",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
+            Text(
+                text = "People viewed your profile: 67",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
+            Text(text = "Viewed by your: 97", color = MaterialTheme.colorScheme.onSecondary)
+        }
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Column(
+            modifier = Modifier.padding(top = 8.dp).height(columnHeight),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            val modifier = Modifier.weight(1f)
+            val contentScale = ContentScale.Crop
+            Image(
+                modifier = modifier,
+                painter = painterResource(id = R.drawable.icon_facebook),
+                contentDescription = "facebook icon",
+                contentScale = contentScale
+            )
+            Image(
+                modifier = modifier,
+                painter = painterResource(id = R.drawable.icon_instagram),
+                contentDescription = "facebook icon",
+                contentScale = contentScale
+            )
+            Image(
+                modifier = modifier,
+                painter = painterResource(id = R.drawable.icon_whatsapp),
+                contentDescription = "facebook icon",
+                contentScale = contentScale
+            )
+        }
+
+    }
+
+//    }
 }
 
 @Preview
