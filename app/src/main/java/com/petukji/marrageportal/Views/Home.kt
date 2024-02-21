@@ -55,8 +55,7 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
         val paddingModifier = Modifier.padding(start = 20.dp, end = 20.dp)
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                ,
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(30.dp))
@@ -88,52 +87,54 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
             Spacer(modifier = Modifier.height(18.dp))
 //            if (showGirls) {
             AnimatedVisibility(visible = showGirls,
-                    enter = slideInVertically(
-                        // Enters by sliding down from offset -fullHeight to 0.
-                        initialOffsetY = { fullHeight -> fullHeight }
-                    ),
-                    exit = slideOutVertically(
-                        // Exits by sliding up from offset 0 to -fullHeight.
-                        targetOffsetY = { fullHeight -> fullHeight }
-                    )) {
-                    Surface( color = MaterialTheme.colorScheme.primaryContainer) {
-                        Column {
-                            IconButton(modifier = Modifier.align(Alignment.End), onClick = { viewModel.updateShowGirls(false) }) {
-                                Icon(imageVector = Icons.Outlined.Clear, contentDescription = "cancel")
-                            }
-                            AvailableGirlsVerticalGrid(modifier = Modifier.padding(horizontal = 20.dp))
+                enter = slideInVertically(
+                    // Enters by sliding down from offset -fullHeight to 0.
+                    initialOffsetY = { fullHeight -> fullHeight }
+                ),
+                exit = slideOutVertically(
+                    // Exits by sliding up from offset 0 to -fullHeight.
+                    targetOffsetY = { fullHeight -> fullHeight }
+                )) {
+                Surface(color = MaterialTheme.colorScheme.primaryContainer) {
+                    Column {
+                        IconButton(
+                            modifier = Modifier.align(Alignment.End),
+                            onClick = { viewModel.updateShowGirls(false) }) {
+                            Icon(imageVector = Icons.Outlined.Clear, contentDescription = "cancel")
                         }
+                        AvailableGirlsVerticalGrid(modifier = Modifier.padding(horizontal = 20.dp))
                     }
                 }
+            }
 //            } else {
-                // status for profile, facebook, insta and whatsapp
-                AnimatedVisibility(visible = !showGirls,
-                        enter = slideInVertically(
-                        // Enters by sliding down from offset -fullHeight to 0.
-                        initialOffsetY = { fullHeight -> -fullHeight }
-                        ),
-                    exit = slideOutVertically(
-                        // Exits by sliding up from offset 0 to -fullHeight.
-                        targetOffsetY = { fullHeight -> -fullHeight }
-                    )) {
-                    Box(
+            // status for profile, facebook, insta and whatsapp
+            AnimatedVisibility(visible = !showGirls,
+                enter = slideInVertically(
+                    // Enters by sliding down from offset -fullHeight to 0.
+                    initialOffsetY = { fullHeight -> -fullHeight }
+                ),
+                exit = slideOutVertically(
+                    // Exits by sliding up from offset 0 to -fullHeight.
+                    targetOffsetY = { fullHeight -> -fullHeight }
+                )) {
+                Box(
+                    modifier = Modifier
+                        .padding(top = 8.dp, start = 20.dp)
+                        .fillMaxWidth()
+                ) {
+                    ProfileStatus(modifier = Modifier.padding(top = 8.dp, start = 8.dp))
+                    Icon(
                         modifier = Modifier
-                            .padding(top = 8.dp, start = 20.dp)
-                            .fillMaxWidth()
-                    ) {
-                        ProfileStatus(modifier = Modifier.padding(top = 8.dp, start = 8.dp))
-                        Icon(
-                            modifier = Modifier
-                                .padding(top = 0.dp)
-                                .align(Alignment.TopStart),
-                            painter = painterResource(id = R.drawable.icon_profile_status),
-                            contentDescription = "profile status"
-                        )
-                    }
+                            .padding(top = 0.dp)
+                            .align(Alignment.TopStart),
+                        painter = painterResource(id = R.drawable.icon_profile_status),
+                        contentDescription = "profile status"
+                    )
                 }
             }
         }
     }
+}
 //}
 
 @Preview

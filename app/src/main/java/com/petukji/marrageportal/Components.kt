@@ -1,5 +1,6 @@
 package com.petukji.marrageportal
 
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -48,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -217,6 +219,8 @@ fun myTextField(
 @Preview
 @Composable
 fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(2),
@@ -225,7 +229,9 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(top = 12.dp)
     ) {
         items(8) {
-            SingleGirlView()
+            SingleGirlView(modifier = Modifier.clickable {
+                context.startActivity(Intent(context, GirlCompleteInfoActivity::class.java))
+            })
         }
     }
 }
@@ -236,7 +242,7 @@ fun SingleGirlView(
     greenTick: Boolean = true,
     blueTick: Boolean = true
 ) {
-    Box {
+    Box(modifier = modifier) {
         Icon(
             painter = painterResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = "girl pic",
@@ -268,7 +274,7 @@ fun SingleGirlView(
                 .background(
                     transientWhite, RoundedCornerShape(30.dp)
                 )
-                .height(43.dp)
+                .height(45.dp)
                 .padding(horizontal = 18.dp, vertical = 5.dp),
             text = "Priya Jaiswal, 45\nDelhi, India",
             textAlign = TextAlign.Center,
@@ -413,9 +419,9 @@ fun ProfileStatus(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun GreenTick() {
+fun GreenTick(modifier: Modifier = Modifier) {
     Icon(
-        modifier = Modifier.background(Color.Green, shape = CircleShape),
+        modifier = modifier.background(Color.Green, shape = CircleShape),
         imageVector = Icons.Outlined.Check,
         contentDescription = "green tick",
         tint = Color.White
@@ -423,9 +429,9 @@ fun GreenTick() {
 }
 
 @Composable
-fun BlueTick() {
+fun BlueTick(modifier: Modifier = Modifier) {
     Icon(
-        modifier = Modifier.background(Color.Blue, shape = CircleShape),
+        modifier = modifier.background(Color.Blue, shape = CircleShape),
         imageVector = Icons.Outlined.Check,
         contentDescription = "green tick",
         tint = Color.White

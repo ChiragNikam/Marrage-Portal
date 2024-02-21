@@ -3,4 +3,5 @@
     <string name="one_step_ahead">You are just one step away to get your soulmate</string>
     <string name="soulmate_intro">A soul mate is the one person whose love is powerfull enough to motivate you to meet your soul, to do the emotional work of self-discovery, of awakening…</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_girl_complete_info">GirlCompleteInfoActivity</string>
 </resources>
