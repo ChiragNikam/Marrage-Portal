@@ -1,6 +1,8 @@
 package com.petukji.marrageportal.ui.theme
 import androidx.compose.ui.graphics.Color
 
+val transientWhite = Color(0x9FFFFFFF)
+
 val primaryLight = Color(0xFF9C2E38)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFFFDADB)

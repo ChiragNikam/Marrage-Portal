@@ -40,6 +40,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.petukji.marrageportal.AvailableGirlsVerticalGrid
+import com.petukji.marrageportal.BlueTick
+import com.petukji.marrageportal.GreenTick
 import com.petukji.marrageportal.HomeViewModel
 import com.petukji.marrageportal.ProfileStatus
 import com.petukji.marrageportal.R
@@ -157,18 +159,10 @@ fun ProfileView(modifier: Modifier = Modifier) {
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Icon(imageVector = Icons.Outlined.DateRange, contentDescription = "")
-                Icon(
-                    modifier = Modifier.background(Color.Green, shape = CircleShape),
-                    imageVector = Icons.Outlined.Check,
-                    contentDescription = "green tick",
-                    tint = Color.White
-                )
-                Icon(
-                    modifier = Modifier.background(Color.Blue, shape = CircleShape),
-                    imageVector = Icons.Outlined.Check,
-                    contentDescription = "green tick",
-                    tint = Color.White
-                )
+
+                GreenTick()
+
+                BlueTick()
             }
         }
         Image(

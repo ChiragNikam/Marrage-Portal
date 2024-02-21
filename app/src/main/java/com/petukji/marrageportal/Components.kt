@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -50,12 +52,15 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.petukji.marrageportal.DataClass.BottomNavigationItem
+import com.petukji.marrageportal.ui.theme.transientWhite
 
 @Composable
 fun AuthMenus(modifier: Modifier = Modifier, onMobileOTP: @Composable (() -> Unit)) {
@@ -209,6 +214,7 @@ fun myTextField(
     return text.value
 }
 
+@Preview
 @Composable
 fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
     LazyVerticalGrid(
@@ -219,17 +225,61 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(top = 12.dp)
     ) {
         items(8) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "girl pic",
-                modifier = Modifier.background(
-                    Color.LightGray, shape = RoundedCornerShape(8.dp)
-                ).height(180.dp)
-            )
+            SingleGirlView()
         }
     }
 }
 
+@Composable
+fun SingleGirlView(
+    modifier: Modifier = Modifier,
+    greenTick: Boolean = true,
+    blueTick: Boolean = true
+) {
+    Box {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            contentDescription = "girl pic",
+            modifier = Modifier
+                .padding(top = 5.dp)
+                .background(
+                    Color.LightGray, shape = RoundedCornerShape(8.dp)
+                )
+                .fillMaxWidth()
+                .height(200.dp)
+        )
+        Row(
+            modifier = Modifier
+                .height(20.dp)
+                .width(50.dp)
+                .align(Alignment.TopEnd)
+        ) {
+            if (greenTick) GreenTick()
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            if (blueTick) BlueTick()
+        }
+
+        Text(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 12.dp)
+                .background(
+                    transientWhite, RoundedCornerShape(30.dp)
+                )
+                .height(43.dp)
+                .padding(horizontal = 18.dp, vertical = 5.dp),
+            text = "Priya Jaiswal, 45\nDelhi, India",
+            textAlign = TextAlign.Center,
+            fontSize = 14.sp,
+            fontWeight = FontWeight(700),
+            lineHeight = 14.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
 
 // Bottom Navigation Bar for Home Screen
 @Composable
@@ -330,7 +380,9 @@ fun ProfileStatus(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.width(16.dp))
 
         Column(
-            modifier = Modifier.padding(top = 8.dp).height(columnHeight),
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .height(columnHeight),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             val modifier = Modifier.weight(1f)
@@ -358,6 +410,26 @@ fun ProfileStatus(modifier: Modifier = Modifier) {
     }
 
 //    }
+}
+
+@Composable
+fun GreenTick() {
+    Icon(
+        modifier = Modifier.background(Color.Green, shape = CircleShape),
+        imageVector = Icons.Outlined.Check,
+        contentDescription = "green tick",
+        tint = Color.White
+    )
+}
+
+@Composable
+fun BlueTick() {
+    Icon(
+        modifier = Modifier.background(Color.Blue, shape = CircleShape),
+        imageVector = Icons.Outlined.Check,
+        contentDescription = "green tick",
+        tint = Color.White
+    )
 }
 
 @Preview

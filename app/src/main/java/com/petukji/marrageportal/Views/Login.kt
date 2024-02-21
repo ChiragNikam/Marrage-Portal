@@ -46,7 +46,6 @@ fun Login(onSendOTP: () -> Unit) {
             .fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-
         AuthMenus { // inside column scope
             MobileOTP(onSendOTP = {
                 onSendOTP()
