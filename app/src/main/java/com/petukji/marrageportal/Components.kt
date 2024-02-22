@@ -57,6 +57,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -243,29 +244,7 @@ fun SingleGirlView(
     blueTick: Boolean = true
 ) {
     Box(modifier = modifier) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = "girl pic",
-            modifier = Modifier
-                .padding(top = 5.dp)
-                .background(
-                    Color.LightGray, shape = RoundedCornerShape(8.dp)
-                )
-                .fillMaxWidth()
-                .height(200.dp)
-        )
-        Row(
-            modifier = Modifier
-                .height(20.dp)
-                .width(50.dp)
-                .align(Alignment.TopEnd)
-        ) {
-            if (greenTick) GreenTick()
-
-            Spacer(modifier = Modifier.width(4.dp))
-
-            if (blueTick) BlueTick()
-        }
+        ImageViewWithGreenBlueTick(tickModifier = Modifier.align(Alignment.TopEnd))
 
         Text(
             modifier = Modifier
@@ -284,6 +263,33 @@ fun SingleGirlView(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
+    }
+}
+
+@Composable
+fun ImageViewWithGreenBlueTick(tickModifier: Modifier = Modifier, imageHeight: Dp = 200.dp, greenTick: Boolean = true, blueTick: Boolean = true){
+    Image(
+        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+        contentDescription = "girl pic",
+        modifier = Modifier
+            .padding(top = 5.dp)
+            .background(
+                Color.LightGray, shape = RoundedCornerShape(8.dp)
+            )
+            .fillMaxWidth()
+            .height(imageHeight)
+    )
+    Row(
+        modifier = tickModifier
+            .height(20.dp)
+            .width(50.dp)
+
+    ) {
+        if (greenTick) GreenTick()
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        if (blueTick) BlueTick()
     }
 }
 
