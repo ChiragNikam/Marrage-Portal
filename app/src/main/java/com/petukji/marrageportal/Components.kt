@@ -455,46 +455,49 @@ fun BlueTick(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun SearchDropBoxView(modifier: Modifier = Modifier, propertyName: String = "City") {
-    Box(modifier = modifier,
-        contentAlignment = Alignment.CenterStart) {
-        Text(
-            modifier = Modifier
-                .background(Color.Red, shape = RoundedCornerShape(16.dp))
-                .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 18.dp)
-                .height(30.dp)
-                .width(170.dp)
-               ,
-            text = propertyName, textAlign = TextAlign.Center, fontSize = 24.sp, color = Color.White
-        )
+fun SearchDropBoxView(modifier: Modifier = Modifier, propertyName: String = "Cast") {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.CenterStart
+    ) {
         Box(
             modifier = Modifier
-                .padding(start=150.dp)
+                .height(48.dp)
+                .width(170.dp)
+                .background(Color.Red, shape = RoundedCornerShape(16.dp))
+                .padding(top = 8.dp, bottom = 8.dp, start = 28.dp),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Text(
+                text = propertyName,
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp,
+                color = Color.White
+            )
+        }
+        Box(
+            modifier = Modifier
+                .padding(start = 140.dp)
                 .background(
                     MaterialTheme.colorScheme.primaryContainer,
                     shape = RoundedCornerShape(30.dp)
                 )
                 .border(2.dp, color = Color.Black, shape = RoundedCornerShape(30.dp))
-                .height(29.dp)
-                .widthIn(min=150.dp,max=180.dp)
-                .padding(horizontal = 20.dp, vertical = 3.dp),
+                .height(32.dp)
+                .widthIn(min = 290.dp, max = 320.dp)
+                .padding(start = 28.dp, end = 20.dp, top = 3.dp, bottom = 3.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Text(text = "Delhi", fontSize = 18.sp)
         }
-
     }
-
-
 }
-
 
 @Composable
 fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String) {
-    Button(modifier = modifier.width(150.dp), onClick = { /*TODO*/ }) {
+    Button(modifier = modifier.width(150.dp), onClick = { }) {
         Text(text = propertyName)
     }
-
 }
 
 @Preview
@@ -502,7 +505,6 @@ fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String)
 fun PreviewSearchDropBoxLayout() {
     SearchDropBoxView()
 }
-
 
 @Preview
 @Composable
