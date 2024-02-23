@@ -13,6 +13,17 @@
         android:theme="@style/Theme.MarragePortal"
         tools:targetApi="31">
         <activity
+            android:name=".RequestRecevedActivity"
+            android:exported="true"
+            android:label="@string/title_activity_request_receved"
+            android:theme="@style/Theme.MarragePortal" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".GirlCompleteInfoActivity"
             android:exported="false"
             android:label="@string/title_activity_girl_complete_info"
@@ -28,11 +39,7 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.MarragePortal"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

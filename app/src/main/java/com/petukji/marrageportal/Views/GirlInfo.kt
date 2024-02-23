@@ -2,6 +2,7 @@ package com.petukji.marrageportal.Views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.LocationOn
@@ -30,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import com.petukji.marrageportal.BlueTick
 import com.petukji.marrageportal.GreenTick
@@ -80,20 +87,84 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
             }
         }
         Row(modifier = Modifier.fillMaxWidth()) {
+            // menus of profile
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(90.dp)
                     .background(MaterialTheme.colorScheme.primary)
             ) {
-                Column {
-                    Icon(imageVector = Icons.Filled.Person, contentDescription = "personal", tint = MaterialTheme.colorScheme.onPrimary)
-                }
+                ProfileMenuItem(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    iconModifier = Modifier.size(35.dp),
+                    icon = Icons.Filled.Person,
+                    title = "Personal"
+                )
+                ProfileMenuItem(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    iconModifier = Modifier.size(35.dp),
+                    icon = Icons.Filled.Face,
+                    title = "Family"
+                )
+                ProfileMenuItem(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    iconModifier = Modifier.size(35.dp),
+                    icon = Icons.Filled.Info,
+                    title = "Community"
+                )
+                ProfileMenuItem(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    iconModifier = Modifier.size(35.dp),
+                    icon = Icons.Filled.Notifications,
+                    title = "Profession"
+                )
+                ProfileMenuItem(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    iconModifier = Modifier.size(35.dp),
+                    icon = Icons.Filled.Call,
+                    title = "Habits"
+                )
             }
             Column {
 
             }
         }
+    }
+}
+
+@Composable
+fun ProfileMenuItem(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    icon: ImageVector,
+    title: String
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            modifier = iconModifier,
+            imageVector = icon,
+            contentDescription = "personal",
+            tint = MaterialTheme.colorScheme.onPrimary
+        )
+        Text(
+            text = title,
+            fontWeight = FontWeight(700),
+            color = MaterialTheme.colorScheme.onPrimary
+        )
     }
 }
 
@@ -107,7 +178,7 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(250.dp), contentAlignment = Alignment.Center
+            .height(300.dp), contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painterResource(id = R.drawable.my_profile_photo),
@@ -118,7 +189,7 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .background(gradient)
                 .fillMaxWidth()
-                .height(135.dp)
+                .height(180.dp)
                 .align(Alignment.BottomCenter),
             contentAlignment = Alignment.BottomStart
         ) {
@@ -156,6 +227,12 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun ProfileMenuPreview() {
+    ProfileMenuItem(icon = Icons.Filled.Person, title = "Profile")
 }
 
 @Preview(showSystemUi = true)
