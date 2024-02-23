@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -275,7 +278,7 @@ fun ImageViewWithGreenBlueTick(
     blueTick: Boolean = true
 ) {
     Image(
-        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+        painter = painterResource(id = R.drawable.girlmarraige),
         contentDescription = "girl pic",
         modifier = Modifier
             .padding(top = 5.dp)
@@ -452,13 +455,54 @@ fun BlueTick(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String) {
-    Button(modifier = modifier, onClick = { /*TODO*/ }) {
-        Text(text = propertyName)
+fun SearchDropBoxLayout(modifier: Modifier = Modifier, propertyName: String = "City") {
+    Box(modifier = modifier,
+        contentAlignment = Alignment.CenterStart) {
+        Text(
+            modifier = Modifier
+                .background(Color.Red, shape = RoundedCornerShape(16.dp))
+                .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 18.dp)
+                .height(30.dp)
+                .width(170.dp)
+               ,
+            text = propertyName, textAlign = TextAlign.Center, fontSize = 24.sp, color = Color.White
+        )
+        Box(
+            modifier = Modifier
+                .padding(start=150.dp)
+                .background(
+                    MaterialTheme.colorScheme.primaryContainer,
+                    shape = RoundedCornerShape(30.dp)
+                )
+                .border(2.dp, color = Color.Black, shape = RoundedCornerShape(30.dp))
+                .height(29.dp)
+                .widthIn(min=150.dp,max=180.dp)
+                .padding(horizontal = 20.dp, vertical = 3.dp),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Text(text = "Delhi", fontSize = 18.sp)
+        }
 
     }
 
+
 }
+
+
+@Composable
+fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String) {
+    Button(modifier = modifier.width(150.dp), onClick = { /*TODO*/ }) {
+        Text(text = propertyName)
+    }
+
+}
+
+@Preview
+@Composable
+fun PreviewSearchDropBoxLayout() {
+    SearchDropBoxLayout()
+}
+
 
 @Preview
 @Composable
