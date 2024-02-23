@@ -90,7 +90,8 @@ fun RequestGirlInfoView(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(8.dp))
         Column {
             Text(
-                text = "ershdjfijwndfksahfk sdkj ds fdffffdd dfsfl;l;klkjllkjkkhsdfsdfsdfdfsfdkj hksddhksdlkdkshfk dsshdls djlds lsdjljdflsjdfsdlj kjsdfjkjsdfdjf jklsdjf lksdjfl sdjfl kjsdflfkjsd",
+                text = "Confident Girl, Post Graduate in Computer, not working,Seeking a real man who respect women and living with joint +" +
+                        "family. CA/CS will have priotity",
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                 lineHeight = MaterialTheme.typography.bodyMedium.lineHeight
             )

@@ -28,6 +28,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -267,7 +268,12 @@ fun SingleGirlView(
 }
 
 @Composable
-fun ImageViewWithGreenBlueTick(tickModifier: Modifier = Modifier, imageHeight: Dp = 200.dp, greenTick: Boolean = true, blueTick: Boolean = true){
+fun ImageViewWithGreenBlueTick(
+    tickModifier: Modifier = Modifier,
+    imageHeight: Dp = 200.dp,
+    greenTick: Boolean = true,
+    blueTick: Boolean = true
+) {
     Image(
         painter = painterResource(id = R.drawable.ic_launcher_foreground),
         contentDescription = "girl pic",
@@ -444,6 +450,16 @@ fun BlueTick(modifier: Modifier = Modifier) {
     )
 }
 
+
+@Composable
+fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String) {
+    Button(modifier = modifier, onClick = { /*TODO*/ }) {
+        Text(text = propertyName)
+
+    }
+
+}
+
 @Preview
 @Composable
 fun PreviewProfilePic() {
@@ -454,4 +470,10 @@ fun PreviewProfilePic() {
 @Composable
 fun PreviewTextField() {
     myTextField(hintText = "")
+}
+
+@Preview
+@Composable
+fun PreviewSearchPropertiesButtons() {
+    SearchPropertiesButtons(propertyName = "City")
 }
