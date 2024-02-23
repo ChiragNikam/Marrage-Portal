@@ -455,7 +455,7 @@ fun BlueTick(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun SearchDropBoxLayout(modifier: Modifier = Modifier, propertyName: String = "City") {
+fun SearchDropBoxView(modifier: Modifier = Modifier, propertyName: String = "City") {
     Box(modifier = modifier,
         contentAlignment = Alignment.CenterStart) {
         Text(
@@ -500,7 +500,7 @@ fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String)
 @Preview
 @Composable
 fun PreviewSearchDropBoxLayout() {
-    SearchDropBoxLayout()
+    SearchDropBoxView()
 }
 
 
