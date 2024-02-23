@@ -1,8 +1,7 @@
-package com.petukji.marrageportal
+package com.petukji.marrageportal.Views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,8 +20,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.petukji.marrageportal.ImageViewWithGreenBlueTick
+import com.petukji.marrageportal.R
 
 @Preview(showSystemUi = true)
 @Composable
