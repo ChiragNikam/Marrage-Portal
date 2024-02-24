@@ -58,7 +58,7 @@ fun SearchScreen(modifier: Modifier = Modifier) {
             ) {
                 // Drag able Properties : city, state, country, qualification, degree, age, religion, body type
                 Column {
-                    val buttonModifier = Modifier.width(118.dp)
+                    val buttonModifier = Modifier.width(128.dp)
 
                     SearchPropertiesButtons(modifier = buttonModifier, propertyName = "City")
                     SearchPropertiesButtons(modifier = buttonModifier, propertyName = "State")
