@@ -455,7 +455,7 @@ fun BlueTick(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun SearchDropBoxView(modifier: Modifier = Modifier, propertyName: String = "City") {
+fun SearchDropBoxView(modifier: Modifier = Modifier, propertyName: String = "City", propertyValue: String = "Delhi") {
     Box(modifier = modifier,
         contentAlignment = Alignment.CenterStart) {
         Text(
@@ -480,7 +480,7 @@ fun SearchDropBoxView(modifier: Modifier = Modifier, propertyName: String = "Cit
                 .padding(horizontal = 20.dp, vertical = 3.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            Text(text = "Delhi", fontSize = 18.sp)
+            Text(text = propertyValue, fontSize = 18.sp)
         }
 
     }
