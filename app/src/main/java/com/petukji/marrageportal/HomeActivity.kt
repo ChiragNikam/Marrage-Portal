@@ -42,6 +42,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.petukji.marrageportal.DataClass.BottomNavigationItem
 import com.petukji.marrageportal.Views.Home
+import com.petukji.marrageportal.Views.SearchScreen
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
 
 class HomeActivity : ComponentActivity() {
@@ -121,7 +122,7 @@ class HomeActivity : ComponentActivity() {
                                 })
                         }
                     },
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = MaterialTheme.colorScheme.background
 
                 ) {
                     Surface(
@@ -147,7 +148,7 @@ fun NavigationForHome(
             Home(viewModel = homeViewModel)
         }
         composable("search") {
-            Text(text = "Search", modifier = Modifier.fillMaxSize())
+            SearchScreen()
         }
         composable("status") {
             Text(text = "Status", modifier = Modifier.fillMaxSize())
