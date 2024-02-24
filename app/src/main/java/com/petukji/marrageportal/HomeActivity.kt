@@ -122,7 +122,7 @@ class HomeActivity : ComponentActivity() {
                                 })
                         }
                     },
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = MaterialTheme.colorScheme.background
 
                 ) {
                     Surface(

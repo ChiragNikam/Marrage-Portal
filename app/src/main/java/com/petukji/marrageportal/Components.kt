@@ -496,7 +496,7 @@ fun SearchDropBoxView(
                 text = propertyName,
                 textAlign = TextAlign.Center,
                 fontSize = 14.sp,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
         Box(
