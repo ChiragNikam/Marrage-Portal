@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.petukji.marrageportal.SearchDropBoxView
 import com.petukji.marrageportal.SearchPropertiesButtons
 
+// Screen for Advanced Search
 @Composable
 fun SearchScreen(modifier: Modifier = Modifier) {
     Surface(modifier = modifier
