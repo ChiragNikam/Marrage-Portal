@@ -32,8 +32,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -70,21 +68,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.petukji.marrageportal.DataClass.BottomNavigationItem
 import com.petukji.marrageportal.ui.theme.transientWhite
-
-// TODO: Loading images by url
-/*
-* Add Dependency: implementation "io.coil-kt:coil-compose:1.3.2"
-* Example:
-@Composable
-fun LoadImageFromUrl(imageUrl: String) {
-    val painter = rememberCoilPainter(request = imageUrl)
-    Image(
-        painter = painter,
-        contentDescription = "Image from URL",
-        contentScale = ContentScale.Fit
-    )
-}
-*/
 
 @Composable
 fun AuthMenus(modifier: Modifier = Modifier, onMobileOTP: @Composable (() -> Unit)) {
@@ -472,65 +455,46 @@ fun BlueTick(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun SearchDropBoxView(
-    modifier: Modifier = Modifier,
-    propertyName: String = "Cast",
-    propertyValue: String = "Delhi"
-) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.CenterStart
-    ) {
+fun SearchDropBoxView(modifier: Modifier = Modifier, propertyName: String = "City") {
+    Box(modifier = modifier,
+        contentAlignment = Alignment.CenterStart) {
+        Text(
+            modifier = Modifier
+                .background(Color.Red, shape = RoundedCornerShape(16.dp))
+                .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 18.dp)
+                .height(30.dp)
+                .width(170.dp)
+               ,
+            text = propertyName, textAlign = TextAlign.Center, fontSize = 24.sp, color = Color.White
+        )
         Box(
             modifier = Modifier
-                .height(42.dp)
-                .width(112.dp)
-                .background(
-                    MaterialTheme.colorScheme.onPrimaryContainer,
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(top = 8.dp, bottom = 8.dp, start = 16.dp),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Text(
-                text = propertyName,
-                textAlign = TextAlign.Center,
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onSecondary
-            )
-        }
-        Box(
-            modifier = Modifier
-                .padding(start = 90.dp)
+                .padding(start=150.dp)
                 .background(
                     MaterialTheme.colorScheme.primaryContainer,
                     shape = RoundedCornerShape(30.dp)
                 )
                 .border(2.dp, color = Color.Black, shape = RoundedCornerShape(30.dp))
-                .height(32.dp)
-                .widthIn(min = 290.dp, max = 320.dp)
-                .padding(start = 28.dp, end = 20.dp, top = 3.dp, bottom = 3.dp),
+                .height(29.dp)
+                .widthIn(min=150.dp,max=180.dp)
+                .padding(horizontal = 20.dp, vertical = 3.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            Text(text = propertyValue, fontSize = 12.sp)
+            Text(text = "Delhi", fontSize = 18.sp)
         }
+
     }
+
+
 }
 
-@Composable
-fun SearchPropertiesButtons(
-    modifier: Modifier = Modifier,
-    propertyName: String
-) {
-    val buttonColor =
-        ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = Color.Black)
 
-    Button(modifier = modifier, onClick = { }, colors = buttonColor) {
-        Text(
-            text = propertyName,
-            fontSize = MaterialTheme.typography.bodySmall.fontSize
-        )
+@Composable
+fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String) {
+    Button(modifier = modifier.width(150.dp), onClick = { /*TODO*/ }) {
+        Text(text = propertyName)
     }
+
 }
 
 @Preview
@@ -538,6 +502,7 @@ fun SearchPropertiesButtons(
 fun PreviewSearchDropBoxLayout() {
     SearchDropBoxView()
 }
+
 
 @Preview
 @Composable

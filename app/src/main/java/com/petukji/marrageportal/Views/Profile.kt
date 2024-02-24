@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
@@ -24,15 +25,21 @@ import androidx.compose.ui.unit.dp
 import com.petukji.marrageportal.ImageViewWithGreenBlueTick
 import com.petukji.marrageportal.R
 
+
 @Preview(showSystemUi = true)
 @Composable
 fun RequestReceivedScreen(modifier: Modifier = Modifier) {
     Surface(
-        modifier = modifier.fillMaxSize(),
+
+        modifier = modifier
+
+        .fillMaxSize(),
         color = MaterialTheme.colorScheme.onSecondaryContainer
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .background(color = Color(0xFF7FFFD4))
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -43,8 +50,9 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
                 SettingRequestRecived(modifier = Modifier.weight(1f))
                 Icon(
                     modifier = Modifier.weight(0.2f),
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Settings Icon"
+                  painter = painterResource(id = R.drawable.ic_gridicon),
+                    tint = Color.Blue,
+                    contentDescription = "Grid Icon"
                 )
             }
 
@@ -55,7 +63,8 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
             Box(modifier = Modifier.padding(horizontal = 24.dp)) {
                 ImageViewWithGreenBlueTick(
                     tickModifier = Modifier.align(Alignment.TopEnd),
-                    imageHeight = 440.dp
+                    imageHeight = 440.dp,
+
                 )
             }
 
@@ -70,22 +79,24 @@ fun RequestGirlInfoView(modifier: Modifier = Modifier) {
     // Name, Place, Short Description, Shortlisted Date
     Column(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(18.dp))
+            .background(color = Color(0xFFDBF9DB), RoundedCornerShape(18.dp))
             .widthIn(max = 320.dp)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+
         Text(
             text = "Priya Jaiswal, 26",
             fontSize = MaterialTheme.typography.headlineMedium.fontSize,
             fontWeight = FontWeight(700),
-            color = MaterialTheme.colorScheme.onSecondary
+            color = Color.Blue
         )
         Text(
             text = "Delhi, India",
             fontSize = MaterialTheme.typography.headlineSmall.fontSize,
             fontWeight = FontWeight(500),
-            color = MaterialTheme.colorScheme.onSecondary
+            color = Color.Blue
         )
         Spacer(modifier = Modifier.height(8.dp))
         Column {
@@ -97,13 +108,27 @@ fun RequestGirlInfoView(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(12.dp))
 
-            Text(text = "Shortlisted Date: 25 July 2023")
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Shortlisted Date: 25 July 2023")
+
+                Icon(
+                    modifier = Modifier.size(50.dp),
+                    painter = painterResource(id = R.drawable.chain),
+                    contentDescription = "Pin Icon"
+                )
+            }
         }
+
     }
 }
 
 @Composable
 fun SettingRequestRecived(modifier: Modifier = Modifier) {
+
     Row(
         modifier = modifier
             .fillMaxWidth(),
