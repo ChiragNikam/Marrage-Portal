@@ -1,10 +1,10 @@
 package com.petukji.marrageportal
 
 import android.content.Intent
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -29,7 +28,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -39,12 +37,10 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -278,7 +274,7 @@ fun ImageViewWithGreenBlueTick(
     blueTick: Boolean = true
 ) {
     Image(
-        painter = painterResource(id = R.drawable.girlmarraige),
+        painter = painterResource(id = R.drawable.tryimage),
         contentDescription = "girl pic",
         modifier = Modifier
             .padding(top = 5.dp)
@@ -302,9 +298,15 @@ fun ImageViewWithGreenBlueTick(
     }
 }
 
-// Bottom Navigation Bar for Home Screen
+@Preview
 @Composable
-fun BottomNav(
+fun PreviewImageViewWithGreenBlueTick() {
+    ImageViewWithGreenBlueTick()
+    
+}
+
+// Bottom Navigation Bar for Home Screen
+@Composable fun BottomNav(
     items: List<BottomNavigationItem>,
     navController: NavController,
     onItemClicked: (BottomNavigationItem) -> Unit
@@ -312,182 +314,194 @@ fun BottomNav(
     NavigationBar(
         modifier = Modifier.shadow(8.dp),
         containerColor = MaterialTheme.colorScheme.onPrimary
-    ) {
-        // to remember back state
+    ) { // to remember back state
         val backStackEntry = navController.currentBackStackEntryAsState()
 
-        items.forEachIndexed { index, bottomNavigationItem ->
-            NavigationBarItem(
-                selected = bottomNavigationItem.route == backStackEntry.value?.destination?.route,
-                onClick = {
-                    onItemClicked(bottomNavigationItem)
-                },
-                label = {
-                    if (bottomNavigationItem.route == backStackEntry.value?.destination?.route) {
-                        Text(
-                            text = bottomNavigationItem.title,
-                            fontWeight = FontWeight(900),
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    } else {
-                        Text(
-                            text = bottomNavigationItem.title,
-                            fontWeight = FontWeight(700),
-                            color = Color.Gray
-                        )
-                    }
-                },
-                alwaysShowLabel = true,
-                icon = {
-                    if (bottomNavigationItem.route == backStackEntry.value?.destination?.route) {
-                        Icon(
-                            bottomNavigationItem.selectedIcon,
-                            contentDescription = bottomNavigationItem.title,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    } else {
-                        Icon(
-                            painter = bottomNavigationItem.unselectedIcon,
-                            contentDescription = bottomNavigationItem.title,
-                            tint = MaterialTheme.colorScheme.secondary
-                        )
-                    }
+                items.forEachIndexed { index, bottomNavigationItem ->
+                    NavigationBarItem(
+                        selected = bottomNavigationItem.route == backStackEntry.value?.destination?.route,
+                        onClick = {
+                            onItemClicked(bottomNavigationItem)
+                        },
+                        label = {
+                            if (bottomNavigationItem.route == backStackEntry.value?.destination?.route) {
+                                Text(
+                                    text = bottomNavigationItem.title,
+                                    fontWeight = FontWeight(900),
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            } else {
+                                Text(
+                                    text = bottomNavigationItem.title,
+                                    fontWeight = FontWeight(700),
+                                    color = Color.Gray
+                                )
+                            }
+                        },
+                        alwaysShowLabel = true,
+                        icon = {
+                            if (bottomNavigationItem.route == backStackEntry.value?.destination?.route) {
+                                Icon(
+                                    bottomNavigationItem.selectedIcon,
+                                    contentDescription = bottomNavigationItem.title,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            } else {
+                                Icon(
+                                    painter = bottomNavigationItem.unselectedIcon,
+                                    contentDescription = bottomNavigationItem.title,
+                                    tint = MaterialTheme.colorScheme.secondary
+                                )
+                            }
+                        }
+                    )
                 }
-            )
-        }
     }
 }
 
-// status view
-@Preview
-@Composable
-fun ProfileStatus(modifier: Modifier = Modifier) {
+    // status view
+    @Preview
+    @Composable
+    fun ProfileStatus(modifier: Modifier = Modifier) {
 //    Box {
-    val localDensity = LocalDensity.current
+        val localDensity = LocalDensity.current
 
-    var columnHeight by remember {
-        mutableStateOf(10.dp)
-    }
-    Row {
-        Column(
-            modifier = modifier
-                .background(
-                    MaterialTheme.colorScheme.secondary,
-                    RoundedCornerShape(8.dp)
+        var columnHeight by remember {
+            mutableStateOf(10.dp)
+        }
+        Row {
+            Column(
+                modifier = modifier
+                    .background(
+                        MaterialTheme.colorScheme.secondary,
+                        RoundedCornerShape(8.dp)
+                    )
+                    .onGloballyPositioned { layoutCoordinates ->
+                        columnHeight = with(localDensity) { layoutCoordinates.size.height.toDp() }
+                    }
+                    .padding(horizontal = 10.dp, vertical = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(3.dp)
+            ) {
+                Text(
+                    text = "Total Profile Accepted: 50",
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
-                .onGloballyPositioned { layoutCoordinates ->
-                    columnHeight = with(localDensity) { layoutCoordinates.size.height.toDp() }
-                }
-                .padding(horizontal = 10.dp, vertical = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(3.dp)
-        ) {
-            Text(text = "Total Profile Accepted: 50", color = MaterialTheme.colorScheme.onSecondary)
-            Text(
-                text = "Total Profile Rejected by you: 5",
-                color = MaterialTheme.colorScheme.onSecondary
-            )
-            Text(text = "Total Rejected by other: 3", color = MaterialTheme.colorScheme.onSecondary)
-            Text(
-                text = "Total Shortlisted profile: 150",
-                color = MaterialTheme.colorScheme.onSecondary
-            )
-            Text(
-                text = "People viewed your profile: 67",
-                color = MaterialTheme.colorScheme.onSecondary
-            )
-            Text(text = "Viewed by your: 97", color = MaterialTheme.colorScheme.onSecondary)
+                Text(
+                    text = "Total Profile Rejected by you: 5",
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+                Text(
+                    text = "Total Rejected by other: 3",
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+                Text(
+                    text = "Total Shortlisted profile: 150",
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+                Text(
+                    text = "People viewed your profile: 67",
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+                Text(text = "Viewed by your: 97", color = MaterialTheme.colorScheme.onSecondary)
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .height(columnHeight),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                val modifier = Modifier.weight(1f)
+                val contentScale = ContentScale.Crop
+                Image(
+                    modifier = modifier,
+                    painter = painterResource(id = R.drawable.icon_facebook),
+                    contentDescription = "facebook icon",
+                    contentScale = contentScale
+                )
+                Image(
+                    modifier = modifier,
+                    painter = painterResource(id = R.drawable.icon_instagram),
+                    contentDescription = "facebook icon",
+                    contentScale = contentScale
+                )
+                Image(
+                    modifier = modifier,
+                    painter = painterResource(id = R.drawable.icon_whatsapp),
+                    contentDescription = "facebook icon",
+                    contentScale = contentScale
+                )
+            }
+
         }
 
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column(
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .height(columnHeight),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            val modifier = Modifier.weight(1f)
-            val contentScale = ContentScale.Crop
-            Image(
-                modifier = modifier,
-                painter = painterResource(id = R.drawable.icon_facebook),
-                contentDescription = "facebook icon",
-                contentScale = contentScale
-            )
-            Image(
-                modifier = modifier,
-                painter = painterResource(id = R.drawable.icon_instagram),
-                contentDescription = "facebook icon",
-                contentScale = contentScale
-            )
-            Image(
-                modifier = modifier,
-                painter = painterResource(id = R.drawable.icon_whatsapp),
-                contentDescription = "facebook icon",
-                contentScale = contentScale
-            )
-        }
 
     }
 
-//    }
-}
-
-@Composable
-fun GreenTick(modifier: Modifier = Modifier) {
-    Icon(
-        modifier = modifier.background(Color.Green, shape = CircleShape),
-        imageVector = Icons.Outlined.Check,
-        contentDescription = "green tick",
-        tint = Color.White
-    )
-}
-
-@Composable
-fun BlueTick(modifier: Modifier = Modifier) {
-    Icon(
-        modifier = modifier.background(Color.Blue, shape = CircleShape),
-        imageVector = Icons.Outlined.Check,
-        contentDescription = "green tick",
-        tint = Color.White
-    )
-}
-
-
-@Composable
-fun SearchDropBoxView(modifier: Modifier = Modifier, propertyName: String = "City", propertyValue: String = "Delhi") {
-    Box(modifier = modifier,
-        contentAlignment = Alignment.CenterStart) {
-        Text(
-            modifier = Modifier
-                .background(Color.Red, shape = RoundedCornerShape(16.dp))
-                .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 18.dp)
-                .height(30.dp)
-                .width(170.dp)
-               ,
-            text = propertyName, textAlign = TextAlign.Center, fontSize = 24.sp, color = Color.White
+    @Composable
+    fun GreenTick(modifier: Modifier = Modifier) {
+        Icon(
+            modifier = modifier.background(Color.Green, shape = CircleShape),
+            imageVector = Icons.Outlined.Check,
+            contentDescription = "green tick",
+            tint = Color.White
         )
+    }
+
+    @Composable
+    fun BlueTick(modifier: Modifier = Modifier) {
+        Icon(
+            modifier = modifier.background(Color.Blue, shape = CircleShape),
+            imageVector = Icons.Outlined.Check,
+            contentDescription = "green tick",
+            tint = Color.White
+        )
+    }
+
+
+    @Composable
+    fun SearchDropBoxView(
+        modifier: Modifier = Modifier,
+        propertyName: String = "City",
+        propertyValue: String = "Delhi"
+    ) {
         Box(
-            modifier = Modifier
-                .padding(start=150.dp)
-                .background(
-                    MaterialTheme.colorScheme.primaryContainer,
-                    shape = RoundedCornerShape(30.dp)
-                )
-                .border(2.dp, color = Color.Black, shape = RoundedCornerShape(30.dp))
-                .height(29.dp)
-                .widthIn(min=150.dp,max=180.dp)
-                .padding(horizontal = 20.dp, vertical = 3.dp),
+            modifier = modifier,
             contentAlignment = Alignment.CenterStart
         ) {
-            Text(text = propertyValue, fontSize = 18.sp)
+            Text(
+                modifier = Modifier
+                    .background(Color.Red, shape = RoundedCornerShape(16.dp))
+                    .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 18.dp)
+                    .height(30.dp)
+                    .width(170.dp),
+                text = propertyName,
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp,
+                color = Color.White
+            )
+            Box(
+                modifier = Modifier
+                    .padding(start = 150.dp)
+                    .background(
+                        MaterialTheme.colorScheme.primaryContainer,
+                        shape = RoundedCornerShape(30.dp)
+                    )
+                    .border(2.dp, color = Color.Black, shape = RoundedCornerShape(30.dp))
+                    .height(29.dp)
+                    .widthIn(min = 150.dp, max = 180.dp)
+                    .padding(horizontal = 20.dp, vertical = 3.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text(text = propertyValue, fontSize = 18.sp)
+            }
+
         }
 
+
     }
-
-
-}
-
 
 @Composable
 fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String) {

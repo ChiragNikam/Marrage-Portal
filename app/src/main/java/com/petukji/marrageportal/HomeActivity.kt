@@ -1,14 +1,11 @@
 package com.petukji.marrageportal
 
 import android.os.Bundle
-import android.provider.MediaStore.Images
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -116,10 +113,10 @@ class HomeActivity : ComponentActivity() {
                                 }
                             BottomNav(
                                 items = bottomBarItems,
-                                navController = navController,
-                                onItemClicked = {
-                                    navController.navigate(it.route)
-                                })
+                                navController = navController
+                            ) {
+                                navController.navigate(it.route)
+                            }
                         }
                     },
                     containerColor = MaterialTheme.colorScheme.background
