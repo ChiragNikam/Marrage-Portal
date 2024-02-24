@@ -33,7 +33,7 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
 
         modifier = modifier
 
-        .fillMaxSize(),
+            .fillMaxSize(),
         color = MaterialTheme.colorScheme.onSecondaryContainer
     ) {
         Column(
@@ -50,7 +50,7 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
                 SettingRequestRecived(modifier = Modifier.weight(1f))
                 Icon(
                     modifier = Modifier.weight(0.2f),
-                  painter = painterResource(id = R.drawable.ic_gridicon),
+                    painter = painterResource(id = R.drawable.ic_gridicon),
                     tint = Color.Blue,
                     contentDescription = "Grid Icon"
                 )
@@ -65,7 +65,7 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
                     tickModifier = Modifier.align(Alignment.TopEnd),
                     imageHeight = 440.dp,
 
-                )
+                    )
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -129,39 +129,47 @@ fun RequestGirlInfoView(modifier: Modifier = Modifier) {
 @Composable
 fun SettingRequestRecived(modifier: Modifier = Modifier) {
 
-    Row(
+    Box(
         modifier = modifier
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.onPrimary, CircleShape)
-                .padding(3.dp)
-        ) {
-            Icon(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary, CircleShape)
-                    .size(36.dp)
-                    .padding(3.dp),
-                imageVector = Icons.Filled.Settings,
-                contentDescription = "Settings Icon",
-            )
+        contentAlignment = Alignment.CenterStart
+    )
+    {
 
-        }
-        Row(
+        Box(
             modifier = Modifier
                 .background(
                     MaterialTheme.colorScheme.onPrimary,
-                    RoundedCornerShape(topEnd = 18.dp, bottomEnd = 18.dp)
+                    RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp, bottomStart = 18.dp, bottomEnd = 18.dp)
                 )
                 .padding(start = 4.dp, end = 12.dp, top = 4.dp, bottom = 4.dp)
         ) {
-            Text(
-                text = "Request Received",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
+
+            Box(modifier = modifier.background(color = Color.Yellow, shape = CircleShape)
+            ) {
+
+                Icon(
+                    modifier = Modifier
+                        .background(Color(0xFFFFA500), CircleShape)
+                        .size(36.dp)
+                        .padding(3.dp),
+                    imageVector = Icons.Filled.Settings,
+                    contentDescription = "Settings Icon",
+
+                    )
+
+            }
+            Spacer(modifier = modifier.width(4.dp))
+
+            Row(modifier = modifier.padding(start = 40.dp, top = 8.dp)) {
+                Text(
+                    text = "Request Received",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+            }
+
         }
     }
 }

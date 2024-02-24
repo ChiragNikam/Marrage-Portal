@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.petukji.marrageportal.SearchDropBoxView
 import com.petukji.marrageportal.SearchPropertiesButtons
 
+// Screen for Advanced Search
 @Composable
 fun SearchScreen(modifier: Modifier = Modifier) {
     Surface(modifier = modifier
@@ -58,7 +59,7 @@ fun SearchScreen(modifier: Modifier = Modifier) {
             ) {
                 // Drag able Properties : city, state, country, qualification, degree, age, religion, body type
                 Column {
-                    val buttonModifier = Modifier.width(118.dp)
+                    val buttonModifier = Modifier.width(128.dp)
 
                     SearchPropertiesButtons(modifier = buttonModifier, propertyName = "City")
                     SearchPropertiesButtons(modifier = buttonModifier, propertyName = "State")
