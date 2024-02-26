@@ -203,14 +203,13 @@ fun UserProfile(
 ) {
     Row(
         modifier = modifier
-            .background(color = Color.White)
+            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically // Align items vertically in the row
     ) {
         Column(
             modifier = modifier
                 .weight(1f) // Take up available horizontal space
-                .padding(16.dp) // Add padding to the column
         ) {
             Text(
                 text = "Hi! $name",
