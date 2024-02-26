@@ -240,11 +240,12 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
 @Composable
 fun SingleGirlView(
     modifier: Modifier = Modifier,
+    imageModifier: Modifier = Modifier,
     greenTick: Boolean = true,
     blueTick: Boolean = true
 ) {
     Box(modifier = modifier) {
-        ImageViewWithGreenBlueTick(tickModifier = Modifier.align(Alignment.TopEnd))
+        ImageViewWithGreenBlueTick(imageModifier = imageModifier, tickModifier = Modifier.align(Alignment.TopEnd))
 
         Text(
             modifier = Modifier
@@ -269,6 +270,7 @@ fun SingleGirlView(
 @Composable
 fun ImageViewWithGreenBlueTick(
     tickModifier: Modifier = Modifier,
+    imageModifier: Modifier = Modifier,
     imageHeight: Dp = 200.dp,
     greenTick: Boolean = true,
     blueTick: Boolean = true
@@ -276,7 +278,7 @@ fun ImageViewWithGreenBlueTick(
     Image(
         painter = painterResource(id = R.drawable.tryimage),
         contentDescription = "girl pic",
-        modifier = Modifier
+        modifier = imageModifier
             .padding(top = 5.dp)
             .background(
                 Color.LightGray, shape = RoundedCornerShape(8.dp)

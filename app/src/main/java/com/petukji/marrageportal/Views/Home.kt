@@ -1,6 +1,11 @@
 package com.petukji.marrageportal.Views
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
@@ -12,6 +17,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,10 +39,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -52,6 +63,7 @@ import com.petukji.marrageportal.HomeViewModel
 import com.petukji.marrageportal.ImageViewWithGreenBlueTick
 import com.petukji.marrageportal.ProfileStatus
 import com.petukji.marrageportal.R
+import com.petukji.marrageportal.SingleGirlView
 
 @Composable
 fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
@@ -68,7 +80,7 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
             Spacer(modifier = Modifier.height(30.dp))
 
             // Profile
-            UserProfile(  name = "Rajat Kumar",
+            UserProfile(name = "Rajat Kumar",
                 id = "56125",
                 image = R.drawable.tryimage,
                 onImageClick = {})
@@ -108,12 +120,45 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
                 )) {
                 Surface(color = MaterialTheme.colorScheme.primaryContainer) {
                     Column {
-                        IconButton(
-                            modifier = Modifier.align(Alignment.End),
-                            onClick = { viewModel.updateShowGirls(false) }) {
-                            Icon(imageVector = Icons.Outlined.Clear, contentDescription = "cancel")
+                        var showSingleGirlView by rememberSaveable {
+                            mutableStateOf(false)
                         }
-                        AvailableGirlsVerticalGrid(modifier = Modifier.padding(horizontal = 20.dp))
+                        Row {
+                            IconButton(
+                                onClick = { showSingleGirlView = !showSingleGirlView }) {
+                                Icon(
+                                    modifier = Modifier.size(32.dp),
+                                    painter = painterResource(id = R.drawable.icon_cards),
+                                    contentDescription = "cancel"
+                                )
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                            IconButton(
+                                modifier = Modifier,
+                                onClick = { viewModel.updateShowGirls(false) }) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Clear,
+                                    contentDescription = "cancel"
+                                )
+                            }
+                        }
+                        AnimatedVisibility(
+                            visible = showSingleGirlView,
+                            enter = scaleIn(transformOrigin = TransformOrigin(0f, 0f)),
+                            exit = scaleOut(transformOrigin = TransformOrigin(0f, 0f))
+                        ) {
+                            SingleGirlView(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 40.dp, vertical = 20.dp),
+                                imageModifier = Modifier.fillMaxHeight()
+                            )
+                        }
+                        AnimatedVisibility(
+                            visible = !showSingleGirlView,
+                        ) {
+                            AvailableGirlsVerticalGrid(modifier = Modifier.padding(horizontal = 20.dp))
+                        }
                     }
                 }
             }
@@ -149,22 +194,21 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
 
 
 @Composable
-
 fun UserProfile(
     modifier: Modifier = Modifier,
     name: String,
     id: String,
     image: Int,
     onImageClick: () -> Unit
-){
-    Row (
-        modifier= modifier
+) {
+    Row(
+        modifier = modifier
             .background(color = Color.White)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically // Align items vertically in the row
-    ){
-        Column (
-            modifier= modifier
+    ) {
+        Column(
+            modifier = modifier
                 .weight(1f) // Take up available horizontal space
                 .padding(16.dp) // Add padding to the column
         ) {
@@ -205,15 +249,15 @@ fun UserImage(
     image: Int,
     onImageClick: () -> Unit,
     modifier: Modifier
-){
+) {
     Box(modifier = modifier
         .size(128.dp)
         .clip(CircleShape)
         .background(Color.LightGray)
         .clickable { onImageClick() }
         .border(width = 4.dp, color = Color.Red, shape = CircleShape)
-    // Add border stroke
-    ){
+        // Add border stroke
+    ) {
         Image(
             painter = painterResource(id = image), contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -228,7 +272,8 @@ fun UserImage(
                 .padding(8.dp)
         )
         {
-            Icon(imageVector = Icons.Default.Edit,
+            Icon(
+                imageVector = Icons.Default.Edit,
                 contentDescription = "Change image",
                 tint = Color.Black
             )
@@ -256,11 +301,11 @@ fun BiodataDocuments(
         )
         Spacer(modifier = Modifier.width(6.dp))
 
-        GreenTick(modifier=Modifier.size(30.dp))
+        GreenTick(modifier = Modifier.size(30.dp))
 
         Spacer(modifier = Modifier.width(6.dp))
 
-        BlueTick(modifier=Modifier.size(30.dp))
+        BlueTick(modifier = Modifier.size(30.dp))
 
 
     }
@@ -268,7 +313,7 @@ fun BiodataDocuments(
 
 @Preview
 @Composable
-fun HomeScreenPreview(){
+fun HomeScreenPreview() {
     Home(viewModel = HomeViewModel())
 }
 
