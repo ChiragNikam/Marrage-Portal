@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.petukji.marrageportal.ImageViewWithGreenBlueTick
 import com.petukji.marrageportal.R
+import com.petukji.marrageportal.TabRowOptions
 
 
 @Preview(showSystemUi = true)
@@ -53,18 +52,36 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
                     contentDescription = "Grid Icon"
                 )
             }
-
-            RequestGirlInfoView()
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Box(modifier = Modifier.padding(horizontal = 24.dp)) {
-                ImageViewWithGreenBlueTick(
-                    tickModifier = Modifier.align(Alignment.TopEnd),
-                    imageHeight = 440.dp,
-
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    RequestGirlInfoView(
+                        modifier = Modifier
+                            .background(color = Color(0xFFDBF9DB), RoundedCornerShape(18.dp))
+                            .widthIn(max = 320.dp)
+                            .padding(horizontal = 16.dp, vertical = 12.dp)
                     )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Box(modifier = Modifier.padding(horizontal = 24.dp)) {
+                        ImageViewWithGreenBlueTick(
+                            tickModifier = Modifier.align(Alignment.TopEnd),
+                            imageHeight = 440.dp,
+
+                            )
+                    }
+                }
+                TabRowOptions(
+                    modifier = Modifier
+                        .background(
+                            Color.White,
+                            RoundedCornerShape(topStart = 8.dp, bottomStart = 8.dp)
+                        )
+                )
             }
+
+
 
             Spacer(modifier = Modifier.height(30.dp))
         }
@@ -76,10 +93,7 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
 fun RequestGirlInfoView(modifier: Modifier = Modifier) {
     // Name, Place, Short Description, Shortlisted Date
     Column(
-        modifier = modifier
-            .background(color = Color(0xFFDBF9DB), RoundedCornerShape(18.dp))
-            .widthIn(max = 320.dp)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -138,12 +152,18 @@ fun SettingRequestRecived(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .background(
                     MaterialTheme.colorScheme.onPrimary,
-                    RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp, bottomStart = 18.dp, bottomEnd = 18.dp)
+                    RoundedCornerShape(
+                        topStart = 18.dp,
+                        topEnd = 18.dp,
+                        bottomStart = 18.dp,
+                        bottomEnd = 18.dp
+                    )
                 )
                 .padding(start = 4.dp, end = 12.dp, top = 4.dp, bottom = 4.dp)
         ) {
 
-            Box(modifier = modifier.background(color = Color.Yellow, shape = CircleShape)
+            Box(
+                modifier = modifier.background(color = Color.Yellow, shape = CircleShape)
             ) {
 
                 Icon(
