@@ -1,6 +1,5 @@
 package com.petukji.marrageportal.Views
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,33 +9,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.petukji.marrageportal.AvailableGirlsVerticalGrid
+import com.petukji.marrageportal.HomeViewModel
 import com.petukji.marrageportal.SearchDropBoxView
 import com.petukji.marrageportal.SearchPropertiesButtons
 
 // Screen for Advanced Search
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier) {
-    Surface(modifier = modifier
-        .verticalScroll(rememberScrollState())
-        .fillMaxSize()) {
+fun SearchScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
+    Surface(modifier = modifier) {
         Column(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(30.dp))
             Text(
@@ -86,7 +83,7 @@ fun SearchScreen(modifier: Modifier = Modifier) {
             
             Spacer(modifier = Modifier.height(42.dp))
 
-            Button(onClick = { /*TODO*/ }, contentPadding = PaddingValues(horizontal = 42.dp, vertical = 12.dp), elevation = ButtonDefaults.buttonElevation(4.dp)) {
+            Button(onClick = { viewModel.updateShowSearchResultsState(showResults = true) }, contentPadding = PaddingValues(horizontal = 42.dp, vertical = 12.dp), elevation = ButtonDefaults.buttonElevation(4.dp)) {
                 Text(text = "Search", fontSize = 18.sp)
             }
 
@@ -95,8 +92,23 @@ fun SearchScreen(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchViewBottomSheet(viewModel: HomeViewModel) {
+    val sheetState = rememberModalBottomSheetState()    // Bottom sheet state
+
+    ModalBottomSheet(
+        containerColor = MaterialTheme.colorScheme.background,
+        sheetState = sheetState,
+        onDismissRequest = { viewModel.updateShowSearchResultsState(false) }
+    ) {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            AvailableGirlsVerticalGrid()
+        }
+    }
+}
 @Preview(showSystemUi = true)
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen()
+    SearchScreen(viewModel = HomeViewModel())
 }
