@@ -28,9 +28,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -44,6 +46,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -230,9 +233,11 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(top = 12.dp)
     ) {
         items(8) {
-            SingleGirlView(modifier = Modifier.clickable {
-                context.startActivity(Intent(context, GirlCompleteInfoActivity::class.java))
-            })
+            SingleGirlView(modifier = Modifier
+                .background(color = Color.Transparent, shape = RoundedCornerShape(8.dp))
+                .clickable {
+                    context.startActivity(Intent(context, GirlCompleteInfoActivity::class.java))
+                })
         }
     }
 }
@@ -245,7 +250,10 @@ fun SingleGirlView(
     blueTick: Boolean = true
 ) {
     Box(modifier = modifier) {
-        ImageViewWithGreenBlueTick(imageModifier = imageModifier, tickModifier = Modifier.align(Alignment.TopEnd))
+        ImageViewWithGreenBlueTick(
+            imageModifier = imageModifier,
+            tickModifier = Modifier.align(Alignment.TopEnd)
+        )
 
         Text(
             modifier = Modifier
@@ -275,14 +283,14 @@ fun ImageViewWithGreenBlueTick(
     greenTick: Boolean = true,
     blueTick: Boolean = true
 ) {
+
     Image(
         painter = painterResource(id = R.drawable.tryimage),
         contentDescription = "girl pic",
+        contentScale = ContentScale.Crop,
         modifier = imageModifier
             .padding(top = 5.dp)
-            .background(
-                Color.LightGray, shape = RoundedCornerShape(8.dp)
-            )
+            .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .height(imageHeight)
     )
@@ -511,7 +519,66 @@ fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String)
     Button(modifier = modifier.width(150.dp), onClick = { /*TODO*/ }) {
         Text(text = propertyName)
     }
+}
 
+// tab options row for Request Received Screen
+@Composable
+fun TabRowOptions(modifier: Modifier = Modifier) {
+    Column {
+        Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(30.dp)) {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_info),
+                    contentDescription = "info"
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_document),
+                    contentDescription = "info"
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.filled_profile),
+                    contentDescription = "info"
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_info),
+                    contentDescription = "info"
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_document),
+                    contentDescription = "info"
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.filled_profile),
+                    contentDescription = "info"
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(imageVector = Icons.Filled.Settings, contentDescription = "settings")
+        }
+    }
+}
+
+@Preview
+@Composable
+fun TabRowOptionsPreview() {
+    TabRowOptions(
+        modifier = Modifier.background(
+            Color.White,
+            RoundedCornerShape(topStart = 8.dp, bottomStart = 8.dp)
+        )
+    )
 }
 
 @Preview
