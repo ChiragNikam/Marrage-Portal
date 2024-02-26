@@ -95,7 +95,8 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
             val showGirls by viewModel.showGirls.collectAsState()
 
             Spacer(modifier = Modifier.height(18.dp))
-//            if (showGirls) {
+
+            // grid view for
             AnimatedVisibility(visible = showGirls,
                 enter = slideInVertically(
                     // Enters by sliding down from offset -fullHeight to 0.
@@ -265,7 +266,11 @@ fun BiodataDocuments(
     }
 }
 
-
+@Preview
+@Composable
+fun HomeScreenPreview(){
+    Home(viewModel = HomeViewModel())
+}
 
 
 @Preview

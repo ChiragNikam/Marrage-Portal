@@ -30,9 +30,7 @@ import com.petukji.marrageportal.R
 @Composable
 fun RequestReceivedScreen(modifier: Modifier = Modifier) {
     Surface(
-
         modifier = modifier
-
             .fillMaxSize(),
         color = MaterialTheme.colorScheme.onSecondaryContainer
     ) {

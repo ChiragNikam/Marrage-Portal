@@ -1,6 +1,7 @@
 package com.petukji.marrageportal
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -33,13 +36,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.petukji.marrageportal.DataClass.BottomNavigationItem
 import com.petukji.marrageportal.Views.Home
+import com.petukji.marrageportal.Views.RequestReceivedScreen
 import com.petukji.marrageportal.Views.SearchScreen
+import com.petukji.marrageportal.Views.SearchViewBottomSheet
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
 
 class HomeActivity : ComponentActivity() {
@@ -96,21 +102,25 @@ class HomeActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             val showGirls by homeViewModel.showGirls.collectAsState()
-                            if (!showGirls)
-                                IconButton(
-                                    onClick = {
-                                        homeViewModel.updateShowGirls(true)
-                                    }) {
-                                    Icon(
-                                        modifier = Modifier.border(
-                                            BorderStroke(1.dp, Color.Black),
-                                            shape = CircleShape
-                                        ),
-                                        imageVector = Icons.Outlined.KeyboardArrowUp,
-                                        contentDescription = "show girls",
-                                        tint = Color.Black
-                                    )
-                                }
+                            val currentDestination by homeViewModel.currentDestinationBottomNav.collectAsState()
+                            if (!showGirls) {
+                                if (currentDestination == "home")
+                                    IconButton(
+                                        onClick = {
+                                            homeViewModel.updateShowGirls(true)
+//                                        Log.d("route", navController.currentDestination?.route.toString())
+                                        }) {
+                                        Icon(
+                                            modifier = Modifier.border(
+                                                BorderStroke(1.dp, Color.Black),
+                                                shape = CircleShape
+                                            ),
+                                            imageVector = Icons.Outlined.KeyboardArrowUp,
+                                            contentDescription = "show girls",
+                                            tint = Color.Black
+                                        )
+                                    }
+                            }
                             BottomNav(
                                 items = bottomBarItems,
                                 navController = navController
@@ -129,6 +139,11 @@ class HomeActivity : ComponentActivity() {
                     ) {
                         NavigationForHome(navHostController = navController, homeViewModel)
                     }
+                    
+                    val showSearchResults by homeViewModel.showSearchResults.collectAsState()
+                    if (showSearchResults){
+                        SearchViewBottomSheet(viewModel = homeViewModel)
+                    }
                 }
             }
         }
@@ -142,15 +157,21 @@ fun NavigationForHome(
 ) {
     NavHost(navController = navHostController, startDestination = "home") {
         composable("home") {
+            homeViewModel.updateCurrentDestinationBottomNav("home")
             Home(viewModel = homeViewModel)
         }
         composable("search") {
-            SearchScreen()
+            homeViewModel.updateCurrentDestinationBottomNav("search")
+            SearchScreen(modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize(), viewModel = homeViewModel)
         }
         composable("status") {
-            Text(text = "Status", modifier = Modifier.fillMaxSize())
+            homeViewModel.updateCurrentDestinationBottomNav("status")
+            RequestReceivedScreen(modifier = Modifier.verticalScroll(rememberScrollState()))
         }
         composable("profile") {
+            homeViewModel.updateCurrentDestinationBottomNav("profile")
             Text(text = "Profile", modifier = Modifier.fillMaxSize())
         }
     }
