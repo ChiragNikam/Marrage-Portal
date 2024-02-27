@@ -122,53 +122,6 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
                     // Exits by sliding up from offset 0 to -fullHeight.
                     targetOffsetY = { fullHeight -> fullHeight }
                 )) {
-                Surface(color = MaterialTheme.colorScheme.primaryContainer) {
-                    Column {
-                        var showSingleGirlView by rememberSaveable {
-                            mutableStateOf(false)
-                        }
-                        Row {
-                            IconButton(
-                                onClick = { showSingleGirlView = !showSingleGirlView }) {
-                                Icon(
-                                    modifier = Modifier.size(32.dp),
-                                    painter = painterResource(id = R.drawable.icon_cards),
-                                    contentDescription = "cancel"
-                                )
-                            }
-                            Spacer(modifier = Modifier.weight(1f))
-                            IconButton(
-                                modifier = Modifier,
-                                onClick = { viewModel.updateShowGirls(false) }) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Clear,
-                                    contentDescription = "cancel"
-                                )
-                            }
-                        }
-                        AnimatedVisibility(
-                            visible = showSingleGirlView,
-                            enter = scaleIn(transformOrigin = TransformOrigin(0f, 0f)),
-                            exit = scaleOut(transformOrigin = TransformOrigin(0f, 0f))
-                        ) {
-                            val pagerState = rememberPagerState(pageCount = { 3 })
-
-                            HorizontalPager(state = pagerState) {
-                                SingleGirlView(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(horizontal = 40.dp, vertical = 20.dp),
-                                    imageModifier = Modifier.fillMaxHeight()
-                                )
-                            }
-                        }
-                        AnimatedVisibility(
-                            visible = !showSingleGirlView,
-                        ) {
-                            AvailableGirlsVerticalGrid(modifier = Modifier.padding(horizontal = 20.dp))
-                        }
-                    }
-                }
             }
 //            } else {
             // status for profile, facebook, insta and whatsapp

@@ -231,7 +231,7 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(top = 12.dp)
+        contentPadding = PaddingValues(top = 12.dp, bottom = 110.dp)
     ) {
         items(8) {
             SingleGirlView(modifier = Modifier

@@ -4,21 +4,36 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,14 +42,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -54,6 +75,7 @@ class HomeActivity : ComponentActivity() {
     // Home view model
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
 
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -104,23 +126,6 @@ class HomeActivity : ComponentActivity() {
                         ) {
                             val showGirls by homeViewModel.showGirls.collectAsState()
                             val currentDestination by homeViewModel.currentDestinationBottomNav.collectAsState()
-                            if (!showGirls) {
-                                if (currentDestination == "home")
-                                    IconButton(
-                                        onClick = {
-                                            homeViewModel.updateShowGirls(true)
-                                        }) {
-                                        Icon(
-                                            modifier = Modifier.border(
-                                                BorderStroke(1.dp, Color.Black),
-                                                shape = CircleShape
-                                            ),
-                                            imageVector = Icons.Outlined.KeyboardArrowUp,
-                                            contentDescription = "show girls",
-                                            tint = Color.Black
-                                        )
-                                    }
-                            }
                             BottomNav(
                                 items = bottomBarItems,
                                 navController = navController
@@ -130,23 +135,101 @@ class HomeActivity : ComponentActivity() {
                         }
                     },
                     containerColor = MaterialTheme.colorScheme.background
-
                 ) {
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(it)
+                    val scaffoldSheetState = rememberBottomSheetScaffoldState()
+                    val bottomPadding = it.calculateBottomPadding() + 40.dp
+
+                    BottomSheetScaffoldForHome(
+                        modifier = Modifier.padding(it),
+                        scaffoldSheetState,
+                        bottomPadding
                     ) {
-                        NavigationForHome(navHostController = navController, homeViewModel)
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(it)
+                        ) {
+                            NavigationForHome(navHostController = navController, homeViewModel)
+                        }
                     }
-                    
+
                     val showSearchResults by homeViewModel.showSearchResults.collectAsState()
-                    if (showSearchResults){
+                    if (showSearchResults) {
                         SearchViewBottomSheet(viewModel = homeViewModel)
                     }
                 }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@Composable
+fun BottomSheetScaffoldForHome(
+    modifier: Modifier = Modifier,
+    scaffoldSheetState: BottomSheetScaffoldState,
+    bottomPadding: Dp,
+    content: @Composable() (() -> Unit)
+) {
+    BottomSheetScaffold(
+        modifier = modifier,
+        scaffoldState = scaffoldSheetState,
+        sheetPeekHeight = bottomPadding,
+        sheetContainerColor = MaterialTheme.colorScheme.primaryContainer,
+        sheetContent = {
+            Surface(color = MaterialTheme.colorScheme.primaryContainer) {
+                Column {
+                    var showSingleGirlView by rememberSaveable {
+                        mutableStateOf(false)
+                    }
+                    Row {
+                        IconButton(
+                            onClick = { showSingleGirlView = !showSingleGirlView }) {
+                            Icon(
+                                modifier = Modifier.size(32.dp),
+                                painter = painterResource(id = R.drawable.icon_cards),
+                                contentDescription = "cancel"
+                            )
+                        }
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(
+                            modifier = Modifier,
+                            onClick = {
+//                                homeViewModel.updateShowGirls(false)
+                            }) {
+                            Icon(
+                                imageVector = Icons.Outlined.Clear,
+                                contentDescription = "cancel"
+                            )
+                        }
+                    }
+                    AnimatedVisibility(
+                        visible = showSingleGirlView,
+                        enter = scaleIn(transformOrigin = TransformOrigin(0f, 0f)),
+                        exit = scaleOut(transformOrigin = TransformOrigin(0f, 0f))
+                    ) {
+                        val pagerState = rememberPagerState(pageCount = { 3 })
+
+                        HorizontalPager(modifier = Modifier.padding(bottom = bottomPadding), state = pagerState) {
+                            SingleGirlView(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 40.dp, vertical = 20.dp),
+                                imageModifier = Modifier.fillMaxHeight()
+                            )
+                        }
+                    }
+                    AnimatedVisibility(
+                        visible = !showSingleGirlView,
+                    ) {
+                        AvailableGirlsVerticalGrid(modifier = Modifier.padding(start = 20.dp, end = 20.dp))
+                    }
+
+                }
+            }
+        }
+    ) {
+        content()
     }
 }
 
@@ -162,7 +245,7 @@ fun NavigationForHome(
         }
         composable("search") {
             homeViewModel.updateCurrentDestinationBottomNav("search")
-            DragableScreen (
+            DragableScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
