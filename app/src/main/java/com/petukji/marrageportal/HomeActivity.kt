@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -108,7 +109,6 @@ class HomeActivity : ComponentActivity() {
                                     IconButton(
                                         onClick = {
                                             homeViewModel.updateShowGirls(true)
-//                                        Log.d("route", navController.currentDestination?.route.toString())
                                         }) {
                                         Icon(
                                             modifier = Modifier.border(
@@ -162,9 +162,16 @@ fun NavigationForHome(
         }
         composable("search") {
             homeViewModel.updateCurrentDestinationBottomNav("search")
-            SearchScreen(modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .fillMaxSize(), viewModel = homeViewModel)
+            DragableScreen (
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                SearchScreen(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .fillMaxSize(), viewModel = homeViewModel
+                )
+            }
         }
         composable("status") {
             homeViewModel.updateCurrentDestinationBottomNav("status")
