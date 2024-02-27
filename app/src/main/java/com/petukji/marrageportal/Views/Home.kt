@@ -8,6 +8,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +25,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -65,6 +68,7 @@ import com.petukji.marrageportal.ProfileStatus
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.SingleGirlView
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
     Surface(
@@ -147,12 +151,16 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
                             enter = scaleIn(transformOrigin = TransformOrigin(0f, 0f)),
                             exit = scaleOut(transformOrigin = TransformOrigin(0f, 0f))
                         ) {
-                            SingleGirlView(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(horizontal = 40.dp, vertical = 20.dp),
-                                imageModifier = Modifier.fillMaxHeight()
-                            )
+                            val pagerState = rememberPagerState(pageCount = { 3 })
+
+                            HorizontalPager(state = pagerState) {
+                                SingleGirlView(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(horizontal = 40.dp, vertical = 20.dp),
+                                    imageModifier = Modifier.fillMaxHeight()
+                                )
+                            }
                         }
                         AnimatedVisibility(
                             visible = !showSingleGirlView,

@@ -139,6 +139,7 @@ fun AuthMenus(modifier: Modifier = Modifier, onMobileOTP: @Composable (() -> Uni
             )
 
         }
+
         Column(
             modifier = Modifier.weight(0.7f)
         ) {
@@ -308,13 +309,6 @@ fun ImageViewWithGreenBlueTick(
     }
 }
 
-@Preview
-@Composable
-fun PreviewImageViewWithGreenBlueTick() {
-    ImageViewWithGreenBlueTick()
-
-}
-
 // Bottom Navigation Bar for Home Screen
 @Composable
 fun BottomNav(
@@ -475,38 +469,41 @@ fun BlueTick(modifier: Modifier = Modifier) {
 @Composable
 fun SearchDropBoxView(
     modifier: Modifier = Modifier,
-    propertyName: String = "City",
+    propertyName: String = "Qualification",
     propertyValue: String = "Delhi"
 ) {
     Box(
         modifier = modifier,
         contentAlignment = Alignment.CenterStart
     ) {
-        Text(
-            modifier = Modifier
-                .background(Color.Red, shape = RoundedCornerShape(16.dp))
-                .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 18.dp)
-                .height(30.dp)
-                .width(170.dp),
-            text = propertyName,
-            textAlign = TextAlign.Center,
-            fontSize = 24.sp,
-            color = Color.White
-        )
         Box(
             modifier = Modifier
-                .padding(start = 150.dp)
+                .background(Color.Red, shape = RoundedCornerShape(16.dp))
+                .padding(top = 8.dp, bottom = 8.dp, start = 18.dp, end = 18.dp)
+                .height(24.dp)
+                .width(120.dp),
+        ) {
+            Text(
+                text = propertyName,
+                textAlign = TextAlign.Start,
+                fontSize = 18.sp,
+                color = Color.White
+            )
+        }
+        Box(
+            modifier = Modifier
+                .padding(start = 128.dp)
                 .background(
                     MaterialTheme.colorScheme.primaryContainer,
                     shape = RoundedCornerShape(30.dp)
                 )
                 .border(2.dp, color = Color.Black, shape = RoundedCornerShape(30.dp))
-                .height(29.dp)
+                .height(24.dp)
                 .widthIn(min = 150.dp, max = 180.dp)
                 .padding(horizontal = 20.dp, vertical = 3.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            Text(text = propertyValue, fontSize = 18.sp)
+            Text(text = propertyValue, fontSize = 14.sp)
         }
 
     }
