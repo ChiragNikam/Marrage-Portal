@@ -135,21 +135,27 @@ class HomeActivity : ComponentActivity() {
                         }
                     },
                     containerColor = MaterialTheme.colorScheme.background
-                ) { innerPadding ->
+                ) {
                     val scaffoldSheetState = rememberBottomSheetScaffoldState()
-                    val bottomPadding = innerPadding.calculateBottomPadding() + 40.dp
+                    val bottomPadding = it.calculateBottomPadding() + 40.dp
 
                     BottomSheetScaffoldForHome(
-                        modifier = Modifier.padding(innerPadding),
-                        scaffoldSheetState = scaffoldSheetState,
-                        bottomPadding = bottomPadding
+                        modifier = Modifier.padding(it),
+                        scaffoldSheetState,
+                        bottomPadding
                     ) {
                         Surface(
                             modifier = Modifier
                                 .fillMaxSize()
+                                .padding(it)
                         ) {
                             NavigationForHome(navHostController = navController, homeViewModel)
                         }
+                    }
+
+                    val showSearchResults by homeViewModel.showSearchResults.collectAsState()
+                    if (showSearchResults) {
+                        SearchViewBottomSheet(viewModel = homeViewModel)
                     }
                 }
             }
@@ -204,10 +210,7 @@ fun BottomSheetScaffoldForHome(
                     ) {
                         val pagerState = rememberPagerState(pageCount = { 3 })
 
-                        HorizontalPager(
-                            modifier = Modifier.padding(bottom = bottomPadding),
-                            state = pagerState
-                        ) {
+                        HorizontalPager(modifier = Modifier.padding(bottom = bottomPadding), state = pagerState) {
                             SingleGirlView(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -219,12 +222,7 @@ fun BottomSheetScaffoldForHome(
                     AnimatedVisibility(
                         visible = !showSingleGirlView,
                     ) {
-                        AvailableGirlsVerticalGrid(
-                            modifier = Modifier.padding(
-                                start = 20.dp,
-                                end = 20.dp
-                            )
-                        )
+                        AvailableGirlsVerticalGrid(modifier = Modifier.padding(start = 20.dp, end = 20.dp))
                     }
 
                 }

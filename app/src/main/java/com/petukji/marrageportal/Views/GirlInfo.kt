@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -86,7 +87,7 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
             }
         }
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
             // menus of profile
             Column(
                 modifier = Modifier
@@ -96,7 +97,7 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
             ) {
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(0.6f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Person,
@@ -104,7 +105,7 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(0.6f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Face,
@@ -112,7 +113,7 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(0.6f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Info,
@@ -120,7 +121,7 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(0.6f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Notifications,
@@ -128,7 +129,7 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(0.6f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Call,
@@ -181,15 +182,16 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
             .height(300.dp), contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.my_profile_photo),
+            painter = painterResource(id = R.drawable.sampleimage),
             contentScale = ContentScale.FillBounds,
-            contentDescription = "girl photo"
+            contentDescription = "girl photo",
         )
+
         Box(
             modifier = Modifier
                 .background(gradient)
                 .fillMaxWidth()
-                .height(180.dp)
+                .height(130.dp)
                 .align(Alignment.BottomCenter),
             contentAlignment = Alignment.BottomStart
         ) {

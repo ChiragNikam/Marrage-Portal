@@ -513,7 +513,7 @@ fun SearchDropBoxView(
 
 @Composable
 fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String) {
-    Button(modifier = modifier.width(150.dp), onClick = { /*TODO*/ }) {
+    Button(modifier = modifier, onClick = { /*TODO*/ }) {
         Text(text = propertyName)
     }
 }

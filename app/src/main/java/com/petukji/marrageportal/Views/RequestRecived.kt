@@ -112,7 +112,7 @@ fun RequestGirlInfoView(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(8.dp))
         Column {
             Text(
-                text = "Confident Girl, Post Graduate in Computer, not working,Seeking a real man who respect women and living with joint +" +
+                text = "Confident Girl, Post Graduate in Computer, not working,Seeking a real man who respect women and living with joint " +
                         "family. CA/CS will have priotity",
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                 lineHeight = MaterialTheme.typography.bodyMedium.lineHeight
@@ -229,6 +229,7 @@ fun RequestCard() {
             fontStyle = null,
             fontFamily = FontFamily.Default
         )
+
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
