@@ -59,8 +59,8 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
                 ) {
                     RequestGirlInfoView(
                         modifier = Modifier
+                            .padding(horizontal = 10.dp)
                             .background(color = Color(0xFFDBF9DB), RoundedCornerShape(18.dp))
-                            .widthIn(max = 320.dp)
                             .padding(horizontal = 16.dp, vertical = 12.dp)
                     )
                     Spacer(modifier = Modifier.height(20.dp))
@@ -92,11 +92,9 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
 fun RequestGirlInfoView(modifier: Modifier = Modifier) {
     // Name, Place, Short Description, Shortlisted Date
     Column(
-        modifier = modifier,
+        modifier = modifier.padding(horizontal = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-
         Text(
             text = "Priya Jaiswal, 26",
             fontSize = MaterialTheme.typography.headlineMedium.fontSize,
@@ -110,6 +108,7 @@ fun RequestGirlInfoView(modifier: Modifier = Modifier) {
             color = Color.Blue
         )
         Spacer(modifier = Modifier.height(8.dp))
+
         Column {
             Text(
                 text = "Confident Girl, Post Graduate in Computer, not working,Seeking a real man who respect women and living with joint " +
@@ -180,7 +179,7 @@ fun SettingRequestRecived(modifier: Modifier = Modifier) {
 
             Row(modifier = modifier.padding(start = 40.dp, top = 8.dp)) {
                 Text(
-                    text = "Request Received",
+                    text = "Request Received(4)",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

@@ -135,27 +135,21 @@ class HomeActivity : ComponentActivity() {
                         }
                     },
                     containerColor = MaterialTheme.colorScheme.background
-                ) {
+                ) { innerPadding ->
                     val scaffoldSheetState = rememberBottomSheetScaffoldState()
-                    val bottomPadding = it.calculateBottomPadding() + 40.dp
+                    val bottomPadding = innerPadding.calculateBottomPadding() + 40.dp
 
                     BottomSheetScaffoldForHome(
-                        modifier = Modifier.padding(it),
-                        scaffoldSheetState,
-                        bottomPadding
+                        modifier = Modifier.padding(innerPadding),
+                        scaffoldSheetState = scaffoldSheetState,
+                        bottomPadding = bottomPadding
                     ) {
                         Surface(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(it)
                         ) {
                             NavigationForHome(navHostController = navController, homeViewModel)
                         }
-                    }
-
-                    val showSearchResults by homeViewModel.showSearchResults.collectAsState()
-                    if (showSearchResults) {
-                        SearchViewBottomSheet(viewModel = homeViewModel)
                     }
                 }
             }
@@ -188,20 +182,11 @@ fun BottomSheetScaffoldForHome(
                             Icon(
                                 modifier = Modifier.size(32.dp),
                                 painter = painterResource(id = R.drawable.icon_cards),
-                                contentDescription = "cancel"
+                                contentDescription = "Cards Icon"
                             )
                         }
                         Spacer(modifier = Modifier.weight(1f))
-                        IconButton(
-                            modifier = Modifier,
-                            onClick = {
-//                                homeViewModel.updateShowGirls(false)
-                            }) {
-                            Icon(
-                                imageVector = Icons.Outlined.Clear,
-                                contentDescription = "cancel"
-                            )
-                        }
+
                     }
                     AnimatedVisibility(
                         visible = showSingleGirlView,
@@ -210,7 +195,10 @@ fun BottomSheetScaffoldForHome(
                     ) {
                         val pagerState = rememberPagerState(pageCount = { 3 })
 
-                        HorizontalPager(modifier = Modifier.padding(bottom = bottomPadding), state = pagerState) {
+                        HorizontalPager(
+                            modifier = Modifier.padding(bottom = bottomPadding),
+                            state = pagerState
+                        ) {
                             SingleGirlView(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -222,7 +210,12 @@ fun BottomSheetScaffoldForHome(
                     AnimatedVisibility(
                         visible = !showSingleGirlView,
                     ) {
-                        AvailableGirlsVerticalGrid(modifier = Modifier.padding(start = 20.dp, end = 20.dp))
+                        AvailableGirlsVerticalGrid(
+                            modifier = Modifier.padding(
+                                start = 20.dp,
+                                end = 20.dp
+                            )
+                        )
                     }
 
                 }

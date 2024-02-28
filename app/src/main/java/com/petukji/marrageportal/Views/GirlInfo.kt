@@ -87,25 +87,29 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
             }
         }
-        Row(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            
+            
             // menus of profile
+            
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .width(90.dp)
+                    .weight(0.38f)
                     .background(MaterialTheme.colorScheme.primary)
+
             ) {
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(0.6f)
+                        .weight(1f)
                         .fillMaxWidth(),
-                    iconModifier = Modifier.size(35.dp),
+                        iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Person,
                     title = "Personal"
                 )
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(0.6f)
+                        .weight(1f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Face,
@@ -113,7 +117,7 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(0.6f)
+                        .weight(1f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Info,
@@ -121,7 +125,7 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(0.6f)
+                        .weight(1f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Notifications,
@@ -129,14 +133,21 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
                 ProfileMenuItem(
                     modifier = Modifier
-                        .weight(0.6f)
+                        .weight(1f)
                         .fillMaxWidth(),
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Call,
                     title = "Habits"
                 )
             }
-            Column {
+            Column(modifier=Modifier.weight(1f)) {
+
+                Text(modifier=Modifier.padding(4.dp),
+                    text = "This is testing code, in communications, an unvarying rule for" +
+                        " replacing a piece of information such as a letter, word, or phrase with an" +
+                        " arbitrarily selected equivalent. The term has been frequently misapplied and used " +
+                        "as a synonym for cipher, which is a method for transforming a message according" +
+                        " to a rule to conceal its meaning.")
 
             }
         }
