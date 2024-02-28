@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -87,18 +88,22 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
             }
         }
         Row(modifier = Modifier.fillMaxWidth()) {
+            
+            
             // menus of profile
+            
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .width(90.dp)
+                    .weight(0.38f)
                     .background(MaterialTheme.colorScheme.primary)
+
             ) {
                 ProfileMenuItem(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth(),
-                    iconModifier = Modifier.size(35.dp),
+                        iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Person,
                     title = "Personal"
                 )
@@ -135,7 +140,14 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                     title = "Habits"
                 )
             }
-            Column {
+            Column(modifier=Modifier.weight(1f)) {
+
+                Text(modifier=Modifier.padding(4.dp),
+                    text = "This is testing code, in communications, an unvarying rule for" +
+                        " replacing a piece of information such as a letter, word, or phrase with an" +
+                        " arbitrarily selected equivalent. The term has been frequently misapplied and used " +
+                        "as a synonym for cipher, which is a method for transforming a message according" +
+                        " to a rule to conceal its meaning.")
 
             }
         }
@@ -181,15 +193,16 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
             .height(300.dp), contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.my_profile_photo),
+            painter = painterResource(id = R.drawable.sampleimage),
             contentScale = ContentScale.FillBounds,
-            contentDescription = "girl photo"
+            contentDescription = "girl photo",
         )
+
         Box(
             modifier = Modifier
                 .background(gradient)
                 .fillMaxWidth()
-                .height(180.dp)
+                .height(130.dp)
                 .align(Alignment.BottomCenter),
             contentAlignment = Alignment.BottomStart
         ) {

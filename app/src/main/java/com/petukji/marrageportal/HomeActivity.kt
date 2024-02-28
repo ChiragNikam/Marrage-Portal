@@ -182,20 +182,11 @@ fun BottomSheetScaffoldForHome(
                             Icon(
                                 modifier = Modifier.size(32.dp),
                                 painter = painterResource(id = R.drawable.icon_cards),
-                                contentDescription = "cancel"
+                                contentDescription = "Cards Icon"
                             )
                         }
                         Spacer(modifier = Modifier.weight(1f))
-                        IconButton(
-                            modifier = Modifier,
-                            onClick = {
-//                                homeViewModel.updateShowGirls(false)
-                            }) {
-                            Icon(
-                                imageVector = Icons.Outlined.Clear,
-                                contentDescription = "cancel"
-                            )
-                        }
+
                     }
                     AnimatedVisibility(
                         visible = showSingleGirlView,
