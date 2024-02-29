@@ -225,10 +225,10 @@ fun MarriagePortalTheme(
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) darkScheme else lightScheme
+            lightScheme
         }
 
-        darkTheme -> darkScheme
+        darkTheme -> lightScheme
         else -> lightScheme
     }
     val view = LocalView.current
