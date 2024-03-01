@@ -1,4 +1,4 @@
-package com.petukji.marrageportal.Views
+package com.petukji.marrageportal.bottom_nav.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,14 +28,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.petukji.marrageportal.AvailableGirlsVerticalGrid
-import com.petukji.marrageportal.DragTarget
-import com.petukji.marrageportal.DropItem
-import com.petukji.marrageportal.HomeViewModel
-import com.petukji.marrageportal.DataClass.PersonUiItem
+import com.petukji.marrageportal.bottom_nav.components.DragTarget
+import com.petukji.marrageportal.bottom_nav.components.DropItem
+import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
+import com.petukji.marrageportal.bottom_nav.data.SearchFields
 import com.petukji.marrageportal.SearchDropBoxView
 import com.petukji.marrageportal.SearchPropertiesButtons
 
@@ -86,7 +85,7 @@ fun SearchScreen(
                 Spacer(modifier = Modifier.width(12.dp))
                 // Place where to drop the property: user have to pick a property and drag it into this column to use this property for search
                 Column(verticalArrangement = Arrangement.spacedBy(22.dp)) {
-                    DropItem<PersonUiItem>(modifier = Modifier) { isInBound, personItem ->
+                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
                         var propertyName by rememberSaveable {
                             mutableStateOf("")
                         }
@@ -103,7 +102,7 @@ fun SearchScreen(
                         )
                     }
 
-                    DropItem<PersonUiItem>(modifier = Modifier) { isInBound, personItem ->
+                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
                         var propertyName by rememberSaveable {
                             mutableStateOf("")
                         }
@@ -120,7 +119,7 @@ fun SearchScreen(
                         )
                     }
 
-                    DropItem<PersonUiItem>(modifier = Modifier) { isInBound, personItem ->
+                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
                         var propertyName by rememberSaveable {
                             mutableStateOf("")
                         }
@@ -137,7 +136,7 @@ fun SearchScreen(
                         )
                     }
 
-                    DropItem<PersonUiItem>(modifier = Modifier) { isInBound, personItem ->
+                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
                         var propertyName by rememberSaveable {
                             mutableStateOf("")
                         }
@@ -154,7 +153,7 @@ fun SearchScreen(
                         )
                     }
 
-                    DropItem<PersonUiItem>(modifier = Modifier) { isInBound, personItem ->
+                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
                         var propertyName by rememberSaveable {
                             mutableStateOf("")
                         }

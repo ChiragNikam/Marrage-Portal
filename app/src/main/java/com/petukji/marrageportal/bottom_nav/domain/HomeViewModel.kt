@@ -1,9 +1,8 @@
-package com.petukji.marrageportal
+package com.petukji.marrageportal.bottom_nav.domain
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.petukji.marrageportal.DataClass.PersonUiItem
+import com.petukji.marrageportal.bottom_nav.data.SearchFields
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -20,23 +19,23 @@ class HomeViewModel: ViewModel() {
     private val _isCurrentlyDragging = MutableStateFlow(false)
     val isCurrentlyDragging get() = _isCurrentlyDragging
 
-    private var _searchItems = MutableStateFlow(emptyList<PersonUiItem>())
+    private var _searchItems = MutableStateFlow(emptyList<SearchFields>())
     val searchItems get() = _searchItems
 
-    private var _addedSearchProperties = MutableStateFlow(mutableListOf<PersonUiItem>())
+    private var _addedSearchProperties = MutableStateFlow(mutableListOf<SearchFields>())
     val addedSearchProperties get() = _addedSearchProperties
 
     init {
         _searchItems.value = listOf(
-            PersonUiItem("City", "1", Color.Gray),
-            PersonUiItem("State", "2", Color.Blue),
-            PersonUiItem("Country", "4", Color.Green),
-            PersonUiItem("Gender", "5", Color.Green),
-            PersonUiItem("Qualification", "6", Color.Green),
-            PersonUiItem("Degree", "7", Color.Green),
-            PersonUiItem("Age", "8", Color.Green),
-            PersonUiItem("Religion", "9", Color.Green),
-            PersonUiItem("Body Type", "10", Color.Green)
+            SearchFields("City", "1", Color.Gray),
+            SearchFields("State", "2", Color.Blue),
+            SearchFields("Country", "4", Color.Green),
+            SearchFields("Gender", "5", Color.Green),
+            SearchFields("Qualification", "6", Color.Green),
+            SearchFields("Degree", "7", Color.Green),
+            SearchFields("Age", "8", Color.Green),
+            SearchFields("Religion", "9", Color.Green),
+            SearchFields("Body Type", "10", Color.Green)
         )
     }
 
@@ -48,8 +47,8 @@ class HomeViewModel: ViewModel() {
         _isCurrentlyDragging.value = false
     }
 
-    fun addPerson(personUiItem: PersonUiItem){
-        _addedSearchProperties.value.add(personUiItem)
+    fun addPerson(searchFields: SearchFields){
+        _addedSearchProperties.value.add(searchFields)
     }
 
     fun updateCurrentDestinationBottomNav(route: String){

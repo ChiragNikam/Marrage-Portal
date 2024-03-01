@@ -1,8 +1,8 @@
-package com.petukji.marrageportal.DataClass
+package com.petukji.marrageportal.bottom_nav.data
 
 import androidx.compose.ui.graphics.Color
 
-data class PersonUiItem (
+data class SearchFields (
     val name: String,
     val id: String,
     val backgroundColor: Color

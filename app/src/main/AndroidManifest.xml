@@ -18,12 +18,12 @@
             android:label="@string/title_activity_request_receved"
             android:theme="@style/Theme.MarragePortal" />
         <activity
-            android:name=".GirlCompleteInfoActivity"
+            android:name=".member_info.presentation.GirlCompleteInfoActivity"
             android:exported="false"
             android:label="@string/title_activity_girl_complete_info"
             android:theme="@style/Theme.MarragePortal" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".bottom_nav.presentation.HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.MarragePortal" />

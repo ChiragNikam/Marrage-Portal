@@ -1,7 +1,6 @@
 package com.petukji.marrageportal
 
 import android.content.Intent
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -34,8 +33,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +44,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -63,9 +59,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.petukji.marrageportal.DataClass.BottomNavigationItem
+import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
 import com.petukji.marrageportal.ui.theme.transientWhite
 
 @Composable
@@ -306,61 +300,6 @@ fun ImageViewWithGreenBlueTick(
         Spacer(modifier = Modifier.width(4.dp))
 
         if (blueTick) BlueTick()
-    }
-}
-
-// Bottom Navigation Bar for Home Screen
-@Composable
-fun BottomNav(
-    items: List<BottomNavigationItem>,
-    navController: NavController,
-    onItemClicked: (BottomNavigationItem) -> Unit
-) {
-    NavigationBar(
-        modifier = Modifier.shadow(8.dp),
-        containerColor = MaterialTheme.colorScheme.onPrimary
-    ) { // to remember back state
-        val backStackEntry = navController.currentBackStackEntryAsState()
-
-        items.forEachIndexed { index, bottomNavigationItem ->
-            NavigationBarItem(
-                selected = bottomNavigationItem.route == backStackEntry.value?.destination?.route,
-                onClick = {
-                    onItemClicked(bottomNavigationItem)
-                },
-                label = {
-                    if (bottomNavigationItem.route == backStackEntry.value?.destination?.route) {
-                        Text(
-                            text = bottomNavigationItem.title,
-                            fontWeight = FontWeight(900),
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    } else {
-                        Text(
-                            text = bottomNavigationItem.title,
-                            fontWeight = FontWeight(700),
-                            color = Color.Gray
-                        )
-                    }
-                },
-                alwaysShowLabel = true,
-                icon = {
-                    if (bottomNavigationItem.route == backStackEntry.value?.destination?.route) {
-                        Icon(
-                            bottomNavigationItem.selectedIcon,
-                            contentDescription = bottomNavigationItem.title,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    } else {
-                        Icon(
-                            painter = bottomNavigationItem.unselectedIcon,
-                            contentDescription = bottomNavigationItem.title,
-                            tint = MaterialTheme.colorScheme.secondary
-                        )
-                    }
-                }
-            )
-        }
     }
 }
 

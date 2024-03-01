@@ -1,4 +1,4 @@
-package com.petukji.marrageportal
+package com.petukji.marrageportal.bottom_nav.components
 
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
@@ -14,11 +14,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
+import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 
 
 internal val LocalDragTargetInfo = compositionLocalOf { DragTargetInfo() }

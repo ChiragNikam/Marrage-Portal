@@ -1,4 +1,4 @@
-package com.petukji.marrageportal.DataClass
+package com.petukji.marrageportal.bottom_nav.data
 
 import androidx.compose.ui.graphics.painter.Painter
 
