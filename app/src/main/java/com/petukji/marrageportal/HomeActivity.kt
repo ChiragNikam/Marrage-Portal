@@ -1,5 +1,6 @@
 package com.petukji.marrageportal
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -11,6 +12,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -131,7 +133,6 @@ class HomeActivity : ComponentActivity() {
                                 .fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            val showGirls by homeViewModel.showGirls.collectAsState()
                             BottomNav(
                                 items = bottomBarItems,
                                 navController = navController
@@ -153,14 +154,6 @@ class HomeActivity : ComponentActivity() {
                     val scope = rememberCoroutineScope()
 
                     val bottomPadding = innerPadding.calculateBottomPadding() + 40.dp
-
-                    val showResults by homeViewModel.showSearchResults.collectAsState()
-
-//                    LaunchedEffect(showResults) {
-//                        if (showResults) {
-//                            sheetState.show() // Show the bottom sheet
-//                        }
-//                    }
 
                     BottomSheetScaffold(
                         modifier = Modifier,
@@ -204,7 +197,9 @@ class HomeActivity : ComponentActivity() {
                                                 modifier = Modifier
                                                     .fillMaxSize()
                                                     .padding(horizontal = 40.dp, vertical = 20.dp),
-                                                imageModifier = Modifier.fillMaxHeight()
+                                                imageModifier = Modifier.fillMaxHeight().clickable {
+                                                    startActivity(Intent(this@HomeActivity, GirlCompleteInfoActivity::class.java))
+                                                }
                                             )
                                         }
                                     }

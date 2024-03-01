@@ -68,7 +68,6 @@ import com.petukji.marrageportal.ProfileStatus
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.SingleGirlView
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
     Surface(
@@ -108,46 +107,22 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
                 lineHeight = MaterialTheme.typography.bodySmall.lineHeight
             )
 
-            val showGirls by viewModel.showGirls.collectAsState()
-
             Spacer(modifier = Modifier.height(18.dp))
 
-            // grid view for
-            AnimatedVisibility(visible = showGirls,
-                enter = slideInVertically(
-                    // Enters by sliding down from offset -fullHeight to 0.
-                    initialOffsetY = { fullHeight -> fullHeight }
-                ),
-                exit = slideOutVertically(
-                    // Exits by sliding up from offset 0 to -fullHeight.
-                    targetOffsetY = { fullHeight -> fullHeight }
-                )) {
-            }
-//            } else {
             // status for profile, facebook, insta and whatsapp
-            AnimatedVisibility(visible = !showGirls,
-                enter = slideInVertically(
-                    // Enters by sliding down from offset -fullHeight to 0.
-                    initialOffsetY = { fullHeight -> -fullHeight }
-                ),
-                exit = slideOutVertically(
-                    // Exits by sliding up from offset 0 to -fullHeight.
-                    targetOffsetY = { fullHeight -> -fullHeight }
-                )) {
-                Box(
+            Box(
+                modifier = Modifier
+                    .padding(top = 8.dp, start = 20.dp)
+                    .fillMaxWidth()
+            ) {
+                ProfileStatus(modifier = Modifier.padding(top = 8.dp, start = 8.dp))
+                Icon(
                     modifier = Modifier
-                        .padding(top = 8.dp, start = 20.dp)
-                        .fillMaxWidth()
-                ) {
-                    ProfileStatus(modifier = Modifier.padding(top = 8.dp, start = 8.dp))
-                    Icon(
-                        modifier = Modifier
-                            .padding(top = 0.dp)
-                            .align(Alignment.TopStart),
-                        painter = painterResource(id = R.drawable.icon_profile_status),
-                        contentDescription = "profile status"
-                    )
-                }
+                        .padding(top = 0.dp)
+                        .align(Alignment.TopStart),
+                    painter = painterResource(id = R.drawable.icon_profile_status),
+                    contentDescription = "profile status"
+                )
             }
         }
     }
