@@ -41,7 +41,11 @@ import com.petukji.marrageportal.SearchPropertiesButtons
 
 // Screen for Advanced Search
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel,
+    onSearch: () -> Unit
+) {
     Surface(modifier = modifier) {
         Column(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(30.dp))
@@ -172,7 +176,7 @@ fun SearchScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
             Spacer(modifier = Modifier.height(42.dp))
 
             Button(
-                onClick = { viewModel.updateShowSearchResultsState(showResults = true) },
+                onClick = { onSearch() },
                 contentPadding = PaddingValues(horizontal = 42.dp, vertical = 12.dp),
                 elevation = ButtonDefaults.buttonElevation(4.dp)
             ) {
@@ -198,10 +202,4 @@ fun SearchViewBottomSheet(viewModel: HomeViewModel) {
             AvailableGirlsVerticalGrid()
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun SearchScreenPreview() {
-    SearchScreen(viewModel = HomeViewModel())
 }

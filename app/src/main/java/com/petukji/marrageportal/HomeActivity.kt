@@ -156,11 +156,16 @@ class HomeActivity : ComponentActivity() {
 
                     val showResults by homeViewModel.showSearchResults.collectAsState()
 
+//                    LaunchedEffect(showResults) {
+//                        if (showResults) {
+//                            sheetState.show() // Show the bottom sheet
+//                        }
+//                    }
 
                     BottomSheetScaffold(
                         modifier = Modifier,
                         scaffoldState = scaffoldState,
-                        sheetPeekHeight = if (currentDestination == "home") {
+                        sheetPeekHeight = if (currentDestination == "home" ) {
                             bottomPadding
                         } else 0.dp,
                         sheetContainerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -220,7 +225,7 @@ class HomeActivity : ComponentActivity() {
                     ) {
                         LaunchedEffect(currentDestination) {
                             scope.launch {
-                                if (currentDestination != "home")
+                                if (currentDestination != "home" && currentDestination != "search")
                                     if (sheetState.hasExpandedState) {
                                         sheetState.hide()
                                     }
@@ -230,7 +235,14 @@ class HomeActivity : ComponentActivity() {
                             modifier = Modifier
                                 .fillMaxSize()
                         ) {
-                            NavigationForHome(navHostController = navController, homeViewModel)
+                            NavigationForHome(
+                                navHostController = navController,
+                                homeViewModel,
+                                onSearch = {
+                                    scope.launch {
+                                            sheetState.expand()
+                                    }
+                                })
                         }
                     }
                 }
@@ -243,7 +255,8 @@ class HomeActivity : ComponentActivity() {
 @Composable
 fun NavigationForHome(
     navHostController: NavHostController,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    onSearch: () -> Unit
 ) {
     NavHost(navController = navHostController, startDestination = "home") {
         composable("home") {
@@ -260,7 +273,9 @@ fun NavigationForHome(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
                         .fillMaxSize(), viewModel = homeViewModel
-                )
+                ) {
+                    onSearch()
+                }
             }
         }
         composable("status") {
