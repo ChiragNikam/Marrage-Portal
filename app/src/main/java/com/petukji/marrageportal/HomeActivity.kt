@@ -101,9 +101,9 @@ class HomeActivity : ComponentActivity() {
                 ),
                 BottomNavigationItem(
                     title = "Status", route = "status", selectedIcon = painterResource(
-                        id = R.drawable.filled_home
+                        id = R.drawable.icon_profile_status
                     ),
-                    unselectedIcon = painterResource(id = R.drawable.filled_home)
+                    unselectedIcon = painterResource(id = R.drawable.icon_profile_status)
                 ),
                 BottomNavigationItem(
                     title = "Profile",
