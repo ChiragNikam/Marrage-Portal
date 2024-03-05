@@ -68,11 +68,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.petukji.marrageportal.DataClass.BottomNavigationItem
-import com.petukji.marrageportal.Views.Home
 import com.petukji.marrageportal.Views.RequestReceivedScreen
-import com.petukji.marrageportal.Views.SearchScreen
-import com.petukji.marrageportal.Views.SearchViewBottomSheet
+import com.petukji.marrageportal.bottom_nav.components.BottomNav
+import com.petukji.marrageportal.bottom_nav.components.DragableScreen
+import com.petukji.marrageportal.bottom_nav.data.BottomNavigationItem
+import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
+import com.petukji.marrageportal.bottom_nav.presentation.Home
+import com.petukji.marrageportal.bottom_nav.presentation.SearchScreen
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
 import kotlinx.coroutines.launch
 
@@ -131,7 +133,6 @@ class HomeActivity : ComponentActivity() {
                                 .fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            val showGirls by homeViewModel.showGirls.collectAsState()
                             BottomNav(
                                 items = bottomBarItems,
                                 navController = navController
@@ -260,7 +261,7 @@ fun NavigationForHome(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
                         .fillMaxSize(), viewModel = homeViewModel
-                )
+                ) {}
             }
         }
         composable("status") {
