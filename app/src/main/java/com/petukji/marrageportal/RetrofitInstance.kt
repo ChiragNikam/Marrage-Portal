@@ -5,26 +5,16 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInstance {
+object RetrofitInstance {
+    private var retrofit: Retrofit? = null
 
-    companion object{
-        private const val BASE_URL = "https://us-central1-my-matrimonial-c8514.cloudfunctions.net/getUserPreference"
-
-        private val retrofit by lazy {
-            val loggingInterceptor = HttpLoggingInterceptor()
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-
-            val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
-
-            Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
+    fun getClient(baseUrl: String): Retrofit {
+        if (retrofit == null) {
+            retrofit = Retrofit.Builder()
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-
-      val api: ApiService by lazy {
-          retrofit.create(ApiService::class.java)
-      }
+        return retrofit!!
     }
 }
