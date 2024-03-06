@@ -28,10 +28,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.petukji.marrageportal.AvailableGirlsVerticalGrid
+import com.petukji.marrageportal.bottom_nav.components.AvailableGirlsVerticalGrid
 import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
 import com.petukji.marrageportal.R
-import com.petukji.marrageportal.SingleGirlView
+import com.petukji.marrageportal.bottom_nav.components.SingleGirlView
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -98,3 +98,4 @@ fun BottomSheetContent(bottomPadding: Dp) {
 
     }
 }
+

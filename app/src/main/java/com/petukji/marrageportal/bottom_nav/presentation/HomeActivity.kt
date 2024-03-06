@@ -22,48 +22,38 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
-import com.petukji.marrageportal.ApiService
-import com.petukji.marrageportal.bottom_nav.data.BottomNavigationItem
+import com.petukji.marrageportal.bottom_nav.data.util_data.BottomNavigationItem
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 import com.petukji.marrageportal.R
-import com.petukji.marrageportal.RetrofitInstance
 import com.petukji.marrageportal.bottom_nav.components.BottomNav
 import com.petukji.marrageportal.bottom_nav.components.NavigationForHome
+import com.petukji.marrageportal.bottom_nav.data.UserProfile
+import com.petukji.marrageportal.bottom_nav.data.api_request.Users
+import com.petukji.marrageportal.bottom_nav.domain.api.ApiService
+import com.petukji.marrageportal.bottom_nav.domain.api.RetrofitInstance
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
-import com.petukji.marrageportal.userPreference
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class HomeActivity : ComponentActivity() {
+    override fun onStart() {
+        super.onStart()
+       val users=Users()
+        users.getUserPreference()
+        users.getUserData()
 
-//        val apiService = RetrofitInstance.getClient("https://us-central1-my-matrimonial-c8514.cloudfunctions.net").create(
-//            ApiService::class.java)
-//
-//        val call = apiService.getUserPreference()
-//        call.enqueue( object : Callback<userPreference> {
-//            override fun onResponse(
-//                call: Call<userPreference>,
-//                response: Response<userPreference>
-//            ) {
-//                if (response.isSuccessful){
-//                    Log.d("respose_data", response.body().toString())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<userPreference>, t: Throwable) {
-//                Log.d("failed_response", t.message.toString())
-//            }
-//        })
-
+    }
     // Home view model
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
-
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
+
             // items for bottom navigation bar
             val bottomBarItems = listOf(
                 BottomNavigationItem(
@@ -165,5 +155,9 @@ class HomeActivity : ComponentActivity() {
                 }
             }
         }
+
+
     }
+
+
 }

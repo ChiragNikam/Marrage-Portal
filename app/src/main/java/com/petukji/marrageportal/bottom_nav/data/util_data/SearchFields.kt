@@ -1,4 +1,4 @@
-package com.petukji.marrageportal.bottom_nav.data
+package com.petukji.marrageportal.bottom_nav.data.util_data
 
 import androidx.compose.ui.graphics.Color
 

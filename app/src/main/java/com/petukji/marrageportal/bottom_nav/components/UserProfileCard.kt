@@ -29,8 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.petukji.marrageportal.BlueTick
-import com.petukji.marrageportal.GreenTick
 import com.petukji.marrageportal.R
 
 
@@ -144,7 +142,6 @@ fun BiodataDocuments(
         Spacer(modifier = Modifier.width(6.dp))
 
         BlueTick(modifier = Modifier.size(30.dp))
-
 
     }
 }

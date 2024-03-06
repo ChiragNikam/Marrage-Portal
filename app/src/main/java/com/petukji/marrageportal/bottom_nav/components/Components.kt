@@ -1,4 +1,4 @@
-package com.petukji.marrageportal
+package com.petukji.marrageportal.bottom_nav.components
 
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
@@ -59,6 +59,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.petukji.marrageportal.R
 import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
 import com.petukji.marrageportal.ui.theme.transientWhite
 
