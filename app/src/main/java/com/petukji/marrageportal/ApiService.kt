@@ -6,5 +6,5 @@ import retrofit2.http.POST
 
 interface ApiService {
     @POST("/getUserPreference")
-    fun getUserPreference(): Call<UsersPreference>
+    fun getUserPreference(): Call<userPreference>
 }

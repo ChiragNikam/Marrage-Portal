@@ -202,4 +202,3 @@ fun SearchViewBottomSheet(viewModel: HomeViewModel) {
         }
     }
 }
-
