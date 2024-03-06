@@ -28,6 +28,8 @@ import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.components.BottomNav
 import com.petukji.marrageportal.bottom_nav.components.NavigationForHome
 import com.petukji.marrageportal.bottom_nav.data.UserProfile
+import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterLocation
+import com.petukji.marrageportal.bottom_nav.data.api_request.Master
 import com.petukji.marrageportal.bottom_nav.data.api_request.Users
 import com.petukji.marrageportal.bottom_nav.domain.api.ApiService
 import com.petukji.marrageportal.bottom_nav.domain.api.RetrofitInstance
@@ -41,13 +43,17 @@ import retrofit2.Response
 class HomeActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
-       val users=Users()
+        val users = Users()
+        val master = Master()
         users.getUserPreference()
         users.getUserData()
+        master.getMasterLocationData(locationRequest = MasterLocation(masterType = "location",queryType = "read"))
 
     }
+
     // Home view model
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
+
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
