@@ -37,8 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.petukji.marrageportal.BlueTick
-import com.petukji.marrageportal.GreenTick
+import com.petukji.marrageportal.bottom_nav.components.BlueTick
+import com.petukji.marrageportal.bottom_nav.components.GreenTick
 import com.petukji.marrageportal.R
 
 @Composable

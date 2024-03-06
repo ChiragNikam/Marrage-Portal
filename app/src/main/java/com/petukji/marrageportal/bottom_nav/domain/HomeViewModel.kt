@@ -2,7 +2,7 @@ package com.petukji.marrageportal.bottom_nav.domain
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.petukji.marrageportal.bottom_nav.data.SearchFields
+import com.petukji.marrageportal.bottom_nav.data.util_data.SearchFields
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

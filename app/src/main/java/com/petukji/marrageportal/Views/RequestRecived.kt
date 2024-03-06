@@ -20,9 +20,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.petukji.marrageportal.ImageViewWithGreenBlueTick
+import com.petukji.marrageportal.bottom_nav.components.ImageViewWithGreenBlueTick
 import com.petukji.marrageportal.R
-import com.petukji.marrageportal.TabRowOptions
+import com.petukji.marrageportal.bottom_nav.components.TabRowOptions
 
 
 @Preview(showSystemUi = true)

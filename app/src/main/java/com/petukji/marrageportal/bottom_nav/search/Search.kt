@@ -1,4 +1,4 @@
-package com.petukji.marrageportal.bottom_nav.presentation
+package com.petukji.marrageportal.bottom_nav.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,13 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.petukji.marrageportal.AvailableGirlsVerticalGrid
+import com.petukji.marrageportal.bottom_nav.components.AvailableGirlsVerticalGrid
 import com.petukji.marrageportal.bottom_nav.components.DragTarget
 import com.petukji.marrageportal.bottom_nav.components.DropItem
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
-import com.petukji.marrageportal.bottom_nav.data.SearchFields
-import com.petukji.marrageportal.SearchDropBoxView
-import com.petukji.marrageportal.SearchPropertiesButtons
+import com.petukji.marrageportal.bottom_nav.data.util_data.SearchFields
+import com.petukji.marrageportal.bottom_nav.components.SearchDropBoxView
+import com.petukji.marrageportal.bottom_nav.components.SearchPropertiesButtons
 
 // Screen for Advanced Search
 @Composable

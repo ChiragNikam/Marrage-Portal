@@ -19,10 +19,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.petukji.marrageportal.bottom_nav.data.BottomNavigationItem
-import com.petukji.marrageportal.bottom_nav.presentation.Home
+import com.petukji.marrageportal.bottom_nav.data.util_data.BottomNavigationItem
+import com.petukji.marrageportal.bottom_nav.home.presentation.Home
 import com.petukji.marrageportal.Views.RequestReceivedScreen
-import com.petukji.marrageportal.bottom_nav.presentation.SearchScreen
+import com.petukji.marrageportal.bottom_nav.search.SearchScreen
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 
 

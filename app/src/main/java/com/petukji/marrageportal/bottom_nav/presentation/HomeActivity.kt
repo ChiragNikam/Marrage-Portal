@@ -1,7 +1,6 @@
 package com.petukji.marrageportal.bottom_nav.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -22,19 +21,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
-import com.petukji.marrageportal.ApiService
-import com.petukji.marrageportal.bottom_nav.data.BottomNavigationItem
+import com.petukji.marrageportal.bottom_nav.data.util_data.BottomNavigationItem
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 import com.petukji.marrageportal.R
-import com.petukji.marrageportal.RetrofitInstance
 import com.petukji.marrageportal.bottom_nav.components.BottomNav
 import com.petukji.marrageportal.bottom_nav.components.NavigationForHome
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
-import com.petukji.marrageportal.userPreference
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeActivity : ComponentActivity() {
 

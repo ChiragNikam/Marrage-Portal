@@ -1,6 +1,6 @@
-package com.petukji.marrageportal
+package com.petukji.marrageportal.bottom_nav.data.api_data
 
-data class UsersPreference(
+data class SingleUserPreference(
     val age: String,
     val correspondenceCity: String,
     val correspondenceCountry: String,
