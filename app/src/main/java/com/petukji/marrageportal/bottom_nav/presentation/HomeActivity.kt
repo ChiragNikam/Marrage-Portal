@@ -1,7 +1,6 @@
 package com.petukji.marrageportal.bottom_nav.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -27,15 +26,9 @@ import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.components.BottomNav
 import com.petukji.marrageportal.bottom_nav.components.NavigationForHome
-import com.petukji.marrageportal.bottom_nav.data.UserProfile
 import com.petukji.marrageportal.bottom_nav.data.api_request.Users
-import com.petukji.marrageportal.bottom_nav.domain.api.ApiService
-import com.petukji.marrageportal.bottom_nav.domain.api.RetrofitInstance
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class HomeActivity : ComponentActivity() {
@@ -44,10 +37,11 @@ class HomeActivity : ComponentActivity() {
        val users=Users()
         users.getUserPreference()
         users.getUserData()
-
     }
+
     // Home view model
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
+
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,7 +1,7 @@
 package com.petukji.marrageportal.bottom_nav.data.api_request
 
 import android.util.Log
-import com.petukji.marrageportal.bottom_nav.data.UserProfile
+import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
 import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
 import com.petukji.marrageportal.bottom_nav.domain.api.ApiService
 import com.petukji.marrageportal.bottom_nav.domain.api.RetrofitInstance

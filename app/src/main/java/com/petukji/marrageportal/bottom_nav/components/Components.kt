@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -59,7 +60,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.petukji.marrageportal.R
+import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
+import com.petukji.marrageportal.bottom_nav.data.api_data.UsersProfileList
 import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
 import com.petukji.marrageportal.ui.theme.transientWhite
 
@@ -216,7 +220,6 @@ fun myTextField(
     return text.value
 }
 
-@Preview
 @Composable
 fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -280,8 +283,11 @@ fun ImageViewWithGreenBlueTick(
     blueTick: Boolean = true
 ) {
 
+    val painter =  rememberImagePainter(data = "https://firebasestorage.googleapis.com/v0/b/my-matrimonial-c8514.appspot.com/o/911234567894%2Fprofile.jpg?alt=media&token=679cbfde-6b3c-4c01-8f10-d888774fbd1e", builder = {crossfade(true)} )
+
     Image(
-        painter = painterResource(id = R.drawable.tryimage),
+//        painter = painterResource(id = R.drawable.tryimage),
+        painter = painter,
         contentDescription = "girl pic",
         contentScale = ContentScale.Crop,
         modifier = imageModifier

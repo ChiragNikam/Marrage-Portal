@@ -110,7 +110,6 @@ class HomeActivity : ComponentActivity() {
                     bottomBar = {
                         Column(
                             modifier = Modifier
-//                                .background(Color.Transparent)
                                 .fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -164,7 +163,6 @@ class HomeActivity : ComponentActivity() {
                                             )
                                         }
                                         Spacer(modifier = Modifier.weight(1f))
-
                                     }
                                     AnimatedVisibility(
                                         visible = showSingleGirlView,
