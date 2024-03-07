@@ -62,6 +62,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.petukji.marrageportal.R
+import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
+import com.petukji.marrageportal.bottom_nav.data.api_data.SingleUserPreference
 import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
 import com.petukji.marrageportal.bottom_nav.data.api_data.UsersProfileList
 import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
@@ -221,7 +223,7 @@ fun myTextField(
 }
 
 @Composable
-fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
+fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier, gridItems: List<SingleUserPreference>) {
     val context = LocalContext.current
 
     LazyVerticalGrid(
@@ -231,8 +233,10 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(top = 12.dp, bottom = 110.dp)
     ) {
-        items(8) {
-            SingleGirlView(modifier = Modifier
+        items(gridItems) {singleUserPreference->
+            SingleGirlView(
+                data = singleUserPreference,
+                modifier = Modifier
                 .background(color = Color.Transparent, shape = RoundedCornerShape(8.dp))
                 .clickable {
                     context.startActivity(Intent(context, GirlCompleteInfoActivity::class.java))
@@ -243,6 +247,7 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
 
 @Composable
 fun SingleGirlView(
+    data: SingleUserPreference,
     modifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     greenTick: Boolean = true,
@@ -250,6 +255,7 @@ fun SingleGirlView(
 ) {
     Box(modifier = modifier) {
         ImageViewWithGreenBlueTick(
+            data = data,
             imageModifier = imageModifier,
             tickModifier = Modifier.align(Alignment.TopEnd)
         )
@@ -263,7 +269,7 @@ fun SingleGirlView(
                 )
                 .height(45.dp)
                 .padding(horizontal = 18.dp, vertical = 5.dp),
-            text = "Priya Jaiswal, 45\nDelhi, India",
+            text = "${data.firstName + "" + data.lastName}, ${data.age}\n${data.correspondenceCity}, ${data.correspondenceCountry}",
             textAlign = TextAlign.Center,
             fontSize = 14.sp,
             fontWeight = FontWeight(700),
@@ -276,6 +282,7 @@ fun SingleGirlView(
 
 @Composable
 fun ImageViewWithGreenBlueTick(
+    data: SingleUserPreference,
     tickModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     imageHeight: Dp = 200.dp,
@@ -283,7 +290,7 @@ fun ImageViewWithGreenBlueTick(
     blueTick: Boolean = true
 ) {
 
-    val painter =  rememberImagePainter(data = "https://firebasestorage.googleapis.com/v0/b/my-matrimonial-c8514.appspot.com/o/911234567894%2Fprofile.jpg?alt=media&token=679cbfde-6b3c-4c01-8f10-d888774fbd1e", builder = {crossfade(true)} )
+    val painter =  rememberImagePainter(data = data.profileImagePath, builder = {crossfade(true)} )
 
     Image(
 //        painter = painterResource(id = R.drawable.tryimage),

@@ -1,9 +1,9 @@
 package com.petukji.marrageportal.bottom_nav.data.api_data
 
-
 data class UsersProfileList(
-    val usersProfileList: List<UserProfile>
+    val usersProfileList: Map<String, UserProfile>
 )
+
 data class UserProfile(
     val mobileKey: String,
     val userID: String,

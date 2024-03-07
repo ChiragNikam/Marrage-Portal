@@ -198,7 +198,7 @@ fun SearchViewBottomSheet(viewModel: HomeViewModel) {
         onDismissRequest = { viewModel.updateShowSearchResultsState(false) }
     ) {
         Surface(modifier = Modifier.fillMaxSize()) {
-            AvailableGirlsVerticalGrid()
+//            AvailableGirlsVerticalGrid()
         }
     }
 }

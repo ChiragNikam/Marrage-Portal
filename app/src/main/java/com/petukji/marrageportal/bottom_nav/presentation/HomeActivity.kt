@@ -37,23 +37,25 @@ import kotlinx.coroutines.launch
 
 
 class HomeActivity : ComponentActivity() {
+    // Home view model
+    private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
+
     override fun onStart() {
         super.onStart()
         val users = Users()
         val master = Master()
-        GlobalScope.launch {
-            async {
-                users.getUserPreference()
-                users.getUserData()
-                master.getMasterLocationData(locationRequest = MasterLocation(masterType = "degree",queryType = "read"))
-                master.getMasterInterestData(interest = MasterInterest("interest", "read"))
-            }
-        }
+//        GlobalScope.launch {
+//            async {
+//                users.getUserPreference()
+//                users.getUserData()
+//                master.getMasterLocationData(locationRequest = MasterLocation(masterType = "degree",queryType = "read"))
+//                master.getMasterInterestData(interest = MasterInterest("interest", "read"))
+//            }
+//        }
+
+        homeViewModel.loadUserPreferenceData()
 
     }
-
-    // Home view model
-    private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -133,7 +135,7 @@ class HomeActivity : ComponentActivity() {
                         sheetContainerColor = MaterialTheme.colorScheme.primaryContainer,
                         sheetContent = {
                             Surface(color = MaterialTheme.colorScheme.primaryContainer) {
-                                BottomSheetContent(bottomPadding)
+                                BottomSheetContent(bottomPadding, homeViewModel)
                             }
                         }
                     ) {

@@ -1,12 +1,24 @@
 package com.petukji.marrageportal.bottom_nav.domain
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
+import com.petukji.marrageportal.bottom_nav.data.api_data.SingleUserPreference
+import com.petukji.marrageportal.bottom_nav.data.api_request.Users
 import com.petukji.marrageportal.bottom_nav.data.util_data.SearchFields
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
+
+    // api response
+    // user preference
+    private val _userPreferenceData = MutableStateFlow(mutableListOf<SingleUserPreference>())
+    val userPreferenceData get() = _userPreferenceData
 
     // store the current bottom navigation route
     private val _currentDestinationBottomNav = MutableStateFlow("")
@@ -39,23 +51,38 @@ class HomeViewModel: ViewModel() {
         )
     }
 
-    fun startDragging(){
+    fun startDragging() {
         _isCurrentlyDragging.value = true
     }
 
-    fun stopDragging(){
+    fun stopDragging() {
         _isCurrentlyDragging.value = false
     }
 
-    fun addPerson(searchFields: SearchFields){
+    fun addPerson(searchFields: SearchFields) {
         _addedSearchProperties.value.add(searchFields)
     }
 
-    fun updateCurrentDestinationBottomNav(route: String){
+    fun updateCurrentDestinationBottomNav(route: String) {
         _currentDestinationBottomNav.value = route
     }
 
-    fun updateShowSearchResultsState(showResults: Boolean){
+    fun updateShowSearchResultsState(showResults: Boolean) {
         _showSearchResults.value = showResults
+    }
+
+    fun loadUserPreferenceData() {
+        viewModelScope.launch {
+            val user = Users()
+            // call
+            val userPreferenceResponse = async { user.service.getUserPreference() }
+            val finalUserPreference = userPreferenceResponse.await()
+            if (finalUserPreference.isSuccessful) {
+                if (finalUserPreference.body() != null)
+                _userPreferenceData.value = finalUserPreference.body()!!.usersPreference.toMutableList()
+            } else{
+                Log.e("user_preference", finalUserPreference.errorBody().toString())
+            }
+        }
     }
 }
