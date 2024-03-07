@@ -26,17 +26,30 @@ import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.components.BottomNav
 import com.petukji.marrageportal.bottom_nav.components.NavigationForHome
+import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterInterest
+import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterLocation
+import com.petukji.marrageportal.bottom_nav.data.api_request.Master
 import com.petukji.marrageportal.bottom_nav.data.api_request.Users
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
 class HomeActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
-       val users=Users()
-        users.getUserPreference()
-        users.getUserData()
+        val users = Users()
+        val master = Master()
+        GlobalScope.launch {
+            async {
+                users.getUserPreference()
+                users.getUserData()
+                master.getMasterLocationData(locationRequest = MasterLocation(masterType = "degree",queryType = "read"))
+                master.getMasterInterestData(interest = MasterInterest("interest", "read"))
+            }
+        }
+
     }
 
     // Home view model
