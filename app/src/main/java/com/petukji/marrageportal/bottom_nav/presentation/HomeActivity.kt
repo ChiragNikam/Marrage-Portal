@@ -1,7 +1,10 @@
 package com.petukji.marrageportal.bottom_nav.presentation
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -39,7 +42,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class HomeActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
@@ -48,18 +50,23 @@ class HomeActivity : ComponentActivity() {
         users.getUserPreference()
         users.getUserData()
         master.getMasterLocationData(locationRequest = MasterLocation(masterType = "location",queryType = "read"))
-
     }
-
     // Home view model
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
-
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
+        //Check internet connection
+        if (isNetworkAvailable()){
+            Toast.makeText(this,"Internet connection is available",Toast.LENGTH_SHORT).show()
 
+
+        }else{
+            Toast.makeText(this,"Internet connection issue.Please check your connection",Toast.LENGTH_SHORT).show()
+
+        }
+        setContent {
             // items for bottom navigation bar
             val bottomBarItems = listOf(
                 BottomNavigationItem(
@@ -161,8 +168,11 @@ class HomeActivity : ComponentActivity() {
                 }
             }
         }
-
-
+    }
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager=getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo=connectivityManager.activeNetworkInfo
+        return networkInfo!=null && networkInfo.isConnected
     }
 
 
