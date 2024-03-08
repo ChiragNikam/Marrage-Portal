@@ -320,7 +320,7 @@ fun ImageViewWithGreenBlueTick(
 @Preview
 @Composable
 fun ProfileStatus(modifier: Modifier = Modifier) {
-//    Box {
+
     val localDensity = LocalDensity.current
 
     var columnHeight by remember {
@@ -535,7 +535,6 @@ fun TabRowOptionsPreview() {
 fun PreviewSearchDropBoxLayout() {
     SearchDropBoxView()
 }
-
 
 @Preview
 @Composable

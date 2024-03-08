@@ -28,7 +28,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.petukji.marrageportal.R
 
 
@@ -37,7 +39,7 @@ fun UserProfile(
     modifier: Modifier = Modifier,
     name: String,
     id: String,
-    image: Int,
+    imageUrl: String,
     onImageClick: () -> Unit
 ) {
     Row(
@@ -52,7 +54,8 @@ fun UserProfile(
         ) {
             Text(
                 text = "Hi! $name",
-                style = MaterialTheme.typography.bodyLarge
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                fontWeight = FontWeight(700)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -70,7 +73,7 @@ fun UserProfile(
         Spacer(modifier = Modifier.width(16.dp)) // Add space between user details and image
 
         UserImage(
-            image = image,
+            imageUrl = imageUrl,
             onImageClick = onImageClick,
             modifier = Modifier
                 .size(128.dp)
@@ -83,10 +86,12 @@ fun UserProfile(
 
 @Composable
 fun UserImage(
-    image: Int,
+    imageUrl: String,
     onImageClick: () -> Unit,
     modifier: Modifier
 ) {
+    val painter =  rememberImagePainter(data = imageUrl, builder = {crossfade(true)} )
+
     Box(modifier = modifier
         .size(128.dp)
         .clip(CircleShape)
@@ -96,11 +101,11 @@ fun UserImage(
         // Add border stroke
     ) {
         Image(
-            painter = painterResource(id = image), contentDescription = null,
+            painter = painter, contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(6.dp)
+                .clip(CircleShape)
         )
         IconButton(
             onClick = onImageClick,
