@@ -65,7 +65,6 @@ import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
 import com.petukji.marrageportal.bottom_nav.data.api_data.SingleUserPreference
 import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
-import com.petukji.marrageportal.bottom_nav.data.api_data.UsersProfileList
 import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
 import com.petukji.marrageportal.ui.theme.transientWhite
 

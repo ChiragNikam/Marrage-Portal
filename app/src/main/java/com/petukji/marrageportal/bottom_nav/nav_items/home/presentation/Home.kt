@@ -1,4 +1,4 @@
-package com.petukji.marrageportal.bottom_nav.home.presentation
+package com.petukji.marrageportal.bottom_nav.nav_items.home.presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

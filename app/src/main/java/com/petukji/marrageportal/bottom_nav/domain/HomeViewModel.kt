@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
 import com.petukji.marrageportal.bottom_nav.data.api_data.SingleUserPreference
+import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
 import com.petukji.marrageportal.bottom_nav.data.api_request.Users
 import com.petukji.marrageportal.bottom_nav.data.util_data.SearchFields
 import kotlinx.coroutines.async
@@ -19,6 +20,9 @@ class HomeViewModel : ViewModel() {
     // user preference
     private val _userPreferenceData = MutableStateFlow(mutableListOf<SingleUserPreference>())
     val userPreferenceData get() = _userPreferenceData
+    // user profiles
+    private val _userProfile = MutableStateFlow(UserProfile())
+    val userProfile get() = _userProfile
 
     // store the current bottom navigation route
     private val _currentDestinationBottomNav = MutableStateFlow("")
@@ -71,17 +75,31 @@ class HomeViewModel : ViewModel() {
         _showSearchResults.value = showResults
     }
 
-    fun loadUserPreferenceData() {
+    fun loadUserPreferenceAndProfileData(profileKeyId: String) {
         viewModelScope.launch {
             val user = Users()
-            // call
+            // calling
             val userPreferenceResponse = async { user.service.getUserPreference() }
+            val userProfileResponse = async { user.service.getUserData() }
+
+            // waiting for user preference response
             val finalUserPreference = userPreferenceResponse.await()
             if (finalUserPreference.isSuccessful) {
                 if (finalUserPreference.body() != null)
-                _userPreferenceData.value = finalUserPreference.body()!!.usersPreference.toMutableList()
-            } else{
+                    _userPreferenceData.value = finalUserPreference.body()!!.usersPreference.toMutableList()
+            } else {
                 Log.e("user_preference", finalUserPreference.errorBody().toString())
+            }
+
+            // waiting for user profile response
+            val finalUserProfile = userProfileResponse.await()
+            if (finalUserProfile.isSuccessful){
+                if (finalUserProfile.body() != null){
+                    _userProfile.value = finalUserProfile.body()!![profileKeyId]!!
+                }
+                Log.d("user_profile", _userProfile.value.toString())
+            } else{
+                Log.e("user_profile", finalUserProfile.errorBody().toString())
             }
         }
     }

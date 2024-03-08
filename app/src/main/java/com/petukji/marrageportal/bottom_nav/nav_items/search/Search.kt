@@ -1,4 +1,4 @@
-package com.petukji.marrageportal.bottom_nav.search
+package com.petukji.marrageportal.bottom_nav.nav_items.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

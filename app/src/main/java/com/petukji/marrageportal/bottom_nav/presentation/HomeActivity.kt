@@ -1,6 +1,7 @@
 package com.petukji.marrageportal.bottom_nav.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -26,8 +27,6 @@ import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.components.BottomNav
 import com.petukji.marrageportal.bottom_nav.components.NavigationForHome
-import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterInterest
-import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterLocation
 import com.petukji.marrageportal.bottom_nav.data.api_request.Master
 import com.petukji.marrageportal.bottom_nav.data.api_request.Users
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
@@ -44,16 +43,16 @@ class HomeActivity : ComponentActivity() {
         super.onStart()
         val users = Users()
         val master = Master()
-//        GlobalScope.launch {
-//            async {
-//                users.getUserPreference()
-//                users.getUserData()
-//                master.getMasterLocationData(locationRequest = MasterLocation(masterType = "degree",queryType = "read"))
-//                master.getMasterInterestData(interest = MasterInterest("interest", "read"))
-//            }
-//        }
 
-        homeViewModel.loadUserPreferenceData()
+        GlobalScope.launch {
+            val response = async { users.service.getUserData() }
+            val apiResponse = response.await()
+            if (apiResponse.isSuccessful){
+                Log.d("user_profiles", apiResponse.body().toString())
+            }
+        }
+
+        homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
 
     }
 
