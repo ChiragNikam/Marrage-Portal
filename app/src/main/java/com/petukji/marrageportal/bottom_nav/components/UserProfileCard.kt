@@ -78,7 +78,6 @@ fun UserProfile(
             modifier = Modifier
                 .size(128.dp)
                 .clip(CircleShape)
-                .background(Color.LightGray)
                 .clickable { onImageClick() }
         )
     }
@@ -90,34 +89,36 @@ fun UserImage(
     onImageClick: () -> Unit,
     modifier: Modifier
 ) {
-    val painter =  rememberImagePainter(data = imageUrl, builder = {crossfade(true)} )
+    val painter = rememberImagePainter(data = imageUrl, builder = { crossfade(true) })
 
-    Box(modifier = modifier
-        .size(128.dp)
-        .clip(CircleShape)
-        .background(Color.LightGray)
-        .clickable { onImageClick() }
-        .border(width = 4.dp, color = Color.Red, shape = CircleShape)
-        // Add border stroke
-    ) {
-        Image(
-            painter = painter, contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(CircleShape)
-        )
+    Box {
+        Box(modifier = modifier
+            .border(
+                width = 4.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = CircleShape
+            )
+        ) {
+            Image(
+                painter = painter, contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+            )
+        }
         IconButton(
-            onClick = onImageClick,
+            onClick = { onImageClick() },
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(8.dp)
+                .padding(top = 6.dp, end = 8.dp)
+                .size(28.dp)
         )
         {
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = "Change image",
-                tint = Color.Black
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }

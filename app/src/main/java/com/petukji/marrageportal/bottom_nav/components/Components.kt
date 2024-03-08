@@ -268,7 +268,7 @@ fun SingleGirlView(
                 )
                 .height(45.dp)
                 .padding(horizontal = 18.dp, vertical = 5.dp),
-            text = "${data.firstName + "" + data.lastName}, ${data.age}\n${data.correspondenceCity}, ${data.correspondenceCountry}",
+            text = "${data.firstName + " " + data.lastName}, ${data.age}\n${data.correspondenceCity}, ${data.correspondenceCountry}",
             textAlign = TextAlign.Center,
             fontSize = 14.sp,
             fontWeight = FontWeight(700),
@@ -292,7 +292,6 @@ fun ImageViewWithGreenBlueTick(
     val painter =  rememberImagePainter(data = data.profileImagePath, builder = {crossfade(true)} )
 
     Image(
-//        painter = painterResource(id = R.drawable.tryimage),
         painter = painter,
         contentDescription = "girl pic",
         contentScale = ContentScale.Crop,
@@ -306,7 +305,6 @@ fun ImageViewWithGreenBlueTick(
         modifier = tickModifier
             .height(20.dp)
             .width(50.dp)
-
     ) {
         if (greenTick) GreenTick()
 

@@ -41,16 +41,6 @@ class HomeActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        val users = Users()
-        val master = Master()
-
-        GlobalScope.launch {
-            val response = async { users.service.getUserData() }
-            val apiResponse = response.await()
-            if (apiResponse.isSuccessful){
-                Log.d("user_profiles", apiResponse.body().toString())
-            }
-        }
 
         homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
 
@@ -163,9 +153,5 @@ class HomeActivity : ComponentActivity() {
                 }
             }
         }
-
-
     }
-
-
 }
