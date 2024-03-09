@@ -58,7 +58,7 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
 
     Column(modifier = modifier.fillMaxSize()) {
 
-        GirlImageAndInfoView(imageUrl = userProfileData.profileImagePath)
+        GirlImageAndInfoView(profileData = userProfileData)
 
         Row(
             modifier = Modifier
@@ -218,9 +218,9 @@ fun ProfileMenuItem(
 }
 
 @Composable
-fun GirlImageAndInfoView(modifier: Modifier = Modifier, imageUrl: String) {
+fun GirlImageAndInfoView(modifier: Modifier = Modifier, profileData: UserProfile) {
 
-    val painter = rememberImagePainter(data = imageUrl, builder = { crossfade(true) })
+    val painter = rememberImagePainter(data = profileData.profileImagePath, builder = { crossfade(true) })
 
     val gradient = Brush.verticalGradient(
         listOf(Color.Transparent, MaterialTheme.colorScheme.primary),
@@ -251,7 +251,7 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier, imageUrl: String) {
                 Column(modifier = Modifier.weight(1f)) {
                     // name and height
                     Text(
-                        text = "Richa Jain, 78 | 5' 6\"",
+                        text = "${profileData.firstName + " " + profileData.lastName}, ${profileData.age} | ${profileData.bodyType}",
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                         fontWeight = FontWeight(700)
@@ -265,7 +265,7 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier, imageUrl: String) {
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                         Text(
-                            text = "Meerut, Uttar Pradesh, India",
+                            text = "${profileData.permanentCity}, ${profileData.permanentState}, ${profileData.permanentCountry}",
                             fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
