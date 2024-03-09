@@ -34,3 +34,6 @@ data class UserProfile(
     val areYouLivingWithFamily: String = ""
 )
 
+data class UserProfileRequest(
+    val mobileKey:String
+)
