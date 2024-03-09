@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Face
@@ -40,15 +42,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.petukji.marrageportal.bottom_nav.components.BlueTick
 import com.petukji.marrageportal.bottom_nav.components.GreenTick
 import com.petukji.marrageportal.R
+import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
 import com.petukji.marrageportal.member_info.domain.MemberInfoViewModel
 
 @Composable
 fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewModel) {
 
     val selectedMenu by viewModel.infoMenusState.collectAsState()
+    val userProfileData by viewModel.userProfileData.collectAsState()
 
     Column(modifier = modifier.fillMaxSize()) {
 
@@ -174,11 +179,11 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
             }
             Column(modifier = Modifier.weight(1f)) {
                 when (selectedMenu) {
-                    0 -> ProfileInfoPersonal()
-                    1 -> ProfileInfoFamily()
-                    2 -> ProfileInfoCommunity()
-                    3 -> ProfileInfoProfession()
-                    4 -> ProfileInfoHabit()
+                    0 -> ProfileInfoPersonal(userProfileData)
+                    1 -> ProfileInfoFamily(userProfileData)
+                    2 -> ProfileInfoCommunity(userProfileData)
+                    3 -> ProfileInfoProfession(userProfileData)
+                    4 -> ProfileInfoHabit(userProfileData)
                 }
             }
         }
@@ -275,27 +280,56 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
 
 // Profile menu items: Personal, Family, Community, Profession, Habit
 @Composable
-fun ProfileInfoPersonal() {
+fun ProfileInfoPersonal(personalData: UserProfile) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 8.dp, vertical = 12.dp)
+
+    ) {
+        Text(text = "${personalData.occupation}| ${personalData.religion} |${personalData.zodiac} | ${personalData.nationality}")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Personality Details")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = "${personalData.bodyType} |${personalData.bodyColor} ")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp,text = "Introduction")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.longDescription)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp,text = "Partner Preference")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text =personalData.marriagePreference )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp,text ="Qualification")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text =personalData.highestQualification)
+    }
+}
+
+@Preview
+@Composable
+fun PreviewProfileInfoPersonal() {
+    ProfileInfoPersonal(personalData = UserProfile())
+}
+
+@Composable
+fun ProfileInfoFamily(personalData: UserProfile) {
 
 }
 
 @Composable
-fun ProfileInfoFamily() {
+fun ProfileInfoCommunity(personalData: UserProfile) {
+}
+
+@Composable
+fun ProfileInfoProfession(personalData: UserProfile) {
 
 }
 
 @Composable
-fun ProfileInfoCommunity() {
-
-}
-
-@Composable
-fun ProfileInfoProfession() {
-
-}
-
-@Composable
-fun ProfileInfoHabit() {
+fun ProfileInfoHabit(personalData: UserProfile) {
 
 }
 
