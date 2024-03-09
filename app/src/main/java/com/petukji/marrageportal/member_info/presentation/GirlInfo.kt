@@ -24,11 +24,12 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.LocationOn
-import androidx.compose.material.icons.outlined.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -39,13 +40,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.petukji.marrageportal.bottom_nav.components.BlueTick
 import com.petukji.marrageportal.bottom_nav.components.GreenTick
 import com.petukji.marrageportal.R
+import com.petukji.marrageportal.member_info.domain.MemberInfoViewModel
 
 @Composable
-fun GirlCompleteInfo(modifier: Modifier = Modifier) {
+fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewModel) {
+
+    val selectedMenu by viewModel.infoMenusState.collectAsState()
 
     Column(modifier = modifier.fillMaxSize()) {
 
@@ -59,7 +62,14 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(modifier = Modifier.weight(0.7f))
-            Row(modifier = Modifier.weight(1.3f).fillMaxHeight().clickable {  }, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+            Row(
+                modifier = Modifier
+                    .weight(1.3f)
+                    .fillMaxHeight()
+                    .clickable { },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
                 Icon(
                     modifier = Modifier.size(28.dp),
                     imageVector = Icons.Filled.Send,
@@ -74,7 +84,14 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
-            Row(modifier = Modifier.weight(1f).fillMaxHeight().clickable {  }, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .clickable { },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
                 Icon(
                     modifier = Modifier.size(28.dp),
                     imageVector = Icons.Outlined.FavoriteBorder,
@@ -103,7 +120,9 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
-                        .clickable {  },
+                        .clickable {
+                            viewModel.updateInfoMenusState(0)
+                        },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Person,
                     title = "Personal"
@@ -112,7 +131,9 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
-                        .clickable {  },
+                        .clickable {
+                            viewModel.updateInfoMenusState(1)
+                        },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Face,
                     title = "Family"
@@ -121,7 +142,9 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
-                        .clickable {  },
+                        .clickable {
+                            viewModel.updateInfoMenusState(2)
+                        },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Info,
                     title = "Community"
@@ -130,7 +153,9 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
-                        .clickable {  },
+                        .clickable {
+                            viewModel.updateInfoMenusState(3)
+                        },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Notifications,
                     title = "Profession"
@@ -139,22 +164,22 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
-                        .clickable {  },
+                        .clickable {
+                            viewModel.updateInfoMenusState(4)
+                        },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Call,
                     title = "Habits"
                 )
             }
             Column(modifier = Modifier.weight(1f)) {
-
-                Text(
-                    modifier = Modifier.padding(4.dp),
-                    text = "This is testing code, in communications, an unvarying rule for" +
-                            " replacing a piece of information such as a letter, word, or phrase with an" +
-                            " arbitrarily selected equivalent. The term has been frequently misapplied and used " +
-                            "as a synonym for cipher, which is a method for transforming a message according" +
-                            " to a rule to conceal its meaning."
-                )
+                when (selectedMenu) {
+                    0 -> ProfileInfoPersonal()
+                    1 -> ProfileInfoFamily()
+                    2 -> ProfileInfoCommunity()
+                    3 -> ProfileInfoProfession()
+                    4 -> ProfileInfoHabit()
+                }
             }
         }
     }
@@ -248,14 +273,34 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
     }
 }
 
+// Profile menu items: Personal, Family, Community, Profession, Habit
+@Composable
+fun ProfileInfoPersonal() {
+
+}
+
+@Composable
+fun ProfileInfoFamily() {
+
+}
+
+@Composable
+fun ProfileInfoCommunity() {
+
+}
+
+@Composable
+fun ProfileInfoProfession() {
+
+}
+
+@Composable
+fun ProfileInfoHabit() {
+
+}
+
 @Preview
 @Composable
 fun ProfileMenuPreview() {
     ProfileMenuItem(icon = Icons.Filled.Person, title = "Profile")
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun GirlInfoPreview() {
-    GirlCompleteInfo()
 }

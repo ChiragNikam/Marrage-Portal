@@ -20,7 +20,7 @@
             android:label="@string/title_activity_request_receved"
             android:theme="@style/Theme.MarragePortal" />
         <activity
-            android:name=".member_info.presentation.GirlCompleteInfoActivity"
+            android:name=".member_info.presentation.MemberCompleteInfoActivity"
             android:exported="false"
             android:label="@string/title_activity_girl_complete_info"
             android:theme="@style/Theme.MarragePortal" />

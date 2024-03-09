@@ -7,9 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
+import com.petukji.marrageportal.member_info.domain.MemberInfoViewModel
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
 
-class GirlCompleteInfoActivity : ComponentActivity() {
+class MemberCompleteInfoActivity : ComponentActivity() {
+
+    val viewModel by lazy { ViewModelProvider(this)[MemberInfoViewModel::class.java] }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -19,7 +24,7 @@ class GirlCompleteInfoActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GirlCompleteInfo()
+                    MemberCompleteInfo(viewModel = viewModel)
                 }
             }
         }

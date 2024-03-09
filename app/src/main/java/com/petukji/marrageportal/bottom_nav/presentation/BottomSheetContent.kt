@@ -30,7 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.petukji.marrageportal.bottom_nav.components.AvailableGirlsVerticalGrid
-import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
+import com.petukji.marrageportal.member_info.presentation.MemberCompleteInfoActivity
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.components.SingleGirlView
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
@@ -84,7 +84,7 @@ fun BottomSheetContent(bottomPadding: Dp, viewModel: HomeViewModel) {
                             context.startActivity(
                                 Intent(
                                     context,
-                                    GirlCompleteInfoActivity::class.java
+                                    MemberCompleteInfoActivity::class.java
                                 )
                             )
                         }

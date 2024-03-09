@@ -62,10 +62,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.petukji.marrageportal.R
-import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
 import com.petukji.marrageportal.bottom_nav.data.api_data.SingleUserPreference
-import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
-import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
+import com.petukji.marrageportal.member_info.presentation.MemberCompleteInfoActivity
 import com.petukji.marrageportal.ui.theme.transientWhite
 
 @Composable
@@ -238,7 +236,7 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier, gridItems: List<Si
                 modifier = Modifier
                 .background(color = Color.Transparent, shape = RoundedCornerShape(8.dp))
                 .clickable {
-                    context.startActivity(Intent(context, GirlCompleteInfoActivity::class.java))
+                    context.startActivity(Intent(context, MemberCompleteInfoActivity::class.java))
                 })
         }
     }
