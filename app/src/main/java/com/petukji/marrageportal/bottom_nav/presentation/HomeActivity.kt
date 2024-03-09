@@ -1,7 +1,11 @@
 package com.petukji.marrageportal.bottom_nav.presentation
 
+import android.content.Context
+import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -22,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import com.petukji.marrageportal.NetworkNotAvalbeActivity
 import com.petukji.marrageportal.bottom_nav.data.util_data.BottomNavigationItem
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 import com.petukji.marrageportal.R
@@ -34,7 +39,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-
 class HomeActivity : ComponentActivity() {
     // Home view model
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
@@ -42,7 +46,21 @@ class HomeActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
 
+        //Check internet connection
+        if (isNetworkAvailable()){
+            val users = Users()
+            val master = Master()
+            homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
+            Toast.makeText(this,"Internet connection is available",Toast.LENGTH_SHORT).show()
+        }else{
+            startActivity(Intent(this,NetworkNotAvalbeActivity::class.java))
+            finish()
+            Toast.makeText(this,"Internet connection issue.Please check your connection",Toast.LENGTH_SHORT).show()
+        }
+
+
         homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
+
 
     }
 
@@ -51,7 +69,6 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
             // items for bottom navigation bar
             val bottomBarItems = listOf(
                 BottomNavigationItem(
@@ -90,7 +107,6 @@ class HomeActivity : ComponentActivity() {
                 // Scaffold for bottom bar
                 Scaffold(
                     topBar = {
-
                     },
                     bottomBar = {
                         BottomNav(
@@ -153,5 +169,12 @@ class HomeActivity : ComponentActivity() {
                 }
             }
         }
+
+    }
+   fun isNetworkAvailable(): Boolean {
+        val connectivityManager=getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo=connectivityManager.activeNetworkInfo
+        return networkInfo!=null && networkInfo.isConnected
+
     }
 }
