@@ -5,4 +5,5 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_girl_complete_info">GirlCompleteInfoActivity</string>
     <string name="title_activity_request_receved">RequestRecevedActivity</string>
+    <string name="title_activity_network_not_avalbe">NetworkNotAvalbeActivity</string>
 </resources>

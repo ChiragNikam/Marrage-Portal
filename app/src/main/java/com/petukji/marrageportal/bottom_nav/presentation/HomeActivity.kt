@@ -1,6 +1,7 @@
 package com.petukji.marrageportal.bottom_nav.presentation
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
@@ -25,47 +26,42 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import com.petukji.marrageportal.NetworkNotAvalbeActivity
 import com.petukji.marrageportal.bottom_nav.data.util_data.BottomNavigationItem
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.components.BottomNav
 import com.petukji.marrageportal.bottom_nav.components.NavigationForHome
-import com.petukji.marrageportal.bottom_nav.data.UserProfile
-import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterLocation
 import com.petukji.marrageportal.bottom_nav.data.api_request.Master
 import com.petukji.marrageportal.bottom_nav.data.api_request.Users
-import com.petukji.marrageportal.bottom_nav.domain.api.ApiService
-import com.petukji.marrageportal.bottom_nav.domain.api.RetrofitInstance
 import com.petukji.marrageportal.ui.theme.MarriagePortalTheme
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeActivity : ComponentActivity() {
-    override fun onStart() {
-        super.onStart()
-        val users = Users()
-        val master = Master()
-        users.getUserPreference()
-        users.getUserData()
-        master.getMasterLocationData(locationRequest = MasterLocation(masterType = "location",queryType = "read"))
-    }
     // Home view model
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
+
+    override fun onStart() {
+        super.onStart()
+        //Check internet connection
+        if (isNetworkAvailable()){
+            val users = Users()
+            val master = Master()
+            homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
+            Toast.makeText(this,"Internet connection is available",Toast.LENGTH_SHORT).show()
+        }else{
+            startActivity(Intent(this,NetworkNotAvalbeActivity::class.java))
+            finish()
+            Toast.makeText(this,"Internet connection issue.Please check your connection",Toast.LENGTH_SHORT).show()
+        }
+    }
+
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Check internet connection
-        if (isNetworkAvailable()){
-            Toast.makeText(this,"Internet connection is available",Toast.LENGTH_SHORT).show()
-
-
-        }else{
-            Toast.makeText(this,"Internet connection issue.Please check your connection",Toast.LENGTH_SHORT).show()
-
-        }
         setContent {
             // items for bottom navigation bar
             val bottomBarItems = listOf(
@@ -105,7 +101,6 @@ class HomeActivity : ComponentActivity() {
                 // Scaffold for bottom bar
                 Scaffold(
                     topBar = {
-
                     },
                     bottomBar = {
                         BottomNav(
@@ -139,7 +134,7 @@ class HomeActivity : ComponentActivity() {
                         sheetContainerColor = MaterialTheme.colorScheme.primaryContainer,
                         sheetContent = {
                             Surface(color = MaterialTheme.colorScheme.primaryContainer) {
-                                BottomSheetContent(bottomPadding)
+                                BottomSheetContent(bottomPadding, homeViewModel)
                             }
                         }
                     ) {
@@ -169,7 +164,7 @@ class HomeActivity : ComponentActivity() {
             }
         }
     }
-    private fun isNetworkAvailable(): Boolean {
+   fun isNetworkAvailable(): Boolean {
         val connectivityManager=getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo=connectivityManager.activeNetworkInfo
         return networkInfo!=null && networkInfo.isConnected

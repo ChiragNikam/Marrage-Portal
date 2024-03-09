@@ -18,6 +18,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -32,10 +33,13 @@ import com.petukji.marrageportal.bottom_nav.components.AvailableGirlsVerticalGri
 import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
 import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.components.SingleGirlView
+import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BottomSheetContent(bottomPadding: Dp) {
+fun BottomSheetContent(bottomPadding: Dp, viewModel: HomeViewModel) {
+
+    val userPreferenceData by viewModel.userPreferenceData.collectAsState()
 
     val context = LocalContext.current
 
@@ -62,13 +66,15 @@ fun BottomSheetContent(bottomPadding: Dp) {
             enter = scaleIn(transformOrigin = TransformOrigin(0f, 0f)),
             exit = scaleOut(transformOrigin = TransformOrigin(0f, 0f))
         ) {
-            val pagerState = rememberPagerState(pageCount = { 3 })
+            val pagerState = rememberPagerState(pageCount = { userPreferenceData.size })
 
             HorizontalPager(
                 modifier = Modifier.padding(bottom = bottomPadding),
                 state = pagerState
             ) {
+                val currentPage = pagerState.currentPage
                 SingleGirlView(
+                    data = userPreferenceData[currentPage],
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 40.dp, vertical = 20.dp),
@@ -89,6 +95,7 @@ fun BottomSheetContent(bottomPadding: Dp) {
             visible = !showSingleGirlView,
         ) {
             AvailableGirlsVerticalGrid(
+                gridItems = userPreferenceData,
                 modifier = Modifier.padding(
                     start = 20.dp,
                     end = 20.dp

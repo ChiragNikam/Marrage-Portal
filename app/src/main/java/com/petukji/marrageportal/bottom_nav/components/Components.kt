@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -59,7 +60,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.petukji.marrageportal.R
+import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
+import com.petukji.marrageportal.bottom_nav.data.api_data.SingleUserPreference
+import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
 import com.petukji.marrageportal.member_info.presentation.GirlCompleteInfoActivity
 import com.petukji.marrageportal.ui.theme.transientWhite
 
@@ -216,9 +221,8 @@ fun myTextField(
     return text.value
 }
 
-@Preview
 @Composable
-fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
+fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier, gridItems: List<SingleUserPreference>) {
     val context = LocalContext.current
 
     LazyVerticalGrid(
@@ -228,8 +232,10 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(top = 12.dp, bottom = 110.dp)
     ) {
-        items(8) {
-            SingleGirlView(modifier = Modifier
+        items(gridItems) {singleUserPreference->
+            SingleGirlView(
+                data = singleUserPreference,
+                modifier = Modifier
                 .background(color = Color.Transparent, shape = RoundedCornerShape(8.dp))
                 .clickable {
                     context.startActivity(Intent(context, GirlCompleteInfoActivity::class.java))
@@ -240,6 +246,7 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier) {
 
 @Composable
 fun SingleGirlView(
+    data: SingleUserPreference,
     modifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     greenTick: Boolean = true,
@@ -247,6 +254,7 @@ fun SingleGirlView(
 ) {
     Box(modifier = modifier) {
         ImageViewWithGreenBlueTick(
+            data = data,
             imageModifier = imageModifier,
             tickModifier = Modifier.align(Alignment.TopEnd)
         )
@@ -260,7 +268,7 @@ fun SingleGirlView(
                 )
                 .height(45.dp)
                 .padding(horizontal = 18.dp, vertical = 5.dp),
-            text = "Priya Jaiswal, 45\nDelhi, India",
+            text = "${data.firstName + "" + data.lastName}, ${data.age}\n${data.correspondenceCity}, ${data.correspondenceCountry}",
             textAlign = TextAlign.Center,
             fontSize = 14.sp,
             fontWeight = FontWeight(700),
@@ -273,6 +281,7 @@ fun SingleGirlView(
 
 @Composable
 fun ImageViewWithGreenBlueTick(
+    data: SingleUserPreference,
     tickModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     imageHeight: Dp = 200.dp,
@@ -280,8 +289,11 @@ fun ImageViewWithGreenBlueTick(
     blueTick: Boolean = true
 ) {
 
+    val painter =  rememberImagePainter(data = data.profileImagePath, builder = {crossfade(true)} )
+
     Image(
-        painter = painterResource(id = R.drawable.tryimage),
+//        painter = painterResource(id = R.drawable.tryimage),
+        painter = painter,
         contentDescription = "girl pic",
         contentScale = ContentScale.Crop,
         modifier = imageModifier

@@ -65,11 +65,11 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     Box(modifier = Modifier.padding(horizontal = 24.dp)) {
-                        ImageViewWithGreenBlueTick(
-                            tickModifier = Modifier.align(Alignment.TopEnd),
-                            imageHeight = 440.dp,
-
-                            )
+//                        ImageViewWithGreenBlueTick(
+//                            tickModifier = Modifier.align(Alignment.TopEnd),
+//                            imageHeight = 440.dp,
+//
+//                            )
                     }
                 }
                 //
