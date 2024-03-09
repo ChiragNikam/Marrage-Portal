@@ -1,6 +1,7 @@
 package com.petukji.marrageportal.bottom_nav.components
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically

@@ -2,6 +2,7 @@ package com.petukji.marrageportal.bottom_nav.domain.api
 
 import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
 import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
+import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfileRequest
 import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterDegree
 import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterDegreeResponse
 import com.petukji.marrageportal.bottom_nav.data.api_data.master.MasterInterest
@@ -22,6 +23,8 @@ interface ApiService {
 
     @POST("/getUserData")
     suspend fun getUserData():Response<Map<String, UserProfile>>
+    @POST("/getUserData")
+    suspend fun getSingleUserData(@Body request:UserProfileRequest):Response <UserProfile>
 
     //master
     @POST("/getMaster")

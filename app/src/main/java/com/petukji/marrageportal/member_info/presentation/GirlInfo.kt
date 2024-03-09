@@ -43,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.petukji.marrageportal.bottom_nav.components.BlueTick
 import com.petukji.marrageportal.bottom_nav.components.GreenTick
 import com.petukji.marrageportal.R
@@ -57,7 +58,7 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
 
     Column(modifier = modifier.fillMaxSize()) {
 
-        GirlImageAndInfoView()
+        GirlImageAndInfoView(imageUrl = userProfileData.profileImagePath)
 
         Row(
             modifier = Modifier
@@ -217,7 +218,10 @@ fun ProfileMenuItem(
 }
 
 @Composable
-fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
+fun GirlImageAndInfoView(modifier: Modifier = Modifier, imageUrl: String) {
+
+    val painter = rememberImagePainter(data = imageUrl, builder = { crossfade(true) })
+
     val gradient = Brush.verticalGradient(
         listOf(Color.Transparent, MaterialTheme.colorScheme.primary),
         startY = 0.0f,
@@ -229,7 +233,7 @@ fun GirlImageAndInfoView(modifier: Modifier = Modifier) {
             .height(300.dp), contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.sampleimage),
+            painter = painter,
             contentScale = ContentScale.FillBounds,
             contentDescription = "girl photo",
         )

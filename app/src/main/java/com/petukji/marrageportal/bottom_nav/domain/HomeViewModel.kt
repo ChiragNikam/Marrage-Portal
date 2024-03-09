@@ -96,7 +96,6 @@ class HomeViewModel : ViewModel() {
                 if (finalUserProfile.body() != null){
                     _userProfile.value = finalUserProfile.body()!![profileKeyId]!!
                 }
-                Log.d("user_profile", _userProfile.value.toString())
             } else{
                 Log.e("user_profile", finalUserProfile.errorBody().toString())
             }

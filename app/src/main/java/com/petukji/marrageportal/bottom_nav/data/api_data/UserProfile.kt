@@ -33,3 +33,7 @@ data class UserProfile(
     val memberLiveTogether: String = "",
     val areYouLivingWithFamily: String = ""
 )
+
+data class UserProfileRequest(
+    val mobileKey:String
+)
