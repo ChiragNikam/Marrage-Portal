@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.petukji.marrageportal.bottom_nav.data.api_data.AllUsersPreference
 import com.petukji.marrageportal.bottom_nav.data.api_data.SingleUserPreference
 import com.petukji.marrageportal.bottom_nav.data.api_data.UserProfile
 import com.petukji.marrageportal.bottom_nav.data.api_request.Users
@@ -63,7 +62,7 @@ class HomeViewModel : ViewModel() {
         _isCurrentlyDragging.value = false
     }
 
-    fun addPerson(searchFields: SearchFields) {
+    fun addProperty(searchFields: SearchFields) {
         _addedSearchProperties.value.add(searchFields)
     }
 

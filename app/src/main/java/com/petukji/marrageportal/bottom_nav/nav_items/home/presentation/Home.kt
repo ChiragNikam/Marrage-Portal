@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,7 +32,6 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        val paddingModifier = Modifier.padding(start = 20.dp, end = 20.dp)
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -38,10 +39,12 @@ fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
+            val userProfile by viewModel.userProfile.collectAsState()
+
             // Profile
-            UserProfile(name = "Rajat Kumar",
-                id = "56125",
-                image = R.drawable.tryimage,
+            UserProfile(name = "${userProfile.firstName} ${userProfile.lastName}",
+                id = userProfile.userID,
+                imageUrl = userProfile.profileImagePath,
                 onImageClick = {})
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -97,7 +100,7 @@ fun UserProfilePreview() {
     UserProfile(
         name = "Rajat Kumar",
         id = "56125",
-        image = R.drawable.tryimage,
+        imageUrl = "",
         onImageClick = {}
     )
 }

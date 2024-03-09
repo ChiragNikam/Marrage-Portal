@@ -30,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.petukji.marrageportal.bottom_nav.components.AvailableGirlsVerticalGrid
 import com.petukji.marrageportal.bottom_nav.components.DragTarget
 import com.petukji.marrageportal.bottom_nav.components.DropItem
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
@@ -92,7 +91,7 @@ fun SearchScreen(
                         if (personItem != null) {
                             LaunchedEffect(key1 = personItem) {
                                 propertyName = personItem.name
-                                viewModel.addPerson(personItem)
+                                viewModel.addProperty(personItem)
                             }
                         }
                         SearchDropBoxView(
@@ -109,7 +108,7 @@ fun SearchScreen(
                         if (personItem != null) {
                             LaunchedEffect(key1 = personItem) {
                                 propertyName = personItem.name
-                                viewModel.addPerson(personItem)
+                                viewModel.addProperty(personItem)
                             }
                         }
                         SearchDropBoxView(
@@ -126,7 +125,7 @@ fun SearchScreen(
                         if (personItem != null) {
                             LaunchedEffect(key1 = personItem) {
                                 propertyName = personItem.name
-                                viewModel.addPerson(personItem)
+                                viewModel.addProperty(personItem)
                             }
                         }
                         SearchDropBoxView(
@@ -143,7 +142,7 @@ fun SearchScreen(
                         if (personItem != null) {
                             LaunchedEffect(key1 = personItem) {
                                 propertyName = personItem.name
-                                viewModel.addPerson(personItem)
+                                viewModel.addProperty(personItem)
                             }
                         }
                         SearchDropBoxView(
@@ -160,7 +159,7 @@ fun SearchScreen(
                         if (personItem != null) {
                             LaunchedEffect(key1 = personItem) {
                                 propertyName = personItem.name
-                                viewModel.addPerson(personItem)
+                                viewModel.addProperty(personItem)
                             }
                         }
                         SearchDropBoxView(

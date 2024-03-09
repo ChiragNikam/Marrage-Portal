@@ -45,6 +45,7 @@ class HomeActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+
         //Check internet connection
         if (isNetworkAvailable()){
             val users = Users()
@@ -56,6 +57,11 @@ class HomeActivity : ComponentActivity() {
             finish()
             Toast.makeText(this,"Internet connection issue.Please check your connection",Toast.LENGTH_SHORT).show()
         }
+
+
+        homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
+
+
     }
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -163,12 +169,12 @@ class HomeActivity : ComponentActivity() {
                 }
             }
         }
+
     }
    fun isNetworkAvailable(): Boolean {
         val connectivityManager=getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo=connectivityManager.activeNetworkInfo
         return networkInfo!=null && networkInfo.isConnected
+
     }
-
-
 }

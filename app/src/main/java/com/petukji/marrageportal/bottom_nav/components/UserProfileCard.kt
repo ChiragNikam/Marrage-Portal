@@ -28,7 +28,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.petukji.marrageportal.R
 
 
@@ -37,7 +39,7 @@ fun UserProfile(
     modifier: Modifier = Modifier,
     name: String,
     id: String,
-    image: Int,
+    imageUrl: String,
     onImageClick: () -> Unit
 ) {
     Row(
@@ -52,7 +54,8 @@ fun UserProfile(
         ) {
             Text(
                 text = "Hi! $name",
-                style = MaterialTheme.typography.bodyLarge
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                fontWeight = FontWeight(700)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -70,12 +73,11 @@ fun UserProfile(
         Spacer(modifier = Modifier.width(16.dp)) // Add space between user details and image
 
         UserImage(
-            image = image,
+            imageUrl = imageUrl,
             onImageClick = onImageClick,
             modifier = Modifier
                 .size(128.dp)
                 .clip(CircleShape)
-                .background(Color.LightGray)
                 .clickable { onImageClick() }
         )
     }
@@ -83,36 +85,40 @@ fun UserProfile(
 
 @Composable
 fun UserImage(
-    image: Int,
+    imageUrl: String,
     onImageClick: () -> Unit,
     modifier: Modifier
 ) {
-    Box(modifier = modifier
-        .size(128.dp)
-        .clip(CircleShape)
-        .background(Color.LightGray)
-        .clickable { onImageClick() }
-        .border(width = 4.dp, color = Color.Red, shape = CircleShape)
-        // Add border stroke
-    ) {
-        Image(
-            painter = painterResource(id = image), contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(6.dp)
-        )
+    val painter = rememberImagePainter(data = imageUrl, builder = { crossfade(true) })
+
+    Box {
+        Box(modifier = modifier
+            .border(
+                width = 4.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = CircleShape
+            )
+        ) {
+            Image(
+                painter = painter, contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+            )
+        }
         IconButton(
-            onClick = onImageClick,
+            onClick = { onImageClick() },
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(8.dp)
+                .padding(top = 6.dp, end = 8.dp)
+                .size(28.dp)
         )
         {
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = "Change image",
-                tint = Color.Black
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }

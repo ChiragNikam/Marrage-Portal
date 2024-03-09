@@ -2,6 +2,7 @@ package com.petukji.marrageportal.member_info.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,8 +21,10 @@ import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.outlined.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -55,24 +58,25 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 .background(MaterialTheme.colorScheme.primary),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(modifier = Modifier.width(90.dp))
-            Row(modifier = Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
+            Spacer(modifier = Modifier.weight(0.7f))
+            Row(modifier = Modifier.weight(1.3f).fillMaxHeight().clickable {  }, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                 Icon(
-                    modifier = Modifier.size(40.dp),
-                    imageVector = Icons.Outlined.FavoriteBorder,
-                    contentDescription = "short list",
+                    modifier = Modifier.size(28.dp),
+                    imageVector = Icons.Filled.Send,
+                    contentDescription = "send interest",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Short List",
-                    fontSize = 18.sp,
+                    text = "Send Interest",
+                    fontStyle = MaterialTheme.typography.labelLarge.fontStyle,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
-            Row(modifier = Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
+            Spacer(modifier = Modifier.width(8.dp))
+            Row(modifier = Modifier.weight(1f).fillMaxHeight().clickable {  }, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                 Icon(
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.size(28.dp),
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "short list",
                     tint = MaterialTheme.colorScheme.onPrimary
@@ -80,16 +84,14 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Short List",
-                    fontSize = 18.sp,
+                    fontStyle = MaterialTheme.typography.labelLarge.fontStyle,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
+
         Row(modifier = Modifier.fillMaxWidth()) {
-            
-            
             // menus of profile
-            
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -100,15 +102,17 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 ProfileMenuItem(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth(),
-                        iconModifier = Modifier.size(35.dp),
+                        .fillMaxWidth()
+                        .clickable {  },
+                    iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Person,
                     title = "Personal"
                 )
                 ProfileMenuItem(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable {  },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Face,
                     title = "Family"
@@ -116,7 +120,8 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 ProfileMenuItem(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable {  },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Info,
                     title = "Community"
@@ -124,7 +129,8 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 ProfileMenuItem(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable {  },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Notifications,
                     title = "Profession"
@@ -132,21 +138,23 @@ fun GirlCompleteInfo(modifier: Modifier = Modifier) {
                 ProfileMenuItem(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable {  },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Call,
                     title = "Habits"
                 )
             }
-            Column(modifier=Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(1f)) {
 
-                Text(modifier=Modifier.padding(4.dp),
+                Text(
+                    modifier = Modifier.padding(4.dp),
                     text = "This is testing code, in communications, an unvarying rule for" +
-                        " replacing a piece of information such as a letter, word, or phrase with an" +
-                        " arbitrarily selected equivalent. The term has been frequently misapplied and used " +
-                        "as a synonym for cipher, which is a method for transforming a message according" +
-                        " to a rule to conceal its meaning.")
-
+                            " replacing a piece of information such as a letter, word, or phrase with an" +
+                            " arbitrarily selected equivalent. The term has been frequently misapplied and used " +
+                            "as a synonym for cipher, which is a method for transforming a message according" +
+                            " to a rule to conceal its meaning."
+                )
             }
         }
     }
