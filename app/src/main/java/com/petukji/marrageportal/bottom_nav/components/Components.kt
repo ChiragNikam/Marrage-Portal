@@ -220,7 +220,10 @@ fun myTextField(
 }
 
 @Composable
-fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier, gridItems: List<SingleUserPreference>) {
+fun AvailableGirlsVerticalGrid(
+    modifier: Modifier = Modifier,
+    gridItems: List<SingleUserPreference>
+) {
     val context = LocalContext.current
 
     LazyVerticalGrid(
@@ -230,14 +233,18 @@ fun AvailableGirlsVerticalGrid(modifier: Modifier = Modifier, gridItems: List<Si
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(top = 12.dp, bottom = 110.dp)
     ) {
-        items(gridItems) {singleUserPreference->
+        items(gridItems) { singleUserPreference ->
             SingleGirlView(
                 data = singleUserPreference,
                 modifier = Modifier
-                .background(color = Color.Transparent, shape = RoundedCornerShape(8.dp))
-                .clickable {
-                    context.startActivity(Intent(context, MemberCompleteInfoActivity::class.java))
-                })
+                    .background(color = Color.Transparent, shape = RoundedCornerShape(8.dp))
+                    .clickable {
+                        context.startActivity(
+                            Intent(
+                                context,
+                                MemberCompleteInfoActivity::class.java
+                            ).apply { putExtra("key", singleUserPreference.mobileKey) })
+                    })
         }
     }
 }
@@ -287,7 +294,7 @@ fun ImageViewWithGreenBlueTick(
     blueTick: Boolean = true
 ) {
 
-    val painter =  rememberImagePainter(data = data.profileImagePath, builder = {crossfade(true)} )
+    val painter = rememberImagePainter(data = data.profileImagePath, builder = { crossfade(true) })
 
     Image(
         painter = painter,

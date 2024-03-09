@@ -33,4 +33,3 @@ data class UserProfile(
     val memberLiveTogether: String = "",
     val areYouLivingWithFamily: String = ""
 )
-
