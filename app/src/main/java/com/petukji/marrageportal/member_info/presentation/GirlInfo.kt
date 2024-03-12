@@ -131,7 +131,8 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                         },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Person,
-                    title = "Personal"
+                    title = "Personal",
+                    selectedState = selectedMenu == 0
                 )
                 ProfileMenuItem(
                     modifier = Modifier
@@ -142,7 +143,8 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                         },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Face,
-                    title = "Family"
+                    title = "Family",
+                    selectedState = selectedMenu == 1
                 )
                 ProfileMenuItem(
                     modifier = Modifier
@@ -153,7 +155,8 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                         },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Info,
-                    title = "Community"
+                    title = "Community",
+                    selectedState = selectedMenu == 2
                 )
                 ProfileMenuItem(
                     modifier = Modifier
@@ -164,7 +167,8 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                         },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Notifications,
-                    title = "Profession"
+                    title = "Profession",
+                    selectedState = selectedMenu == 3
                 )
                 ProfileMenuItem(
                     modifier = Modifier
@@ -175,7 +179,8 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                         },
                     iconModifier = Modifier.size(35.dp),
                     icon = Icons.Filled.Call,
-                    title = "Habits"
+                    title = "Habits",
+                    selectedState = selectedMenu == 4
                 )
             }
             Column(modifier = Modifier.weight(1f)) {
@@ -196,7 +201,8 @@ fun ProfileMenuItem(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     icon: ImageVector,
-    title: String
+    title: String,
+    selectedState: Boolean = false
 ) {
     Column(
         modifier = modifier,
@@ -207,12 +213,12 @@ fun ProfileMenuItem(
             modifier = iconModifier,
             imageVector = icon,
             contentDescription = "personal",
-            tint = MaterialTheme.colorScheme.onPrimary
+            tint = if(selectedState) Color.Blue.copy(0.5f) else MaterialTheme.colorScheme.onPrimary
         )
         Text(
             text = title,
             fontWeight = FontWeight(700),
-            color = MaterialTheme.colorScheme.onPrimary
+            color = if(selectedState) Color.Blue.copy(0.5f) else MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -327,21 +333,22 @@ fun ProfileInfoFamily(personalData: UserProfile) {
             .padding(horizontal = 8.dp, vertical = 12.dp)
 
     ){
-        Text(modifier = Modifier, fontSize = 12.sp, text = "Total Family Members")
+        val fontStyle = MaterialTheme.typography.labelLarge.fontStyle
+        Text(modifier = Modifier, fontStyle = fontStyle, text = "Total Family Members")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.totalFamily)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(modifier = Modifier, fontSize = 12.sp, text = "Is Joint Family")
+        Text(modifier = Modifier, fontStyle = fontStyle, text = "Is Joint Family")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.isJointFamily)
-        Text(modifier = Modifier, fontSize = 12.sp, text = "Total Members live together")
+        Text(modifier = Modifier, fontStyle = fontStyle, text = "Total Members live together")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.memberLiveTogether)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(modifier = Modifier, fontSize = 12.sp, text = "Living with Family ?")
+        Text(modifier = Modifier, fontStyle = fontStyle, text = "Living with Family ?")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.areYouLivingWithFamily)
-        Text(modifier = Modifier, fontSize = 12.sp, text = "Address")
+        Text(modifier = Modifier, fontStyle = fontStyle, text = "Address")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.permanentCity)
         Spacer(modifier = Modifier.height(8.dp))
