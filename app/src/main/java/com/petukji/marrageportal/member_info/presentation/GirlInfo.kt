@@ -320,21 +320,100 @@ fun PreviewProfileInfoPersonal() {
 
 @Composable
 fun ProfileInfoFamily(personalData: UserProfile) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 8.dp, vertical = 12.dp)
+
+    ){
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Total Family Members")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.totalFamily)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Is Joint Family")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.isJointFamily)
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Total Members live together")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.memberLiveTogether)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Living with Family ?")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.areYouLivingWithFamily)
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Address")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.permanentCity)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.permanentState)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.permanentCountry)
+    }
 
 }
 
 @Composable
 fun ProfileInfoCommunity(personalData: UserProfile) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 8.dp, vertical = 12.dp)
+
+    ){
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Religion")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.religion)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Religion")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.religion)
+
+    }
+
 }
 
 @Composable
 fun ProfileInfoProfession(personalData: UserProfile) {
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 8.dp, vertical = 12.dp)
+
+    ){
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Company")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.companyName)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp, text = "CompanyAddress")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.companyAddress)
+
+    }
+
 }
 
 @Composable
 fun ProfileInfoHabit(personalData: UserProfile) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 8.dp, vertical = 12.dp)
 
+    ){
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Interests")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.interests)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(modifier = Modifier, fontSize = 12.sp, text = "HabitInformation")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = personalData.badHabit)
+
+    }
 }
 
 @Preview
