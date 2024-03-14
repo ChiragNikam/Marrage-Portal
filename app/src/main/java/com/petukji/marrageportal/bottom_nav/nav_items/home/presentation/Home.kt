@@ -23,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.petukji.marrageportal.bottom_nav.domain.HomeViewModel
 import com.petukji.marrageportal.bottom_nav.components.ProfileStatus
-import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.components.UserProfile
+import com.petukji.matrimonialapp.R
 
 @Composable
 fun Home(modifier: Modifier = Modifier, viewModel: HomeViewModel) {

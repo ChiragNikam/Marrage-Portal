@@ -62,10 +62,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.petukji.marrageportal.R
 import com.petukji.marrageportal.bottom_nav.data.api_data.SingleUserPreference
 import com.petukji.marrageportal.member_info.presentation.MemberCompleteInfoActivity
 import com.petukji.marrageportal.ui.theme.transientWhite
+import com.petukji.matrimonialapp.R
 
 @Composable
 fun AuthMenus(modifier: Modifier = Modifier, onMobileOTP: @Composable (() -> Unit)) {
@@ -395,10 +395,7 @@ fun ProfileStatus(modifier: Modifier = Modifier) {
                 contentScale = contentScale
             )
         }
-
     }
-
-
 }
 
 @Composable
