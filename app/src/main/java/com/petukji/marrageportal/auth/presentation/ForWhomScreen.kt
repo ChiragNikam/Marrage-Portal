@@ -1,7 +1,6 @@
 package com.petukji.marrageportal.auth.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -59,10 +58,10 @@ fun ForWhomScreen() {
         }
     }
 }
+
 @Composable
 fun GradientButton(
     text: String,
-//    roundedCornerShape: RoundedCornerShape
 ) {
     val gradient = listOf(
         colorResource(id = R.color.lightGreen),
@@ -76,6 +75,7 @@ fun GradientButton(
             .padding(start = 32.dp, end = 32.dp, top = 8.dp),
         onClick = {},
 
+        //should have no additional padding around it inside the button.
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent
@@ -86,10 +86,6 @@ fun GradientButton(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-//                .background(
-//                    brush = Brush.horizontalGradient(colors = gradient),
-//                    shape = roundedCornerShape
-//                )
                 .clip(shape = RoundedCornerShape(24.dp))
                 .background(
                     brush = Brush.linearGradient(colors = gradient),
@@ -108,7 +104,7 @@ fun GradientButton(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview()
 @Composable
 fun GradientButtonPreview() {
     GradientButton(
