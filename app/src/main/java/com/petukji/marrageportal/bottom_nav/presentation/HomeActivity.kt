@@ -51,17 +51,12 @@ class HomeActivity : ComponentActivity() {
             val users = Users()
             val master = Master()
             homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
-            Toast.makeText(this,"Internet connection is available",Toast.LENGTH_SHORT).show()
         }else{
             startActivity(Intent(this,NetworkNotAvalbeActivity::class.java))
             finish()
             Toast.makeText(this,"Internet connection issue.Please check your connection",Toast.LENGTH_SHORT).show()
         }
-
-
         homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
-
-
     }
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -77,17 +72,12 @@ class HomeActivity : ComponentActivity() {
                     selectedIcon = painterResource(id = R.drawable.filled_home),
                     unselectedIcon = painterResource(id = R.drawable.outline_home)
                 ),
-                BottomNavigationItem(
-                    title = "Search",
-                    route = "search",
-                    selectedIcon = painterResource(id = R.drawable.filled_search),
-                    unselectedIcon = painterResource(id = R.drawable.filled_search)
-                ),
+
                 BottomNavigationItem(
                     title = "Status", route = "status", selectedIcon = painterResource(
-                        id = R.drawable.filled_home
+                        id = R.drawable.icon_profile_status
                     ),
-                    unselectedIcon = painterResource(id = R.drawable.filled_home)
+                    unselectedIcon = painterResource(id = R.drawable.icon_profile_status)
                 ),
                 BottomNavigationItem(
                     title = "Profile",

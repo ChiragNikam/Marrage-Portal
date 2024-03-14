@@ -1,6 +1,7 @@
 package com.petukji.marrageportal.bottom_nav.components
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -35,23 +36,16 @@ fun NavigationForHome(
     NavHost(navController = navHostController, startDestination = "home") {
         composable("home") {
             homeViewModel.updateCurrentDestinationBottomNav("home")
-            Home(viewModel = homeViewModel)
+            Home(viewModel = homeViewModel,navController=navHostController)
         }
+
         composable("search") {
             homeViewModel.updateCurrentDestinationBottomNav("search")
-            DragableScreen(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                SearchScreen(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                        .fillMaxSize(), viewModel = homeViewModel
-                ) {
-                    onSearch()
-                }
-            }
+          SearchScreen(viewModel = homeViewModel, modifier = Modifier.padding(bottom = 40.dp)) {
+              navHostController.popBackStack()
+          }
         }
+
         composable("status") {
             homeViewModel.updateCurrentDestinationBottomNav("status")
             RequestReceivedScreen(

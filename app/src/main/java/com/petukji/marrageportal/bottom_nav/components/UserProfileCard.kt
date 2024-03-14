@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.petukji.marrageportal.R
@@ -58,14 +59,14 @@ fun UserProfile(
                 fontWeight = FontWeight(700)
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Text(
                 text = "ID: $id",
                 style = MaterialTheme.typography.bodyMedium
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             BiodataDocuments()
         }
@@ -76,7 +77,7 @@ fun UserProfile(
             imageUrl = imageUrl,
             onImageClick = onImageClick,
             modifier = Modifier
-                .size(128.dp)
+                .size(80.dp)
                 .clip(CircleShape)
                 .clickable { onImageClick() }
         )
@@ -124,6 +125,8 @@ fun UserImage(
     }
 }
 
+
+
 @Composable
 fun BiodataDocuments(
     modifier: Modifier = Modifier
@@ -136,18 +139,19 @@ fun BiodataDocuments(
     ) {
 
         Icon(
-            painter = painterResource(id = R.drawable.icon_profile_status),
+            painter = painterResource(R.drawable.icon_profile_status),
             contentDescription = "Bio data",
+            Modifier.size(18.dp),
             tint = Color.Red
 
         )
-        Spacer(modifier = Modifier.width(6.dp))
+        Spacer(modifier = Modifier.width(2.dp))
 
-        GreenTick(modifier = Modifier.size(30.dp))
+        GreenTick(modifier = Modifier.size(18.dp))
 
-        Spacer(modifier = Modifier.width(6.dp))
+        Spacer(modifier = Modifier.width(2.dp))
 
-        BlueTick(modifier = Modifier.size(30.dp))
+        BlueTick(modifier = Modifier.size(18.dp))
 
     }
 }
