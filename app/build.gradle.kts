@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.petukji.marrageportal"
+    namespace = "com.petukji.matrimonialapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.petukji.marrageportal"
+        applicationId = "com.petukji.matrimonialapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -59,13 +59,13 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation(platform("androidx.compose:compose-bom:2024.02.01"))
+    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
 
     // navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
-    implementation(platform("androidx.compose:compose-bom:2024.02.01"))
-    implementation(platform("androidx.compose:compose-bom:2024.02.01"))
+    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
+    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
 
     //retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
