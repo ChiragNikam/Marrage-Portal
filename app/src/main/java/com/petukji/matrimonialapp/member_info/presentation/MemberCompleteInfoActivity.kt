@@ -35,7 +35,6 @@ class MemberCompleteInfoActivity : ComponentActivity() {
             // set viewed profile to api
             viewModel.profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
 
-            viewModel.getShortListedRequest(UserProfileRequest(mobileKey = "11234567894"))
         }
     }
 

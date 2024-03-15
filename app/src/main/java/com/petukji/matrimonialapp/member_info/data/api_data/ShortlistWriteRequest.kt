@@ -1,7 +1,7 @@
 package com.petukji.matrimonialapp.member_info.data.api_data
 
 data class ShortlistWriteRequest(
-    val logType: String = "view",
+    val logType: String = "shortlist",
     val queryType: String = "write",
     val data:ShortListLogData
 )

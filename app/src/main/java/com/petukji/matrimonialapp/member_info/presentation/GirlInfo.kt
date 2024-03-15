@@ -1,5 +1,7 @@
 package com.petukji.matrimonialapp.member_info.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,8 +48,10 @@ import coil.compose.rememberImagePainter
 import com.petukji.matrimonialapp.bottom_nav.components.BlueTick
 import com.petukji.matrimonialapp.bottom_nav.components.GreenTick
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.member_info.domain.MemberInfoViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewModel) {
 
@@ -92,7 +96,9 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .clickable { },
+                    .clickable {
+                        viewModel.getShortListedRequest(UserProfileRequest(mobileKey = "11234567894"))
+                    },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {

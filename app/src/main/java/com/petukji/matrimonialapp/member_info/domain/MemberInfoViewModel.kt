@@ -98,7 +98,7 @@ class MemberInfoViewModel : ViewModel() {
             val current = LocalDateTime.now().format(formatter)
             val viewLogData = LogData(  // set data to the obj
                 to = userProfileData.value.mobileKey,
-                toName =  "${userProfileData.value.firstName }|${userProfileData.value.lastName}",
+                toName = "${userProfileData.value.firstName}|${userProfileData.value.lastName}",
                 toAge = userProfileData.value.age,
                 toLocation = "${userProfileData.value.permanentCity} | ${userProfileData.value.permanentState}|${userProfileData.value.permanentCountry}",
                 toShortDesc = userProfileData.value.longDescription,
@@ -143,23 +143,6 @@ class MemberInfoViewModel : ViewModel() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getShortListedRequest(data: UserProfileRequest) {
         viewModelScope.launch {
-            val user = Users()
-            try {
-                // calling
-                val userProfileResponse = async { user.service.getSingleUserData(data) }
-
-                val finalUserProfile = userProfileResponse.await()
-                if (finalUserProfile.isSuccessful) {
-                    if (finalUserProfile.body() != null) {
-                        _loggedInUserProfile.value = finalUserProfile.body()!!
-                    }
-                    Log.d("user_profileData", _loggedInUserProfile.value.toString())
-                } else {
-                    Log.e("user_profileData", finalUserProfile.errorBody().toString())
-                }
-            } catch (e: Exception) {
-                Log.e("user_profile", e.message.toString())
-            }
 
             val formatter =
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") // get current data and time
@@ -182,6 +165,7 @@ class MemberInfoViewModel : ViewModel() {
             )
 
             try {
+                val user = Users()
                 val shortListLogResponse = async {
                     user.service.shortListLog(ShortlistWriteRequest(data = shortListedLogData))
                 }
@@ -192,21 +176,21 @@ class MemberInfoViewModel : ViewModel() {
                         call: Call<ShortListLogDataResponse>,
                         response: Response<ShortListLogDataResponse>
                     ) {
-                        Log.d("shortlist", "profile shortlisted successfully")
+                        if (response.isSuccessful)
+                            Log.d("shortlist", "profile shortlisted successfully")
+                        else
+                            Log.e("shortlist", "problem shortlisting: ${response.errorBody()}, ${response.code()}")
                     }
 
                     override fun onFailure(call: Call<ShortListLogDataResponse>, t: Throwable) {
                         Log.e("shortlist", "problem shortlisting profile: $finalShortlistedData.e")
                     }
                 })
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 Log.e("shortlist_error", e.message.toString())
             }
 
         }
-
-
     }
 
 }
