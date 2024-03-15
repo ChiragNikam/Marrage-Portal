@@ -20,3 +20,7 @@ data class LogData(
     val toLocation: String,
     val toShortDesc: String
 )
+
+data class LogDataResponse(
+    val message:String
+)

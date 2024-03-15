@@ -9,6 +9,8 @@ import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterInterest
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterInterestSingleResponse
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterLocation
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterLocationSingleResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.LogDataResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.ViewLogWriteRequest
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -33,5 +35,8 @@ interface ApiService {
 
     @POST("/getMaster")
     fun getMasterDegreeData(@Body request:MasterDegree):Call<MasterDegreeResponse>
+
+    @POST("/connectViewLog")
+    fun getConnectViewLog(@Body request: ViewLogWriteRequest):Call<LogDataResponse>
 
 }

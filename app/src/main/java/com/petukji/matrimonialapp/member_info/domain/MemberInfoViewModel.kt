@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
+import com.petukji.matrimonialapp.member_info.data.api_data.LogData
+import com.petukji.matrimonialapp.member_info.data.api_data.ViewLogWriteRequest
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -22,6 +24,8 @@ class MemberInfoViewModel: ViewModel() {
     //personalDetails
     private val _userProfileData = MutableStateFlow(UserProfile())
     val userProfileData get() = _userProfileData
+
+
 
     fun updateUserProfileKey(key: String) {
         _userProfileKey.value = key
@@ -51,4 +55,18 @@ class MemberInfoViewModel: ViewModel() {
             }
         }
     }
+
+    fun profileViewedRequest(){
+        viewModelScope.launch {
+          val  viewLogData=LogData(
+            to = userProfileData.value.mobileKey,
+              toName = userProfileData.value.firstName,
+              toAge = userProfileData.value.age,
+              toLocation = "${userProfileData.value.permanentCity} | ${userProfileData.value.permanentState}|${userProfileData.value.permanentCountry}",
+              toShortDesc = userProfileData.value.longDescription,
+
+          )
+        }
+    }
 }
+
