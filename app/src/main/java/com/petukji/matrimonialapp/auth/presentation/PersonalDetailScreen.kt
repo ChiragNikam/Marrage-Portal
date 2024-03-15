@@ -38,7 +38,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.petukji.marrageportal.R
+import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -176,7 +176,7 @@ fun PersonalDetailsForm(viewModel: PersonalDetailsViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = personalDetails.bloodGroup,
+            value = personalDetails.gotra,
             onValueChange = { viewModel.updateBloodGroup(it) },
             label = { Text("Blood Group") },
             modifier = Modifier.fillMaxWidth()
@@ -196,7 +196,7 @@ fun PersonalDetailsForm(viewModel: PersonalDetailsViewModel) {
             Spacer(modifier = Modifier.width(8.dp))
 
             OutlinedTextField(
-                value = personalDetails.weight,
+                value = personalDetails.dependentUponYou,
                 onValueChange = { viewModel.updateWeight(it) },
                 label = { Text("Weight") },
                 modifier = Modifier.weight(1f),
@@ -208,7 +208,7 @@ fun PersonalDetailsForm(viewModel: PersonalDetailsViewModel) {
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             OutlinedTextField(
-                value = personalDetails.color,
+                value = personalDetails.bodyColor,
                 onValueChange = { viewModel.updateColor(it) },
                 label = { Text("Color") },
                 modifier = Modifier.weight(1f),
@@ -228,7 +228,7 @@ fun PersonalDetailsForm(viewModel: PersonalDetailsViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = personalDetails.diet,
+            value = personalDetails.dietPreference,
             onValueChange = { viewModel.updateDiet(it) },
             label = { Text("Diet") },
             modifier = Modifier.fillMaxWidth()

@@ -37,7 +37,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.petukji.marrageportal.R
+import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 
 @Composable
@@ -67,15 +67,16 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             OutlinedTextField(
-                value = personalDetails.degree,
+                value = personalDetails.degree1,
                 onValueChange = { viewModel.updateDegree(it) },
                 label = { Text("Degree") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                singleLine = true
             )
             Spacer(modifier = Modifier.width(8.dp))
 
             OutlinedTextField(
-                value = personalDetails.passOutYear,
+                value = personalDetails.passoutYear1,
                 onValueChange = { viewModel.updatePassOutYear(it) },
                 label = { Text("Passout Year") },
                 modifier = Modifier.weight(1f)
@@ -85,7 +86,7 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = personalDetails.college,
+            value = personalDetails.college1,
             onValueChange = { viewModel.updateCollege(it) },
             label = { Text("College") },
             modifier = Modifier.fillMaxWidth(),
@@ -104,7 +105,7 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             OutlinedTextField(
-                value = personalDetails.company,
+                value = personalDetails.companyName,
                 onValueChange = { viewModel.updateCompany(it) },
                 label = { Text("Company") },
                 modifier = Modifier.weight(1f),
@@ -133,7 +134,7 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
             Spacer(modifier = Modifier.width(8.dp))
 
             OutlinedTextField(
-                value = personalDetails.experience,
+                value = personalDetails.occupation,
                 onValueChange = { viewModel.updateExperience(it) },
                 label = { Text("Experience") },
                 modifier = Modifier.weight(1f),
@@ -144,7 +145,7 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = personalDetails.address,
+            value = personalDetails.permanentAddress,
             onValueChange = { viewModel.updateAddress(it) },
             label = { Text("Address") },
             modifier = Modifier.fillMaxWidth()
