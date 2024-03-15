@@ -1,5 +1,6 @@
 package com.petukji.matrimonialapp.auth.presentation
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,15 +24,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
+import com.petukji.matrimonialapp.bottom_nav.presentation.HomeActivity
 
 @Composable
 fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
+
+    val context = LocalContext.current
+
     val personalDetails = viewModel.personalDetails.value
 
     val occupations = listOf("Job", "Business", "Professional")
@@ -69,7 +75,8 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
                 value = personalDetails.passoutYear1,
                 onValueChange = { viewModel.updatePassOutYear(it) },
                 label = { Text("Passout Year") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                singleLine = true
             )
         }
 
@@ -80,7 +87,8 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
             onValueChange = { viewModel.updateCollege(it) },
             label = { Text("College") },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email)
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+            singleLine = true
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -99,7 +107,8 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
                 onValueChange = { viewModel.updateCompany(it) },
                 label = { Text("Company") },
                 modifier = Modifier.weight(1f),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                singleLine = true
             )
             Spacer(modifier = Modifier.width(8.dp))
 
@@ -107,7 +116,8 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
                 value = personalDetails.designation,
                 onValueChange = { viewModel.updateDesignation(it) },
                 label = { Text("Designation") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                singleLine = true
             )
         }
 
@@ -147,7 +157,9 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
             colors = ButtonDefaults.buttonColors(
                 colorResource(id = R.color.lightRed)
             ),
-            onClick = { }
+            onClick = {
+                context.startActivity(Intent(context, HomeActivity::class.java))
+            }
         ) {
             Text(text = "Next")
         }

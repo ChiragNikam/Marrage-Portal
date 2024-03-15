@@ -38,13 +38,15 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PersonalDetailsForm(viewModel: PersonalDetailsViewModel) {
+fun PersonalDetailsForm(navController: NavController, viewModel: PersonalDetailsViewModel) {
     val personalDetails = viewModel.personalDetails.value
 
 //    val selectedDate = remember { mutableStateOf(LocalDate.now()) }
@@ -240,7 +242,9 @@ fun PersonalDetailsForm(viewModel: PersonalDetailsViewModel) {
             colors = ButtonDefaults.buttonColors(
                 colorResource(id = R.color.lightRed)
             ),
-            onClick = { }
+            onClick = {
+                navController.navigate("qualification")
+            }
         ) {
             Text(text = "Next")
         }
@@ -249,9 +253,8 @@ fun PersonalDetailsForm(viewModel: PersonalDetailsViewModel) {
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PersonalDetailPreview() {
-    PersonalDetailsForm(PersonalDetailsViewModel())
+    PersonalDetailsForm(viewModel = PersonalDetailsViewModel(), navController = rememberNavController())
 }

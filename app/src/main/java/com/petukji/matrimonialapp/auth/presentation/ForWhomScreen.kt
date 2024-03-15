@@ -24,12 +24,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.data.SelectionType
+import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 
 
 @Composable
-fun ForWhomScreen() {
+fun ForWhomScreen(navController: NavController, viewModel: PersonalDetailsViewModel) {
     Column(
         modifier = Modifier.padding(top = 210.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,7 +55,9 @@ fun ForWhomScreen() {
             colors = ButtonDefaults.buttonColors(
                 colorResource(id = R.color.lightRed)
             ),
-            onClick = { }
+            onClick = {
+                navController.navigate("personal_details")
+            }
         ) {
             Text(text = "Next")
         }
