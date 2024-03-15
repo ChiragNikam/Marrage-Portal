@@ -33,6 +33,8 @@ class MemberCompleteInfoActivity : ComponentActivity() {
             viewModel.getSelectedUserProfile(UserProfileRequest(mobileKey = key))
 
             viewModel.profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
+
+            viewModel.getShortListedRequest(UserProfileRequest(mobileKey = "11234567894"))
         }
     }
 
