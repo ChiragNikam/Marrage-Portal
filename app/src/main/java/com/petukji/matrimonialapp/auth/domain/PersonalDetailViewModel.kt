@@ -132,6 +132,45 @@ class PersonalDetailsViewModel : ViewModel() {
         _personalDetails.value = _personalDetails.value.copy(permanentAddress = address)
     }
 
+    fun updateCity(city: String) {
+        _personalDetails.value = _personalDetails.value.copy(permanentCity = city)
+    }
+
+    fun updateCorrespondenceCity(city: String) {
+        _personalDetails.value = _personalDetails.value.copy(correspondenceCity = city)
+    }
+
+    fun updateState(state: String) {
+        _personalDetails.value = _personalDetails.value.copy(permanentState = state)
+    }
+
+    fun updateCorrespondenceState(state: String) {
+        _personalDetails.value = _personalDetails.value.copy(correspondenceState = state)
+    }
+
+    fun updateCountry(country: String) {
+        _personalDetails.value = _personalDetails.value.copy(permanentCountry = country)
+    }
+
+    fun updateCorrespondenceCountry(country: String) {
+        _personalDetails.value = _personalDetails.value.copy(correspondenceCountry = country)
+    }
+
+    fun updatePermanentAddress(address: String) {
+        _personalDetails.value = _personalDetails.value.copy(permanentAddress = address)
+    }
+
+    fun updateCorrespondenceAddress(address: String) {
+        _personalDetails.value = _personalDetails.value.copy(correspondenceAddress = address)
+    }
+
+    fun updatePermanentPincode(pincode: String) {
+        _personalDetails.value = _personalDetails.value.copy(permanentPIN = pincode)
+    }
+
+    fun updateCorrespondencePincode(pincode: String) {
+        _personalDetails.value = _personalDetails.value.copy(correspondencePIN = pincode)
+    }
 
 //    fun resetPersonalDetails() {
 //        _personalDetails.value = PersonalDetails()
