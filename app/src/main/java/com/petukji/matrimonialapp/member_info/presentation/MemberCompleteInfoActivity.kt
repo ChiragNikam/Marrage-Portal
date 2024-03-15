@@ -21,7 +21,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MemberCompleteInfoActivity : ComponentActivity() {
-    private lateinit var key : String
+    private lateinit var key: String
 
     private val viewModel by lazy { ViewModelProvider(this)[MemberInfoViewModel::class.java] }
 
@@ -33,6 +33,9 @@ class MemberCompleteInfoActivity : ComponentActivity() {
             viewModel.getSelectedUserProfile(UserProfileRequest(mobileKey = key))
             // set viewed profile to api
             viewModel.profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
+
+            viewModel.getShortListedProfilesByMe(userMobile = "11234567894")
+            viewModel.isCurrentProfileShortListed()
         }
     }
 

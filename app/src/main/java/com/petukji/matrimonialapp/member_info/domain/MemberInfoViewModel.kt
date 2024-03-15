@@ -1,8 +1,6 @@
 package com.petukji.matrimonialapp.member_info.domain
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
@@ -12,10 +10,10 @@ import com.petukji.matrimonialapp.member_info.data.api_data.LogData
 import com.petukji.matrimonialapp.member_info.data.api_data.LogDataResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogData
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogDataResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistReadRequest
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistWriteRequest
+import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistedProfile
 import com.petukji.matrimonialapp.member_info.data.api_data.ViewLogWriteRequest
-import gen._base._base_java__assetres.srcjar.R
-import gen._base._base_java__assetres.srcjar.R.id.async
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -42,6 +40,18 @@ class MemberInfoViewModel : ViewModel() {
     private val _loggedInUserProfile = MutableStateFlow(UserProfile())
     val loggedInUserProfile get() = _loggedInUserProfile
 
+    // shortlisted profiles by me
+    private val _shortlistedProfiles = MutableStateFlow(mutableListOf<ShortlistedProfile>())
+    val shortlistedProfiles get() = _shortlistedProfiles
+
+    // status for profile shortlisted
+    private val _isProfileShortlisted = MutableStateFlow(false)
+    val isProfileShortlisted get() = _isProfileShortlisted
+
+    fun updateShortlistedProfile(status: Boolean){
+        _isProfileShortlisted.value = status
+    }
+
     fun updateUserProfileKey(key: String) {
         _userProfileKey.value = key
     }
@@ -50,9 +60,10 @@ class MemberInfoViewModel : ViewModel() {
         _infoMenusState.value = value
     }
 
+    val user = Users()
+
     suspend fun getSelectedUserProfile(data: UserProfileRequest) {
         viewModelScope.launch {
-            val user = Users()
             val userProfileResponse = async { user.service.getSingleUserData(data) }
 
             val finalUserProfile = userProfileResponse.await()
@@ -71,10 +82,41 @@ class MemberInfoViewModel : ViewModel() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun getShortListedProfilesByMe(userMobile: String) {
+        viewModelScope.launch {
+            try {
+                val shortListedProfilesRes = async {
+                    user.service.getShortListedProfile(
+                        ShortlistReadRequest(
+                            queryFor = "byme",
+                            userMobile = userMobile,
+                            topQuery = "detail"
+                        )
+                    )
+                }
+
+                val finalShortListedProfileRes = shortListedProfilesRes.await()
+
+                if (finalShortListedProfileRes.isSuccessful) {
+                    if (finalShortListedProfileRes.body() != null) {
+                        for (profile in finalShortListedProfileRes.body()!!.data){
+                            _shortlistedProfiles.value.add(profile)
+                        }
+                    }
+                } else {
+                    Log.e("shortlisted_profiles", "something went wrong while getting profile")
+                }
+            } catch (e: Exception) {
+                Log.e("shortlist", e.message.toString())
+            }
+
+//            isCurrentProfileShortListed()
+        }
+    }
+
     fun profileViewedRequest(data: UserProfileRequest) {
         viewModelScope.launch {
-            val user = Users()
+
             try {
                 // calling
                 val userProfileResponse = async { user.service.getSingleUserData(data) }
@@ -84,7 +126,6 @@ class MemberInfoViewModel : ViewModel() {
                     if (finalUserProfile.body() != null) {
                         _loggedInUserProfile.value = finalUserProfile.body()!!
                     }
-                    Log.d("user_profileData", _loggedInUserProfile.value.toString())
                 } else {
                     Log.e("user_profileData", finalUserProfile.errorBody().toString())
                 }
@@ -130,9 +171,6 @@ class MemberInfoViewModel : ViewModel() {
 
                     }
                 })
-//                if (finalConnectSend.isSuccessful) {
-//                } else {
-//                }
             } catch (e: Exception) {
                 Log.e("connect_error", e.message.toString())
             }
@@ -140,8 +178,7 @@ class MemberInfoViewModel : ViewModel() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getShortListedRequest(data: UserProfileRequest) {
+    fun shortListProfile(data: UserProfileRequest) {
         viewModelScope.launch {
 
             val formatter =
@@ -161,11 +198,9 @@ class MemberInfoViewModel : ViewModel() {
                 byShortDesc = loggedInUserProfile.value.longDescription,
                 time = current.toString(),
                 date = current.toString()
-
             )
 
             try {
-                val user = Users()
                 val shortListLogResponse = async {
                     user.service.shortListLog(ShortlistWriteRequest(data = shortListedLogData))
                 }
@@ -176,10 +211,15 @@ class MemberInfoViewModel : ViewModel() {
                         call: Call<ShortListLogDataResponse>,
                         response: Response<ShortListLogDataResponse>
                     ) {
-                        if (response.isSuccessful)
+                        if (response.isSuccessful){
                             Log.d("shortlist", "profile shortlisted successfully")
+                            updateShortlistedProfile(true)
+                        }
                         else
-                            Log.e("shortlist", "problem shortlisting: ${response.errorBody()}, ${response.code()}")
+                            Log.e(
+                                "shortlist",
+                                "problem shortlisting: ${response.errorBody()}, ${response.code()}"
+                            )
                     }
 
                     override fun onFailure(call: Call<ShortListLogDataResponse>, t: Throwable) {
@@ -191,6 +231,15 @@ class MemberInfoViewModel : ViewModel() {
             }
 
         }
+    }
+
+    fun isCurrentProfileShortListed(){
+        for (profile in shortlistedProfiles.value){
+            if (userProfileData.value.mobileKey == profile.to){
+                _isProfileShortlisted.value =  true
+            }
+        }
+        _isProfileShortlisted.value = false
     }
 
 }

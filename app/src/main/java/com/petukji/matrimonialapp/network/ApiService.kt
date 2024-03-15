@@ -11,8 +11,10 @@ import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterInterest
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterInterestSingleResponse
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterLocation
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterLocationSingleResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.InterestLogResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.LogDataResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogDataResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistReadRequest
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistWriteRequest
 import com.petukji.matrimonialapp.member_info.data.api_data.ViewLogWriteRequest
 import retrofit2.Call
@@ -45,11 +47,14 @@ interface ApiService {
     @POST("/getMaster")
     fun getMasterDegreeData(@Body request:MasterDegree):Call<MasterDegreeResponse>
 
+    // connect Log's
     @POST("/connectViewLog")
     fun sendConnectViewLog(@Body request: ViewLogWriteRequest):Call <LogDataResponse>
 
-
     @POST("/connectShortlistedLog")
     fun shortListLog(@Body request:ShortlistWriteRequest):Call<ShortListLogDataResponse>
+
+    @POST("/connectShortlistedLog")
+    suspend fun getShortListedProfile(@Body request: ShortlistReadRequest): Response<InterestLogResponse>
 
 }
