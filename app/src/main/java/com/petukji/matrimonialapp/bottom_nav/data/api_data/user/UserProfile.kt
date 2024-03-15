@@ -1,4 +1,4 @@
-package com.petukji.matrimonialapp.bottom_nav.data.api_data
+package com.petukji.matrimonialapp.bottom_nav.data.api_data.user
 
 data class UserProfile(
     val mobileKey: String = "",

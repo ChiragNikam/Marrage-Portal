@@ -1,4 +1,4 @@
-package com.petukji.matrimonialapp.bottom_nav.nav_items.search
+package com.petukji.matrimonialapp.bottom_nav.nav_items.search.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,8 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.petukji.matrimonialapp.bottom_nav.components.DragTarget
-import com.petukji.matrimonialapp.bottom_nav.components.DropItem
 import com.petukji.matrimonialapp.bottom_nav.domain.HomeViewModel
 import com.petukji.matrimonialapp.bottom_nav.data.util_data.SearchFields
 import com.petukji.matrimonialapp.bottom_nav.components.SearchDropBoxView

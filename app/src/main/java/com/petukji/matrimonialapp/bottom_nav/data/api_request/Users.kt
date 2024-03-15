@@ -1,7 +1,7 @@
 package com.petukji.matrimonialapp.bottom_nav.data.api_request
 
-import com.petukji.matrimonialapp.bottom_nav.domain.api.ApiService
-import com.petukji.matrimonialapp.bottom_nav.domain.api.RetrofitInstance
+import com.petukji.matrimonialapp.api.ApiService
+import com.petukji.matrimonialapp.api.RetrofitInstance
 
 class Users {
     var service: ApiService =

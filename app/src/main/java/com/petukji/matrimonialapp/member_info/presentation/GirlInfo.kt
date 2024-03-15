@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.petukji.matrimonialapp.bottom_nav.components.BlueTick
 import com.petukji.matrimonialapp.bottom_nav.components.GreenTick
-import com.petukji.matrimonialapp.bottom_nav.data.api_data.UserProfile
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.member_info.domain.MemberInfoViewModel
 
 @Composable

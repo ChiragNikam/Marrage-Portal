@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
-import com.petukji.matrimonialapp.bottom_nav.data.api_data.UserProfileRequest
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.member_info.domain.MemberInfoViewModel
 import com.petukji.matrimonialapp.ui.theme.MarriagePortalTheme
 

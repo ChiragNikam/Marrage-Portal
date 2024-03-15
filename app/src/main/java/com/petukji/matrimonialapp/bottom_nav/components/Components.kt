@@ -61,7 +61,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.petukji.matrimonialapp.bottom_nav.data.api_data.SingleUserPreference
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.SingleUserPreference
 import com.petukji.matrimonialapp.member_info.presentation.MemberCompleteInfoActivity
 import com.petukji.matrimonialapp.ui.theme.transientWhite
 import com.petukji.matrimonialapp.R

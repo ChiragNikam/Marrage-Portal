@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.petukji.matrimonialapp.bottom_nav.data.api_data.SingleUserPreference
-import com.petukji.matrimonialapp.bottom_nav.data.api_data.UserProfile
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.SingleUserPreference
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
 import com.petukji.matrimonialapp.bottom_nav.data.util_data.SearchFields
 import kotlinx.coroutines.async

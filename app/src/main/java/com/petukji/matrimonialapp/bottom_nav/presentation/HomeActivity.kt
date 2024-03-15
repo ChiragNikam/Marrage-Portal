@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -107,51 +108,14 @@ class HomeActivity : ComponentActivity() {
                     containerColor = MaterialTheme.colorScheme.background
                 ) { innerPadding ->
 
-                    val sheetState = rememberStandardBottomSheetState(
-                        skipHiddenState = false
-                    )
-                    val scaffoldState = rememberBottomSheetScaffoldState(
-                        bottomSheetState = sheetState
-                    )
-                    val scope = rememberCoroutineScope()
-
-                    val bottomPadding = innerPadding.calculateBottomPadding() + 40.dp
-
-                    // Scaffold for bottom sheet
-                    BottomSheetScaffold(
-                        modifier = Modifier,
-                        scaffoldState = scaffoldState,
-                        sheetPeekHeight = if (currentDestination == "home") {
-                            bottomPadding
-                        } else 0.dp,
-                        sheetContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                        sheetContent = {
-                            Surface(color = MaterialTheme.colorScheme.primaryContainer) {
-                                BottomSheetContent(bottomPadding, homeViewModel)
-                            }
-                        }
+                    Surface(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
                     ) {
-                        LaunchedEffect(currentDestination) {
-                            scope.launch {
-                                if (currentDestination != "home" && currentDestination != "search")
-                                    if (sheetState.hasExpandedState) {
-                                        sheetState.hide()
-                                    }
-                            }
-                        }
-                        Surface(
-                            modifier = Modifier
-                                .fillMaxSize()
-                        ) {
-                            NavigationForHome(
-                                navHostController = navController,
-                                homeViewModel,
-                                onSearch = {
-                                    scope.launch {
-                                        sheetState.expand()
-                                    }
-                                })
-                        }
+                        NavigationForHome(
+                            navHostController = navController,
+                            homeViewModel)
                     }
                 }
             }

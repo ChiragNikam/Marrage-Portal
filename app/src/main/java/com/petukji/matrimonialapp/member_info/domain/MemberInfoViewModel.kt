@@ -3,8 +3,8 @@ package com.petukji.matrimonialapp.member_info.domain
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.petukji.matrimonialapp.bottom_nav.data.api_data.UserProfile
-import com.petukji.matrimonialapp.bottom_nav.data.api_data.UserProfileRequest
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow

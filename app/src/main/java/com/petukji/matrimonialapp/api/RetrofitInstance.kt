@@ -1,4 +1,4 @@
-package com.petukji.matrimonialapp.bottom_nav.domain.api
+package com.petukji.matrimonialapp.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

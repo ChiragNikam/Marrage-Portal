@@ -1,4 +1,4 @@
-package com.petukji.matrimonialapp.bottom_nav.components
+package com.petukji.matrimonialapp.bottom_nav.nav_items.search.presentation
 
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box

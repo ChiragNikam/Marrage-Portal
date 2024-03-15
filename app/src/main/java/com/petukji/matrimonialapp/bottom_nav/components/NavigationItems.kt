@@ -23,15 +23,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.petukji.matrimonialapp.bottom_nav.data.util_data.BottomNavigationItem
 import com.petukji.matrimonialapp.bottom_nav.nav_items.home.presentation.Home
 import com.petukji.matrimonialapp.Views.RequestReceivedScreen
-import com.petukji.matrimonialapp.bottom_nav.nav_items.search.SearchScreen
+import com.petukji.matrimonialapp.bottom_nav.nav_items.search.presentation.SearchScreen
 import com.petukji.matrimonialapp.bottom_nav.domain.HomeViewModel
 
 
 @Composable
 fun NavigationForHome(
     navHostController: NavHostController,
-    homeViewModel: HomeViewModel,
-    onSearch: () -> Unit
+    homeViewModel: HomeViewModel
 ) {
     NavHost(navController = navHostController, startDestination = "home") {
         composable("home") {
