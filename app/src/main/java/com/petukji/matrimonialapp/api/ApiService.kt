@@ -12,6 +12,8 @@ import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterInterest
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterLocation
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterLocationSingleResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.LogDataResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogDataResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistWriteRequest
 import com.petukji.matrimonialapp.member_info.data.api_data.ViewLogWriteRequest
 import retrofit2.Call
 import retrofit2.Response
@@ -45,5 +47,9 @@ interface ApiService {
 
     @POST("/connectViewLog")
     fun sendConnectViewLog(@Body request: ViewLogWriteRequest):Call <LogDataResponse>
+
+
+    @POST("/connectShortlistedLog")
+    fun shortListLog(@Body request:ShortlistWriteRequest):Call<ShortListLogDataResponse>
 
 }

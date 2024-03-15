@@ -10,7 +10,12 @@ import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileReque
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
 import com.petukji.matrimonialapp.member_info.data.api_data.LogData
 import com.petukji.matrimonialapp.member_info.data.api_data.LogDataResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogData
+import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogDataResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistWriteRequest
 import com.petukji.matrimonialapp.member_info.data.api_data.ViewLogWriteRequest
+import gen._base._base_java__assetres.srcjar.R
+import gen._base._base_java__assetres.srcjar.R.id.async
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -93,12 +98,12 @@ class MemberInfoViewModel : ViewModel() {
             val current = LocalDateTime.now().format(formatter)
             val viewLogData = LogData(  // set data to the obj
                 to = userProfileData.value.mobileKey,
-                toName = userProfileData.value.firstName,
+                toName =  "${userProfileData.value.firstName }|${userProfileData.value.lastName}",
                 toAge = userProfileData.value.age,
                 toLocation = "${userProfileData.value.permanentCity} | ${userProfileData.value.permanentState}|${userProfileData.value.permanentCountry}",
                 toShortDesc = userProfileData.value.longDescription,
                 by = loggedInUserProfile.value.mobileKey,
-                byName = loggedInUserProfile.value.firstName,
+                byName = "${loggedInUserProfile.value.firstName}|${loggedInUserProfile.value.lastName}",
                 byAge = loggedInUserProfile.value.age,
                 byLocation = "${loggedInUserProfile.value.permanentCity} | ${loggedInUserProfile.value.permanentState}|${loggedInUserProfile.value.permanentCountry}",
                 byShortDesc = loggedInUserProfile.value.longDescription,
@@ -134,5 +139,74 @@ class MemberInfoViewModel : ViewModel() {
 
         }
     }
-}
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getShortListedRequest(data: UserProfileRequest) {
+        viewModelScope.launch {
+            val user = Users()
+            try {
+                // calling
+                val userProfileResponse = async { user.service.getSingleUserData(data) }
+
+                val finalUserProfile = userProfileResponse.await()
+                if (finalUserProfile.isSuccessful) {
+                    if (finalUserProfile.body() != null) {
+                        _loggedInUserProfile.value = finalUserProfile.body()!!
+                    }
+                    Log.d("user_profileData", _loggedInUserProfile.value.toString())
+                } else {
+                    Log.e("user_profileData", finalUserProfile.errorBody().toString())
+                }
+            } catch (e: Exception) {
+                Log.e("user_profile", e.message.toString())
+            }
+
+            val formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") // get current data and time
+            val current = LocalDateTime.now().format(formatter)
+
+            val shortListedLogData = ShortListLogData(
+                to = userProfileData.value.mobileKey,
+                toName = "${userProfileData.value.firstName}|${userProfileData.value.lastName}",
+                toAge = userProfileData.value.age,
+                toLocation = "${userProfileData.value.permanentCity}|${userProfileData.value.permanentState}|${userProfileData.value.permanentCountry}",
+                toShortDesc = userProfileData.value.longDescription,
+                by = loggedInUserProfile.value.mobileKey,
+                byName = "${loggedInUserProfile.value.firstName}|${loggedInUserProfile.value.lastName}",
+                byAge = loggedInUserProfile.value.age,
+                byLocation = "${loggedInUserProfile.value.permanentCity} | ${loggedInUserProfile.value.permanentState}|${loggedInUserProfile.value.permanentCountry}",
+                byShortDesc = loggedInUserProfile.value.longDescription,
+                time = current.toString(),
+                date = current.toString()
+
+            )
+
+            try {
+                val shortListLogResponse = async {
+                    user.service.shortListLog(ShortlistWriteRequest(data = shortListedLogData))
+                }
+                val finalShortlistedData = shortListLogResponse.await()
+
+                finalShortlistedData.enqueue(object : Callback<ShortListLogDataResponse> {
+                    override fun onResponse(
+                        call: Call<ShortListLogDataResponse>,
+                        response: Response<ShortListLogDataResponse>
+                    ) {
+                        Log.d("shortlist", "profile shortlisted successfully")
+                    }
+
+                    override fun onFailure(call: Call<ShortListLogDataResponse>, t: Throwable) {
+                        Log.e("shortlist", "problem shortlisting profile: $finalShortlistedData.e")
+                    }
+                })
+            }
+            catch (e: Exception) {
+                Log.e("shortlist_error", e.message.toString())
+            }
+
+        }
+
+
+    }
+
+}
