@@ -171,6 +171,33 @@ class PersonalDetailsViewModel : ViewModel() {
     fun updateCorrespondencePincode(pincode: String) {
         _personalDetails.value = _personalDetails.value.copy(correspondencePIN = pincode)
     }
+    //FamilyDetail
+    fun updateFatherName(fatherName: String) {
+        _personalDetails.value = _personalDetails.value.copy(fatherName = fatherName)
+    }
+
+    fun updateMotherName(motherName: String) {
+        _personalDetails.value = _personalDetails.value.copy(motherName = motherName)
+    }
+
+    fun updateBrotherName(brother: String) {
+        _personalDetails.value = _personalDetails.value.copy(brothers = brother)
+    }
+
+    fun updateSisterName(sister: String) {
+        _personalDetails.value = _personalDetails.value.copy(sisters = sister)
+    }
+
+    fun totalFamilyMembers(totalFamilyMembers: String) {
+        _personalDetails.value = _personalDetails.value.copy(totalFamily = totalFamilyMembers)
+    }
+    fun updateFatherOccupation(fatherOccupation: String) {
+        _personalDetails.value = _personalDetails.value.copy(fatherOccupation = fatherOccupation)
+    }
+
+    fun updateMotherOccupation(motherOccupation: String) {
+        _personalDetails.value = _personalDetails.value.copy(motherOccupation = motherOccupation)
+    }
 
 //    fun resetPersonalDetails() {
 //        _personalDetails.value = PersonalDetails()
