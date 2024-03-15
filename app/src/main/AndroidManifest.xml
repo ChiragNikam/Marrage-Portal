@@ -21,11 +21,6 @@
             android:label="@string/title_activity_network_not_avalbe"
             android:theme="@style/Theme.MarragePortal" />
         <activity
-            android:name=".RequestRecevedActivity"
-            android:exported="true"
-            android:label="@string/title_activity_request_receved"
-            android:theme="@style/Theme.MarragePortal" />
-        <activity
             android:name=".member_info.presentation.MemberCompleteInfoActivity"
             android:exported="false"
             android:label="@string/title_activity_girl_complete_info"

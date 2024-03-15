@@ -45,7 +45,7 @@ class MemberInfoViewModel : ViewModel() {
         _infoMenusState.value = value
     }
 
-    fun getSelectedUserProfile(data: UserProfileRequest) {
+    suspend fun getSelectedUserProfile(data: UserProfileRequest) {
         viewModelScope.launch {
             val user = Users()
             val userProfileResponse = async { user.service.getSingleUserData(data) }

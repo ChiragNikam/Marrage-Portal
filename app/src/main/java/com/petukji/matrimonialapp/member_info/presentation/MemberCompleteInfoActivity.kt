@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.member_info.domain.MemberInfoViewModel
 import com.petukji.matrimonialapp.ui.theme.MarriagePortalTheme
@@ -24,14 +25,14 @@ class MemberCompleteInfoActivity : ComponentActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this)[MemberInfoViewModel::class.java] }
 
-    @OptIn(DelicateCoroutinesApi::class)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
-        GlobalScope.launch {
+        lifecycleScope.launch {
+            // get profile of the selected user
             viewModel.getSelectedUserProfile(UserProfileRequest(mobileKey = key))
-
+            // set viewed profile to api
             viewModel.profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
         }
     }
