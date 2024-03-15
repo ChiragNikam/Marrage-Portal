@@ -37,6 +37,6 @@ interface ApiService {
     fun getMasterDegreeData(@Body request:MasterDegree):Call<MasterDegreeResponse>
 
     @POST("/connectViewLog")
-    fun getConnectViewLog(@Body request: ViewLogWriteRequest):Call<LogDataResponse>
+    fun sendConnectViewLog(@Body request: ViewLogWriteRequest):Call <LogDataResponse>
 
 }

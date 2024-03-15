@@ -65,7 +65,7 @@ class HomeActivity : ComponentActivity() {
             // items for bottom navigation bar
             val bottomBarItems = listOf(
                 BottomNavigationItem(
-                    title = "Home",
+                    title = "Match",
                     route = "home",
                     selectedIcon = painterResource(id = R.drawable.filled_home),
                     unselectedIcon = painterResource(id = R.drawable.outline_home)
