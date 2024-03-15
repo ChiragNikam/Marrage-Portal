@@ -6,7 +6,7 @@ data class InterestLogResponse(
 
 data class ShortlistedProfile(
     val by: String,
-    val byAge: Int,
+    val byAge: String,
     val byLocation: String,
     val byName: String,
     val byProfile: String,

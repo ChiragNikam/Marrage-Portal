@@ -65,11 +65,6 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
 
     Column(modifier = modifier.fillMaxSize()) {
 
-        if (profileShortListed)
-            Toast
-                .makeText(context, "Profile Shortlisted", Toast.LENGTH_SHORT)
-                .show()
-
         GirlImageAndInfoView(profileData = userProfileData)
 
         Row(
@@ -84,7 +79,9 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                 modifier = Modifier
                     .weight(1.3f)
                     .fillMaxHeight()
-                    .clickable { },
+                    .clickable {
+                        viewModel.sendInterestLog()
+                    },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -108,8 +105,11 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                     .fillMaxHeight()
                     .clickable {
                         if (!profileShortListed) {
-                            viewModel.shortListProfile(UserProfileRequest(mobileKey = "11234567894"))
+                            viewModel.shortListProfile()
                         }
+                        Toast
+                            .makeText(context, "Profile Shortlisted", Toast.LENGTH_SHORT)
+                            .show()
                     },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center

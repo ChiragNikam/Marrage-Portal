@@ -6,13 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
+import com.petukji.matrimonialapp.member_info.data.api_data.InterestLogResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.LogData
 import com.petukji.matrimonialapp.member_info.data.api_data.LogDataResponse
+import com.petukji.matrimonialapp.member_info.data.api_data.LogEntry
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogData
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogDataResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistReadRequest
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistWriteRequest
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistedProfile
+import com.petukji.matrimonialapp.member_info.data.api_data.StatusLogRequest
 import com.petukji.matrimonialapp.member_info.data.api_data.ViewLogWriteRequest
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -178,7 +181,7 @@ class MemberInfoViewModel : ViewModel() {
         }
     }
 
-    fun shortListProfile(data: UserProfileRequest) {
+    fun shortListProfile() {
         viewModelScope.launch {
 
             val formatter =
@@ -233,13 +236,66 @@ class MemberInfoViewModel : ViewModel() {
         }
     }
 
-    fun isCurrentProfileShortListed(){
-        for (profile in shortlistedProfiles.value){
-            if (userProfileData.value.mobileKey == profile.to){
-                _isProfileShortlisted.value =  true
+    fun sendInterestLog(){
+        viewModelScope.launch {
+            val formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") // get current data and time
+            val current = LocalDateTime.now().format(formatter)
+
+            val sendInterestedLogData= LogEntry(
+                to = userProfileData.value.mobileKey,
+                toName = "${userProfileData.value.firstName}|${userProfileData.value.lastName}",
+                toAge = userProfileData.value.age,
+                toLocation = "${userProfileData.value.permanentCity}|${userProfileData.value.permanentState}|${userProfileData.value.permanentCountry}",
+                toShortDesc = userProfileData.value.longDescription,
+                by = loggedInUserProfile.value.mobileKey,
+                byName = "${loggedInUserProfile.value.firstName}|${loggedInUserProfile.value.lastName}",
+                byAge = loggedInUserProfile.value.age,
+                byLocation = "${loggedInUserProfile.value.permanentCity} | ${loggedInUserProfile.value.permanentState}|${loggedInUserProfile.value.permanentCountry}",
+                byShortDesc = loggedInUserProfile.value.longDescription,
+                time = current.toString(),
+                date = current.toString()
+
+            )
+
+            try {
+                val user=Users()
+                val interestedLogResponse=async {
+                    user.service.sendInterestLog(StatusLogRequest(data=sendInterestedLogData))
+                }
+                val finalSendInterestedData=interestedLogResponse.await()
+
+                finalSendInterestedData.enqueue(object :Callback<InterestLogResponse>{
+                    override fun onResponse(
+                        call: Call<InterestLogResponse>,
+                        response: Response<InterestLogResponse>
+                    ) {
+                        if (response.isSuccessful){
+                            Log.d("InterestedLog", "Interest Send successfully")
+                        }
+                        else{
+                            Log.e("InterestedLog", "problem sending Request: ${response.errorBody()}, ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<InterestLogResponse>, t: Throwable) {
+                        Log.e("InterestedLog", "problem sending Request profile: $finalSendInterestedData.e")
+                    }
+                })
+
+            }catch (e:Exception){
+                Log.e("InterestedLog", e.message.toString())
+            }
+        }
+
+    }
+
+    fun isCurrentProfileShortListed() {
+        for (profile in shortlistedProfiles.value) {
+            if (userProfileData.value.mobileKey == profile.to) {
+                _isProfileShortlisted.value = true
             }
         }
         _isProfileShortlisted.value = false
     }
-
 }
