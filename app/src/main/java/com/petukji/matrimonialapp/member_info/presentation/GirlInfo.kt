@@ -51,6 +51,7 @@ import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.member_info.domain.MemberInfoViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewModel) {
 
@@ -73,7 +74,9 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                 modifier = Modifier
                     .weight(1.3f)
                     .fillMaxHeight()
-                    .clickable { },
+                    .clickable {
+                               viewModel.sendInterestLog(UserProfileRequest(mobileKey = "11234567894"))
+                    },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {

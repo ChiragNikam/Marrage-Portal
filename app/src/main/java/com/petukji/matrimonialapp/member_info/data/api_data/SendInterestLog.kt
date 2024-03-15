@@ -11,14 +11,14 @@ data class StatusLogRequest(
 data class LogEntry(
     val by: String,
     val byName: String,
-    val byAge: Int,
+    val byAge: String,
     val byLocation: String,
     val byShortDesc: String,
     val date: String,
     val time: String,
     val to: String,
     val toName: String,
-    val toAge: Int,
+    val toAge: String,
     val toLocation: String,
     val toShortDesc: String
 )

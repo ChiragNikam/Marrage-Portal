@@ -25,6 +25,7 @@ class MemberCompleteInfoActivity : ComponentActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this)[MemberInfoViewModel::class.java] }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 

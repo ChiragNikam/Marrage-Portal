@@ -6,7 +6,7 @@ data class InterestLogResponse(
 
 data class UserLog(
     val by: String,
-    val byAge: Int,
+    val byAge: String,
     val byLocation: String,
     val byName: String,
     val byProfile: String,
@@ -15,7 +15,7 @@ data class UserLog(
     val date: String,
     val time: String,
     val to: String,
-    val toAge: Int,
+    val toAge: String,
     val toLocation: String,
     val toName: String,
     val toProfile: String,
