@@ -1,5 +1,7 @@
 package com.petukji.matrimonialapp.api
 
+import com.petukji.matrimonialapp.auth.data.api_data.RegistrationRequestData
+import com.petukji.matrimonialapp.auth.data.api_data.RegistrationResponse
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.AllUsersPreference
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
@@ -19,6 +21,11 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
+
+    // register user
+    @POST("/registerUser")
+    suspend fun registerUser(@Body request: RegistrationRequestData): Response<RegistrationResponse>
+
     //user
     @POST("/getUserPreference")
     suspend fun getUserPreference(): Response<AllUsersPreference>

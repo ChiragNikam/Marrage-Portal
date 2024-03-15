@@ -1,9 +1,11 @@
 package com.petukji.matrimonialapp.auth.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,11 +25,44 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.petukji.matrimonialapp.R
+import com.petukji.matrimonialapp.auth.data.SelectionType
+
+
+@Composable
+fun ForWhomScreen() {
+    Column(
+        modifier = Modifier.padding(top = 210.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "For whom are you creating?",
+            fontSize = MaterialTheme.typography.headlineSmall.fontSize
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        SelectionType.entries.forEach { groom ->
+            GradientButton(
+                text = groom.name
+            )
+        }
+        Spacer(modifier = Modifier.height(50.dp))
+
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                colorResource(id = R.color.lightRed)
+            ),
+            onClick = { }
+        ) {
+            Text(text = "Next")
+        }
+    }
+}
 
 @Composable
 fun GradientButton(
     text: String,
-//    roundedCornerShape: RoundedCornerShape
 ) {
     val gradient = listOf(
         colorResource(id = R.color.lightGreen),
@@ -41,6 +76,7 @@ fun GradientButton(
             .padding(start = 32.dp, end = 32.dp, top = 8.dp),
         onClick = {},
 
+        //should have no additional padding around it inside the button.
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent
@@ -51,10 +87,6 @@ fun GradientButton(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-//                .background(
-//                    brush = Brush.horizontalGradient(colors = gradient),
-//                    shape = roundedCornerShape
-//                )
                 .clip(shape = RoundedCornerShape(24.dp))
                 .background(
                     brush = Brush.linearGradient(colors = gradient),
@@ -73,41 +105,7 @@ fun GradientButton(
     }
 }
 
-@Composable
-fun GradientButton2(text: String, onClick: () -> Unit) {
-
-    val gradient = Brush.horizontalGradient(
-        colors = listOf(
-            colorResource(id = R.color.lightGreen),
-            colorResource(id = R.color.lightPink)
-        )
-    )
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .clickable(onClick = onClick)
-            .clip(shape = RoundedCornerShape(24.dp))
-            .background(
-                brush = gradient
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = text,
-            color = Color.Black,
-            fontSize = MaterialTheme.typography.bodyMedium.fontSize
-        )
-    }
-}
-
-@Preview
-@Composable
-fun GradientButton2Preview() {
-    GradientButton2(text = "MySelf", onClick = { })
-}
-
-@Preview(showSystemUi = true)
+@Preview()
 @Composable
 fun GradientButtonPreview() {
     GradientButton(
