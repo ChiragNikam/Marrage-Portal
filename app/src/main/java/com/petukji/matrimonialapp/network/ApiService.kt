@@ -1,4 +1,4 @@
-package com.petukji.matrimonialapp.api
+package com.petukji.matrimonialapp.network
 
 import com.petukji.matrimonialapp.auth.data.api_data.RegistrationRequestData
 import com.petukji.matrimonialapp.auth.data.api_data.RegistrationResponse

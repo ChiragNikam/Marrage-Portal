@@ -8,7 +8,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.petukji.matrimonialapp.auth.data.PersonalDetails
 import com.petukji.matrimonialapp.auth.data.api_data.RegistrationRequestData
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
 import kotlinx.coroutines.async

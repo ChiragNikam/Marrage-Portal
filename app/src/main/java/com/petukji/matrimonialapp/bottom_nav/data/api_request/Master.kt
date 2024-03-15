@@ -1,7 +1,7 @@
 package com.petukji.matrimonialapp.bottom_nav.data.api_request
 
-import com.petukji.matrimonialapp.api.ApiService
-import com.petukji.matrimonialapp.api.RetrofitInstance
+import com.petukji.matrimonialapp.network.ApiService
+import com.petukji.matrimonialapp.network.RetrofitInstance
 
 class Master {
 

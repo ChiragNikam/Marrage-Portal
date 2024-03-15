@@ -25,7 +25,6 @@ class MemberCompleteInfoActivity : ComponentActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this)[MemberInfoViewModel::class.java] }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
@@ -34,7 +33,6 @@ class MemberCompleteInfoActivity : ComponentActivity() {
             viewModel.getSelectedUserProfile(UserProfileRequest(mobileKey = key))
             // set viewed profile to api
             viewModel.profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
-
         }
     }
 

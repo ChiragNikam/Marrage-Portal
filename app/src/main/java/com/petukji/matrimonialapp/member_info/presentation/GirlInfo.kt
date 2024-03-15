@@ -51,7 +51,6 @@ import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.member_info.domain.MemberInfoViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewModel) {
 
