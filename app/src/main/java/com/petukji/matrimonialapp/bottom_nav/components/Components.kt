@@ -470,66 +470,6 @@ fun SearchPropertiesButtons(modifier: Modifier = Modifier, propertyName: String)
     }
 }
 
-// tab options row for Request Received Screen
-@Composable
-fun TabRowOptions(modifier: Modifier = Modifier) {
-    Column {
-        Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(30.dp)) {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_info),
-                    contentDescription = "info"
-                )
-            }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_document),
-                    contentDescription = "info"
-                )
-            }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.filled_profile),
-                    contentDescription = "info"
-                )
-            }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_info),
-                    contentDescription = "info"
-                )
-            }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_document),
-                    contentDescription = "info"
-                )
-            }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.filled_profile),
-                    contentDescription = "info"
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(30.dp))
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(imageVector = Icons.Filled.Settings, contentDescription = "settings")
-        }
-    }
-}
-
-@Preview
-@Composable
-fun TabRowOptionsPreview() {
-    TabRowOptions(
-        modifier = Modifier.background(
-            Color.White,
-            RoundedCornerShape(topStart = 8.dp, bottomStart = 8.dp)
-        )
-    )
-}
-
 @Preview
 @Composable
 fun PreviewSearchDropBoxLayout() {

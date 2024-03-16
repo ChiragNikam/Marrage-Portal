@@ -25,12 +25,14 @@ import com.petukji.matrimonialapp.bottom_nav.nav_items.home.presentation.Home
 import com.petukji.matrimonialapp.Views.RequestReceivedScreen
 import com.petukji.matrimonialapp.bottom_nav.nav_items.search.presentation.SearchScreen
 import com.petukji.matrimonialapp.bottom_nav.domain.HomeViewModel
+import com.petukji.matrimonialapp.bottom_nav.domain.StatusViewModel
 
 
 @Composable
 fun NavigationForHome(
     navHostController: NavHostController,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    statusViewModel: StatusViewModel
 ) {
     NavHost(navController = navHostController, startDestination = "home") {
         composable("home") {
@@ -49,8 +51,8 @@ fun NavigationForHome(
             homeViewModel.updateCurrentDestinationBottomNav("status")
             RequestReceivedScreen(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                statusViewModel
             )
         }
         composable("profile") {

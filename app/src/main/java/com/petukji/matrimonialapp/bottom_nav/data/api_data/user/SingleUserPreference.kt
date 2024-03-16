@@ -14,3 +14,7 @@ data class SingleUserPreference(
     val shortDescription: String,
     val userID: String
 )
+
+data class SingleUserPreferenceResponse(
+    val userPreference: SingleUserPreference
+)

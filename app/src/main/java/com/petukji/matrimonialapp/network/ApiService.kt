@@ -11,6 +11,8 @@ import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterInterest
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterInterestSingleResponse
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterLocation
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.master.MasterLocationSingleResponse
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.SingleUserPreference
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.SingleUserPreferenceResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.InterestLogResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.LogDataResponse
 import com.petukji.matrimonialapp.member_info.data.api_data.ShortListLogDataResponse
@@ -32,6 +34,8 @@ interface ApiService {
     //user
     @POST("/getUserPreference")
     suspend fun getUserPreference(): Response<AllUsersPreference>
+    @POST("/getUserPreference")
+    suspend fun getSingleUserPreference(@Body request: UserProfileRequest): Response<SingleUserPreferenceResponse>
 
     @POST("/getUserData")
     suspend fun getUserData():Response<Map<String, UserProfile>>

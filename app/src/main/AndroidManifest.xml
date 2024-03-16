@@ -27,7 +27,7 @@
             android:theme="@style/Theme.MarragePortal" />
         <activity
             android:name=".bottom_nav.presentation.HomeActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.MarragePortal" />
         <activity

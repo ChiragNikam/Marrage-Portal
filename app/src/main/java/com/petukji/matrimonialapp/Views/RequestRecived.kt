@@ -8,10 +8,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,13 +23,16 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.petukji.matrimonialapp.R
-import com.petukji.matrimonialapp.bottom_nav.components.TabRowOptions
+import com.petukji.matrimonialapp.bottom_nav.components.AvailableGirlsVerticalGrid
+import com.petukji.matrimonialapp.bottom_nav.domain.StatusViewModel
 
-
-@Preview(showSystemUi = true)
 @Composable
-fun RequestReceivedScreen(modifier: Modifier = Modifier) {
+fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewModel) {
+
+    val tabSelectedState by viewModel.tabSelectedState.collectAsState()
+
     Surface(
         modifier = modifier
             .fillMaxSize(),
@@ -53,22 +59,12 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
             }
             Row(modifier = Modifier.fillMaxWidth()) {
                 Column(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).padding(horizontal = 14.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    RequestGirlInfoView(
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp)
-                            .background(color = Color(0xFFDBF9DB), RoundedCornerShape(18.dp))
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Box(modifier = Modifier.padding(horizontal = 24.dp)) {
-//                        ImageViewWithGreenBlueTick(
-//                            tickModifier = Modifier.align(Alignment.TopEnd),
-//                            imageHeight = 440.dp,
-//
-//                            )
+                    when (tabSelectedState){
+                        1 -> RequestReceived()
+                        2 -> ShortlistedProfiles(viewModel)
                     }
                 }
                 //
@@ -77,7 +73,8 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier) {
                         .background(
                             Color.White,
                             RoundedCornerShape(topStart = 8.dp, bottomStart = 8.dp)
-                        )
+                        ),
+                    viewModel
                 )
             }
 
@@ -187,6 +184,109 @@ fun SettingRequestRecived(modifier: Modifier = Modifier) {
 
         }
     }
+}
+
+@Composable
+fun RequestReceived() {
+    RequestGirlInfoView(
+        modifier = Modifier
+            .padding(horizontal = 10.dp)
+            .background(color = Color(0xFFDBF9DB), RoundedCornerShape(18.dp))
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+    )
+    Spacer(modifier = Modifier.height(20.dp))
+    Box(modifier = Modifier.padding(horizontal = 24.dp)) {
+//                        ImageViewWithGreenBlueTick(
+//                            tickModifier = Modifier.align(Alignment.TopEnd),
+//                            imageHeight = 440.dp,
+//
+//                            )
+    }
+}
+
+@Composable
+fun ShortlistedProfiles(viewModel: StatusViewModel) {
+    val profiles by viewModel.profilesData.collectAsState()
+    AvailableGirlsVerticalGrid(gridItems = profiles)
+}
+
+// tab options row for Request Received Screen
+@Composable
+fun TabRowOptions(modifier: Modifier = Modifier, viewModel: StatusViewModel) {
+    val tabSelected by viewModel.tabSelectedState.collectAsState()
+    Column {
+        Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(30.dp)) {
+            IconButton(onClick = {
+                viewModel.updateTabSelectedState(0)
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_info),
+                    contentDescription = "info",
+                    tint = if (tabSelected == 0) MaterialTheme.colorScheme.primary else Color.Black
+                )
+            }
+            IconButton(onClick = {
+                viewModel.updateTabSelectedState(1)
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_document),
+                    contentDescription = "info",
+                    tint = if (tabSelected == 1) MaterialTheme.colorScheme.primary else Color.Black
+                )
+            }
+            IconButton(onClick = {
+                viewModel.updateTabSelectedState(2)
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.filled_profile),
+                    contentDescription = "info",
+                    tint = if (tabSelected == 2) MaterialTheme.colorScheme.primary else Color.Black
+                )
+            }
+            IconButton(onClick = {
+                viewModel.updateTabSelectedState(3)
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_info),
+                    contentDescription = "info",
+                    tint = if (tabSelected == 3) MaterialTheme.colorScheme.primary else Color.Black
+                )
+            }
+            IconButton(onClick = {
+                viewModel.updateTabSelectedState(4)
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_document),
+                    contentDescription = "info",
+                    tint = if (tabSelected == 4) MaterialTheme.colorScheme.primary else Color.Black
+                )
+            }
+            IconButton(onClick = {
+                viewModel.updateTabSelectedState(5)
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.filled_profile),
+                    contentDescription = "info"
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(imageVector = Icons.Filled.Settings, contentDescription = "settings")
+        }
+    }
+}
+
+@Preview
+@Composable
+fun TabRowOptionsPreview() {
+    TabRowOptions(
+        modifier = Modifier.background(
+            Color.White,
+            RoundedCornerShape(topStart = 8.dp, bottomStart = 8.dp)
+        ),
+        viewModel = viewModel()
+    )
 }
 
 @Preview
