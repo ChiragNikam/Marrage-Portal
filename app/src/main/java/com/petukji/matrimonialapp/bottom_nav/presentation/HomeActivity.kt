@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.petukji.matrimonialapp.NetworkNotAvalbeActivity
 import com.petukji.matrimonialapp.bottom_nav.data.util_data.BottomNavigationItem
@@ -34,12 +35,15 @@ import com.petukji.matrimonialapp.bottom_nav.components.BottomNav
 import com.petukji.matrimonialapp.bottom_nav.components.NavigationForHome
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Master
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
+import com.petukji.matrimonialapp.bottom_nav.domain.StatusViewModel
 import com.petukji.matrimonialapp.ui.theme.MarriagePortalTheme
 import kotlinx.coroutines.launch
 
 class HomeActivity : ComponentActivity() {
     // Home view model
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
+
+    private val statusViewModel by lazy { ViewModelProvider(this)[StatusViewModel::class.java] }
 
     override fun onStart() {
         super.onStart()
@@ -48,13 +52,16 @@ class HomeActivity : ComponentActivity() {
         if (isNetworkAvailable()){
             val users = Users()
             val master = Master()
-            homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
+            lifecycleScope.launch {
+                homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
+
+                statusViewModel.getShortListedProfilesByMe("11234567894")
+            }
         }else{
             startActivity(Intent(this,NetworkNotAvalbeActivity::class.java))
             finish()
             Toast.makeText(this,"Internet connection issue.Please check your connection",Toast.LENGTH_SHORT).show()
         }
-        homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
     }
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -115,7 +122,8 @@ class HomeActivity : ComponentActivity() {
                     ) {
                         NavigationForHome(
                             navHostController = navController,
-                            homeViewModel)
+                            homeViewModel,
+                            statusViewModel = statusViewModel)
                     }
                 }
             }

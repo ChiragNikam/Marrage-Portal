@@ -114,8 +114,6 @@ class MemberInfoViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e("shortlist", e.message.toString())
             }
-
-//            isCurrentProfileShortListed()
         }
     }
 
