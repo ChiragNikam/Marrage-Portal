@@ -163,7 +163,6 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
         ) {
             Text(text = "Next")
         }
-
     }
 }
 

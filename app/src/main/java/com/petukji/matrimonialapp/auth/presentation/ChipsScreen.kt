@@ -29,11 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastForEachIndexed
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.petukji.matrimonialapp.R
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PickUpYourFav() {
+fun PickUpYourFav(navController: NavController) {
 
     val optionCreativity = listOf(
         "Traveling", "Learning Languages", "History",
@@ -135,7 +137,7 @@ fun PickUpYourFav() {
                 colorResource(id = R.color.lightRed)
             ),
             onClick = {
-
+                navController.navigate("qualification")
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -147,5 +149,5 @@ fun PickUpYourFav() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ChipGroupReflowSamplePreview() {
-    PickUpYourFav()
+    PickUpYourFav(rememberNavController())
 }

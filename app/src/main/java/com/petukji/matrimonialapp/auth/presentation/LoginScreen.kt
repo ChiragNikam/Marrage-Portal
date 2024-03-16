@@ -81,14 +81,20 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(
+        TextButton(
+            modifier = Modifier.align(Alignment.End).height(48.dp),
             onClick = onRequestOtp,
-            enabled = true,
-            modifier = Modifier.height(48.dp)
+            enabled = true
         ) {
             Text("Request OTP (30s)")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            navController.navigate("personal_details")
+        }) {
+            Text(text = "Login")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -96,22 +102,6 @@ fun LoginScreen(
         // Divider
         HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Google Login Button
-//        OutlinedButton(
-//            colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
-//            border = BorderStroke(0.dp, Color.Transparent),
-//            modifier = modifier,
-//            onClick = onClick
-//        ) {
-//            Icon(
-//                painter = painterResource(id = R.drawable.google_icon),
-//                contentDescription = "Google Login"
-//            )
-//            Spacer(modifier = Modifier.width(8.dp))
-//            Text("Login with Google")
-//        }
-
 
         TextButton(
             onClick = { },

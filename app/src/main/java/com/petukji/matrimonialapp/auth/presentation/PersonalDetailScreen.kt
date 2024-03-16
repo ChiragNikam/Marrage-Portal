@@ -242,7 +242,7 @@ fun PersonalDetailsForm(navController: NavController, viewModel: PersonalDetails
                 colorResource(id = R.color.lightRed)
             ),
             onClick = {
-                navController.navigate("qualification")
+                navController.navigate("address")
             }
         ) {
             Text(text = "Next")

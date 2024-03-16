@@ -34,31 +34,32 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 
 @Composable
 fun AdditionalDetailScreen(
+    navController: NavController,
     viewModel: PersonalDetailsViewModel
 ) {
     rememberScrollState()
     val additionalDetails = viewModel.personalDetails.value
 
     Column(
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "Additional Detail",
+            text = "Address",
             style = MaterialTheme.typography.headlineMedium,
             fontSize = 18.sp,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        Row() {
+        Row {
             OutlinedTextField(
                 value = additionalDetails.permanentCity,
                 onValueChange = { viewModel.updateCity(it) },
@@ -205,7 +206,7 @@ fun AdditionalDetailScreen(
                 colorResource(id = R.color.lightRed)
             ),
             onClick = {
-
+                navController.navigate("pick_fav")
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -217,5 +218,5 @@ fun AdditionalDetailScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun AdditionalDetailScreenPreview() {
-    AdditionalDetailScreen(viewModel = PersonalDetailsViewModel())
+    AdditionalDetailScreen(rememberNavController(), viewModel = PersonalDetailsViewModel())
 }
