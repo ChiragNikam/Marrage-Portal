@@ -1,6 +1,7 @@
 package com.petukji.matrimonialapp.member_info.presentation
 
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
@@ -40,6 +42,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,12 +54,14 @@ import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.member_info.domain.MemberInfoViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewModel) {
 
     val selectedMenu by viewModel.infoMenusState.collectAsState()
     val userProfileData by viewModel.userProfileData.collectAsState()
+    val profileShortListed by viewModel.isProfileShortlisted.collectAsState()
+
+    val context = LocalContext.current
 
     Column(modifier = modifier.fillMaxSize()) {
 
@@ -75,7 +80,7 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                     .weight(1.3f)
                     .fillMaxHeight()
                     .clickable {
-                               viewModel.sendInterestLog(UserProfileRequest(mobileKey = "11234567894"))
+                        viewModel.sendInterestLog()
                     },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
@@ -99,14 +104,19 @@ fun MemberCompleteInfo(modifier: Modifier = Modifier, viewModel: MemberInfoViewM
                     .weight(1f)
                     .fillMaxHeight()
                     .clickable {
-                        viewModel.getShortListedRequest(UserProfileRequest(mobileKey = "11234567894"))
+                        if (!profileShortListed) {
+                            viewModel.shortListProfile()
+                        }
+                        Toast
+                            .makeText(context, "Profile Shortlisted", Toast.LENGTH_SHORT)
+                            .show()
                     },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
                     modifier = Modifier.size(28.dp),
-                    imageVector = Icons.Outlined.FavoriteBorder,
+                    imageVector = if (profileShortListed) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                     contentDescription = "short list",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
@@ -219,12 +229,12 @@ fun ProfileMenuItem(
             modifier = iconModifier,
             imageVector = icon,
             contentDescription = "personal",
-            tint = if(selectedState) Color.Blue.copy(0.5f) else MaterialTheme.colorScheme.onPrimary
+            tint = if (selectedState) Color.Blue.copy(0.5f) else MaterialTheme.colorScheme.onPrimary
         )
         Text(
             text = title,
             fontWeight = FontWeight(700),
-            color = if(selectedState) Color.Blue.copy(0.5f) else MaterialTheme.colorScheme.onPrimary
+            color = if (selectedState) Color.Blue.copy(0.5f) else MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -232,7 +242,8 @@ fun ProfileMenuItem(
 @Composable
 fun GirlImageAndInfoView(modifier: Modifier = Modifier, profileData: UserProfile) {
 
-    val painter = rememberImagePainter(data = profileData.profileImagePath, builder = { crossfade(true) })
+    val painter =
+        rememberImagePainter(data = profileData.profileImagePath, builder = { crossfade(true) })
 
     val gradient = Brush.verticalGradient(
         listOf(Color.Transparent, MaterialTheme.colorScheme.primary),
@@ -310,17 +321,17 @@ fun ProfileInfoPersonal(personalData: UserProfile) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = "${personalData.bodyType} |${personalData.bodyColor} ")
         Spacer(modifier = Modifier.height(8.dp))
-        Text(modifier = Modifier, fontSize = 12.sp,text = "Introduction")
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Introduction")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.longDescription)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(modifier = Modifier, fontSize = 12.sp,text = "Partner Preference")
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Partner Preference")
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text =personalData.marriagePreference )
+        Text(text = personalData.marriagePreference)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(modifier = Modifier, fontSize = 12.sp,text ="Qualification")
+        Text(modifier = Modifier, fontSize = 12.sp, text = "Qualification")
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text =personalData.highestQualification)
+        Text(text = personalData.highestQualification)
     }
 }
 
@@ -338,7 +349,7 @@ fun ProfileInfoFamily(personalData: UserProfile) {
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 8.dp, vertical = 12.dp)
 
-    ){
+    ) {
         val fontStyle = MaterialTheme.typography.labelLarge.fontStyle
         Text(modifier = Modifier, fontStyle = fontStyle, text = "Total Family Members")
         Spacer(modifier = Modifier.height(8.dp))
@@ -374,7 +385,7 @@ fun ProfileInfoCommunity(personalData: UserProfile) {
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 8.dp, vertical = 12.dp)
 
-    ){
+    ) {
         Text(modifier = Modifier, fontSize = 12.sp, text = "Religion")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.religion)
@@ -396,7 +407,7 @@ fun ProfileInfoProfession(personalData: UserProfile) {
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 8.dp, vertical = 12.dp)
 
-    ){
+    ) {
         Text(modifier = Modifier, fontSize = 12.sp, text = "Company")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.companyName)
@@ -417,7 +428,7 @@ fun ProfileInfoHabit(personalData: UserProfile) {
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 8.dp, vertical = 12.dp)
 
-    ){
+    ) {
         Text(modifier = Modifier, fontSize = 12.sp, text = "Interests")
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = personalData.interests)

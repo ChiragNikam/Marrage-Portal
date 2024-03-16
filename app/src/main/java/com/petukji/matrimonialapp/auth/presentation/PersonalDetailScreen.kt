@@ -44,7 +44,6 @@ import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PersonalDetailsForm(navController: NavController, viewModel: PersonalDetailsViewModel) {
     val personalDetails = viewModel.personalDetails.value

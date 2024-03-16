@@ -1,10 +1,10 @@
 package com.petukji.matrimonialapp.member_info.data.api_data
 
 data class InterestLogResponse(
-    val data: List<UserLog>
+    val data: List<ShortlistedProfile>
 )
 
-data class UserLog(
+data class ShortlistedProfile(
     val by: String,
     val byAge: String,
     val byLocation: String,
