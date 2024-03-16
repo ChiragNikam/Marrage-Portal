@@ -37,6 +37,7 @@ class MemberCompleteInfoActivity : ComponentActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         key = intent.getStringExtra("key").toString()
         viewModel.updateUserProfileKey(key)
