@@ -39,8 +39,8 @@ class PersonalDetailsViewModel : ViewModel() {
         _personalDetails.value = _personalDetails.value.copy(age = age)
     }
 
-    fun updatePhoneNo(phoneNo: String) {
-        _personalDetails.value = _personalDetails.value.copy(mobileKey = phoneNo)
+    fun updatePhoneNo(mobile: String) {
+        _personalDetails.value = _personalDetails.value.copy(mobile = mobile)
     }
 
     fun updateEmail(email: String) {
