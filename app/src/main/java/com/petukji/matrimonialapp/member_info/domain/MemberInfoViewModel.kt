@@ -1,6 +1,8 @@
 package com.petukji.matrimonialapp.member_info.domain
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
@@ -117,6 +119,7 @@ class MemberInfoViewModel : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun profileViewedRequest(data: UserProfileRequest) {
         viewModelScope.launch {
 
@@ -181,6 +184,7 @@ class MemberInfoViewModel : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun shortListProfile() {
         viewModelScope.launch {
 
@@ -236,6 +240,7 @@ class MemberInfoViewModel : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun sendInterestLog(){
         viewModelScope.launch {
             val formatter =
