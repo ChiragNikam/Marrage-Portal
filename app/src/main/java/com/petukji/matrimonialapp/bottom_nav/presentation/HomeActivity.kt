@@ -52,11 +52,7 @@ class HomeActivity : ComponentActivity() {
         if (isNetworkAvailable()){
             val users = Users()
             val master = Master()
-            lifecycleScope.launch {
-                homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
 
-                statusViewModel.getShortListedProfilesByMe("11234567894")
-            }
         }else{
             startActivity(Intent(this,NetworkNotAvalbeActivity::class.java))
             finish()
@@ -67,6 +63,14 @@ class HomeActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (savedInstanceState == null){
+            lifecycleScope.launch {
+                homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
+
+                statusViewModel.getShortListedProfilesByMe("11234567894")
+            }
+        }
 
         setContent {
             // items for bottom navigation bar
