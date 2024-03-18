@@ -25,8 +25,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,6 +51,10 @@ fun LoginScreen(
     onGoogleLogin: () -> Unit
 ) {
     val loginDetails = viewModel.personalDetails.value
+    
+    var otpField by remember {
+        mutableStateOf("")
+    }
 
     Column(
         modifier = Modifier
@@ -75,14 +81,16 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = otpField,
+            onValueChange = {otpField = it},
             label = { Text("OTP") },
             modifier = Modifier.fillMaxWidth()
         )
 
         TextButton(
-            modifier = Modifier.align(Alignment.End).height(48.dp),
+            modifier = Modifier
+                .align(Alignment.End)
+                .height(48.dp),
             onClick = onRequestOtp,
             enabled = true
         ) {
