@@ -62,7 +62,7 @@ fun NavigationForAuth(
         }
 
         composable("uploadImage") {
-            UploadImage(navController = navHostController)
+            UploadImage(navController = navHostController, viewModel)
         }
 
 

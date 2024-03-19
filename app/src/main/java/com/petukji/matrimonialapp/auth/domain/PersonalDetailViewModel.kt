@@ -11,13 +11,20 @@ import androidx.lifecycle.viewModelScope
 import com.petukji.matrimonialapp.auth.data.api_data.RegistrationRequestData
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import org.json.JSONException
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 
 class PersonalDetailsViewModel : ViewModel() {
     private val _personalDetails = mutableStateOf(RegistrationRequestData())
     val personalDetails: State<RegistrationRequestData> = _personalDetails
+
+    private val _isRegistrationSuccess = MutableStateFlow(false)
+    val isRegistrationSuccess get() = _isRegistrationSuccess
 
     fun updateFirstName(firstName: String) {
         _personalDetails.value = _personalDetails.value.copy(firstName = firstName)
@@ -41,6 +48,8 @@ class PersonalDetailsViewModel : ViewModel() {
 
     fun updatePhoneNo(mobile: String) {
         _personalDetails.value = _personalDetails.value.copy(mobile = mobile)
+        _personalDetails.value = _personalDetails.value.copy(mobileKey = mobile)
+        _personalDetails.value = _personalDetails.value.copy(userID = mobile)
     }
 
     fun updateEmail(email: String) {
@@ -171,6 +180,7 @@ class PersonalDetailsViewModel : ViewModel() {
     fun updateCorrespondencePincode(pincode: String) {
         _personalDetails.value = _personalDetails.value.copy(correspondencePIN = pincode)
     }
+
     //FamilyDetail
     fun updateFatherName(fatherName: String) {
         _personalDetails.value = _personalDetails.value.copy(fatherName = fatherName)
@@ -191,6 +201,7 @@ class PersonalDetailsViewModel : ViewModel() {
     fun totalFamilyMembers(totalFamilyMembers: String) {
         _personalDetails.value = _personalDetails.value.copy(totalFamily = totalFamilyMembers)
     }
+
     fun updateFatherOccupation(fatherOccupation: String) {
         _personalDetails.value = _personalDetails.value.copy(fatherOccupation = fatherOccupation)
     }
@@ -199,26 +210,31 @@ class PersonalDetailsViewModel : ViewModel() {
         _personalDetails.value = _personalDetails.value.copy(motherOccupation = motherOccupation)
     }
 
-//    fun resetPersonalDetails() {
-//        _personalDetails.value = PersonalDetails()
-//    }
-
     fun getPersonalDetails(): RegistrationRequestData {
         return _personalDetails.value
     }
 
-    fun registerUser(){
+    fun registerUser() {
         viewModelScope.launch {
             val user = Users()
             val registrationResponse = async { user.service.registerUser(personalDetails.value) }
 
             val finalRegistrationResponse = registrationResponse.await()
-            if (finalRegistrationResponse.isSuccessful){
+            if (finalRegistrationResponse.isSuccessful) {
                 Log.d("registration", "Registration Successfully")
-            } else{
-                Log.e("registration", "Registration Failed: ${finalRegistrationResponse.errorBody()}")
+                _isRegistrationSuccess.value = true
+            } else {
+                val errorBody = finalRegistrationResponse.errorBody()?.string()
+                val errorMessage = try {
+                    JSONObject(errorBody ?: "").getString("error")
+                } catch (e: JSONException) {
+                    "Unknown error occurred"
+                }
+                Log.e(
+                    "registration",
+                    "Registration Failed: ${finalRegistrationResponse.code()} $errorMessage"
+                )
             }
         }
     }
-
 }

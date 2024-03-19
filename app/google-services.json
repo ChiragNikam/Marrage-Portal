@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "649502893330",
+    "project_id": "mobile-otp-9f32b",
+    "storage_bucket": "mobile-otp-9f32b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649502893330:android:145e82ba2d80d9454c7fcb",
+        "android_client_info": {
+          "package_name": "com.petukji.matrimonialapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4ZUy-0SrOrei7Yal074pvz-3_eBo_bTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

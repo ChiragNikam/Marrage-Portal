@@ -37,16 +37,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.petukji.matrimonialapp.R
+import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 import com.petukji.matrimonialapp.bottom_nav.presentation.HomeActivity
 
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun UploadImage(navController: NavController) {
+fun UploadImage(navController: NavController, viewModel: PersonalDetailsViewModel) {
 
     var profileImageUri by remember {
         mutableStateOf<Uri?>(null)
@@ -131,7 +133,7 @@ fun UploadImage(navController: NavController) {
 
         Button(
             onClick = {
-                context.startActivity(Intent(context, HomeActivity::class.java))
+                viewModel.registerUser()
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -145,6 +147,7 @@ fun UploadImage(navController: NavController) {
 @Composable
 fun PickUpImageFromGalleryPreview() {
     UploadImage(
-        rememberNavController()
+        rememberNavController(),
+        viewModel()
     )
 }

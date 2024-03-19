@@ -29,9 +29,11 @@
             android:name=".bottom_nav.presentation.HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.MarragePortal" />
+            android:theme="@style/Theme.MarragePortal" >
+
+        </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".auth.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MarragePortal"
