@@ -3,6 +3,7 @@ package com.petukji.matrimonialapp.bottom_nav.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.petukji.matrimonialapp.R
 
@@ -38,65 +40,54 @@ fun UserProfile(
     modifier: Modifier = Modifier,
     name: String,
     id: String,
-    imageUrl: String,
-    onImageClick: () -> Unit
+    imageUrl: String
 ) {
-    Row(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically // Align items vertically in the row
-    ) {
+    UserImage(
+        imageUrl = imageUrl,
+        modifier = Modifier
+            .size(52.dp)
+            .clip(CircleShape)
+    )
+
+    Spacer(modifier = Modifier.width(16.dp)) // Add space between user details and image
+
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Column(
-            modifier = modifier
-                .weight(1f) // Take up available horizontal space
+            modifier = Modifier
         ) {
             Text(
                 text = "Hi! $name",
-                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                fontSize = 22.sp,
                 fontWeight = FontWeight(700)
             )
 
-            Spacer(modifier = Modifier.height(6.dp))
-
             Text(
                 text = "ID: $id",
+                fontSize = 10.sp,
                 style = MaterialTheme.typography.bodyMedium
             )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            BiodataDocuments()
         }
+        Spacer(modifier = Modifier.weight(1f))
 
-        Spacer(modifier = Modifier.width(16.dp)) // Add space between user details and image
-
-        UserImage(
-            imageUrl = imageUrl,
-            onImageClick = onImageClick,
-            modifier = Modifier
-                .size(80.dp)
-                .clip(CircleShape)
-                .clickable { onImageClick() }
-        )
+        BiodataDocuments()
     }
 }
 
 @Composable
 fun UserImage(
     imageUrl: String,
-    onImageClick: () -> Unit,
     modifier: Modifier
 ) {
     val painter = rememberImagePainter(data = imageUrl, builder = { crossfade(true) })
 
     Box {
-        Box(modifier = modifier
-            .border(
-                width = 4.dp,
-                color = MaterialTheme.colorScheme.primary,
-                shape = CircleShape
-            )
+        Box(
+            modifier = modifier
+                .border(
+                    width = 4.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = CircleShape
+                )
         ) {
             Image(
                 painter = painter, contentDescription = null,
@@ -106,23 +97,8 @@ fun UserImage(
                     .clip(CircleShape)
             )
         }
-        IconButton(
-            onClick = { onImageClick() },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(top = 6.dp, end = 8.dp)
-                .size(28.dp)
-        )
-        {
-            Icon(
-                imageVector = Icons.Default.Edit,
-                contentDescription = "Change image",
-                tint = MaterialTheme.colorScheme.primary
-            )
-        }
     }
 }
-
 
 
 @Composable
@@ -131,25 +107,23 @@ fun BiodataDocuments(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(3.dp),
         modifier = modifier
-            .fillMaxWidth(1f)
-
     ) {
 
         Icon(
             painter = painterResource(R.drawable.icon_profile_status),
             contentDescription = "Bio data",
-            Modifier.size(18.dp),
+            Modifier.size(22.dp),
             tint = Color.Red
-
         )
         Spacer(modifier = Modifier.width(2.dp))
 
-        GreenTick(modifier = Modifier.size(18.dp))
+        GreenTick(modifier = Modifier.size(22.dp))
 
         Spacer(modifier = Modifier.width(2.dp))
 
-        BlueTick(modifier = Modifier.size(18.dp))
+        BlueTick(modifier = Modifier.size(22.dp))
 
     }
 }
