@@ -8,16 +8,23 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import com.petukji.matrimonialapp.auth.data.api_data.RegistrationRequestData
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.concurrent.TimeUnit
 
 class PersonalDetailsViewModel : ViewModel() {
     private val _personalDetails = mutableStateOf(RegistrationRequestData())
@@ -25,6 +32,12 @@ class PersonalDetailsViewModel : ViewModel() {
 
     private val _isRegistrationSuccess = MutableStateFlow(false)
     val isRegistrationSuccess get() = _isRegistrationSuccess
+
+    // login using mobile and OTP
+    val _verificationId = MutableStateFlow<String?>(null)
+    val verificationId: StateFlow<String?> = _verificationId
+
+    private val firebaseAuth = FirebaseAuth.getInstance()
 
     fun updateFirstName(firstName: String) {
         _personalDetails.value = _personalDetails.value.copy(firstName = firstName)
@@ -236,5 +249,20 @@ class PersonalDetailsViewModel : ViewModel() {
                 )
             }
         }
+    }
+
+    fun verifyOtp(phoneNumber: String, otp: String, onResult: (Boolean) -> Unit) {
+        val credential = PhoneAuthProvider.getCredential(verificationId.value!!, otp)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    val user = task.result?.user
+                    onResult(true)
+                } else {
+                    // Sign in failed, display a message and update the UI
+                    onResult(false)
+                }
+            }
     }
 }
