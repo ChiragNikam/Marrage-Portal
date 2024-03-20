@@ -2,8 +2,6 @@ package com.petukji.matrimonialapp.bottom_nav.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -22,10 +20,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.petukji.matrimonialapp.bottom_nav.data.util_data.BottomNavigationItem
 import com.petukji.matrimonialapp.bottom_nav.nav_items.home.presentation.Home
-import com.petukji.matrimonialapp.Views.RequestReceivedScreen
+import com.petukji.matrimonialapp.bottom_nav.nav_items.status.presentation.RequestReceivedScreen
 import com.petukji.matrimonialapp.bottom_nav.nav_items.search.presentation.SearchScreen
 import com.petukji.matrimonialapp.bottom_nav.domain.HomeViewModel
-import com.petukji.matrimonialapp.bottom_nav.domain.StatusViewModel
+import com.petukji.matrimonialapp.bottom_nav.nav_items.status.domain.StatusViewModel
 
 
 @Composable

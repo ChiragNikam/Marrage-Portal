@@ -1,13 +1,11 @@
-package com.petukji.matrimonialapp.Views
+package com.petukji.matrimonialapp.bottom_nav.nav_items.status.presentation
 
-import android.provider.MediaStore.Images
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
@@ -31,7 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.bottom_nav.components.AvailableGirlsVerticalGrid
-import com.petukji.matrimonialapp.bottom_nav.domain.StatusViewModel
+import com.petukji.matrimonialapp.bottom_nav.nav_items.status.domain.StatusViewModel
+import com.petukji.matrimonialapp.common.GridContentBeforeLoading
+import com.petukji.matrimonialapp.common.ShimmerItem
 
 @Composable
 fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewModel) {
@@ -217,7 +217,15 @@ fun RequestReceived() {
 @Composable
 fun ShortlistedProfiles(viewModel: StatusViewModel) {
     val profiles by viewModel.profilesData.collectAsState()
-    AvailableGirlsVerticalGrid(gridItems = profiles)
+    val isProfileLoading by viewModel.isShortlistedProfilesLoading.collectAsState()
+
+    ShimmerItem(isLoading = isProfileLoading,
+        contentBeforeLoading = {
+            GridContentBeforeLoading()
+        },
+        contentAfterLoading = {
+            AvailableGirlsVerticalGrid(gridItems = profiles)
+        })
 }
 
 // tab options row for Request Received Screen

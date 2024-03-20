@@ -1,11 +1,8 @@
 package com.petukji.matrimonialapp.bottom_nav.nav_items.home.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,10 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +35,8 @@ import com.petukji.matrimonialapp.bottom_nav.domain.HomeViewModel
 import com.petukji.matrimonialapp.bottom_nav.components.AvailableGirlsVerticalGrid
 import com.petukji.matrimonialapp.bottom_nav.components.UserProfile
 import com.petukji.matrimonialapp.R
+import com.petukji.matrimonialapp.common.GridContentBeforeLoading
+import com.petukji.matrimonialapp.common.ProfileContentBeforeLoading
 import com.petukji.matrimonialapp.common.ShimmerItem
 import com.petukji.matrimonialapp.common.shimmerEffect
 
@@ -56,7 +52,7 @@ fun Home(
 
     val userPreferenceData by viewModel.userPreferenceData.collectAsState()
     Surface(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         Column(
@@ -77,28 +73,7 @@ fun Home(
                 ShimmerItem(
                     isLoading = isUserProfileLoading,
                     contentBeforeLoading = {
-                        Box(
-                            modifier = Modifier
-                                .size(52.dp)
-                                .clip(CircleShape)
-                                .shimmerEffect()
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Column {
-                            Box(
-                                modifier = Modifier
-                                    .height(22.dp)
-                                    .width(176.dp)
-                                    .shimmerEffect()
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Box(
-                                modifier = Modifier
-                                    .height(8.dp)
-                                    .width(56.dp)
-                                    .shimmerEffect()
-                            )
-                        }
+                        ProfileContentBeforeLoading()
                     },
                     contentAfterLoading = {
                         UserProfile(
@@ -163,46 +138,7 @@ fun Home(
                 ShimmerItem(
                     isLoading = isUserPreferenceLoading,
                     contentBeforeLoading = {
-                        LazyVerticalGrid(
-                            modifier = Modifier
-                                .padding(
-                                    start = 20.dp,
-                                    end = 20.dp
-                                ),
-                            columns = GridCells.Fixed(2),
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            contentPadding = PaddingValues(top = 12.dp, bottom = 110.dp)
-                        ) {
-                            items(8) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(200.dp)
-                                        .clip(RoundedCornerShape(15.dp))
-                                        .shimmerEffect(),
-                                    contentAlignment = Alignment.BottomCenter
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(bottom = 14.dp),
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth(0.7f)
-                                                .height(20.dp)
-                                                .shimmerEffect()
-                                        )
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth(0.5f)
-                                                .height(20.dp)
-                                                .shimmerEffect()
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        GridContentBeforeLoading()
                     },
                     contentAfterLoading = {
                         AvailableGirlsVerticalGrid(

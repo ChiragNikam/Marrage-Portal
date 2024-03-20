@@ -65,4 +65,7 @@ interface ApiService {
     @POST("/connectShortlistedLog")
     suspend fun getShortListedProfile(@Body request: ShortlistReadRequest): Response<InterestLogResponse>
 
+    @POST("/connectViewLog")
+    suspend fun getViewedProfiles(@Body request: ShortlistReadRequest): Response<InterestLogResponse>
+
 }

@@ -1,4 +1,4 @@
-package com.petukji.matrimonialapp.bottom_nav.domain
+package com.petukji.matrimonialapp.bottom_nav.nav_items.status.domain
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -17,6 +17,9 @@ class StatusViewModel: ViewModel() {
     // shortlisted profiles by me
     private val _shortlistedProfiles = MutableStateFlow(mutableListOf<ShortlistedProfile>())
     val shortlistedProfiles get() = _shortlistedProfiles
+
+    private val _isShortlistedProfilesLoading = MutableStateFlow(true)
+    val isShortlistedProfilesLoading get() = _isShortlistedProfilesLoading
 
     // profile data for shortlisted profiles
     private val _profilesData = MutableStateFlow(mutableListOf<SingleUserPreference>())
@@ -66,7 +69,7 @@ class StatusViewModel: ViewModel() {
         }
     }
 
-    fun getDetailsOfShortlistedProfiles(){
+    private fun getDetailsOfShortlistedProfiles(){
         viewModelScope.launch {
             for (profile in shortlistedProfiles.value){
                 try {
@@ -78,6 +81,7 @@ class StatusViewModel: ViewModel() {
                         if (finalUserProfile.body() != null) {
                             _profilesData.value.add(finalUserProfile.body()!!.userPreference)
                             Log.d("shortlisted", finalUserProfile.body().toString())
+                            _isShortlistedProfilesLoading.value = false
                         }
                     } else {
                         Log.e("user_profileData", finalUserProfile.errorBody().toString())
@@ -86,6 +90,12 @@ class StatusViewModel: ViewModel() {
                     Log.e("user_profile", e.message.toString())
                 }
             }
+        }
+    }
+
+    suspend fun getProfilesViewedByMe(){
+        viewModelScope.launch {
+
         }
     }
 }

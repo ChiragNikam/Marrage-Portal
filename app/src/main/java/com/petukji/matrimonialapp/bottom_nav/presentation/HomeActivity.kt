@@ -10,20 +10,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.rememberBottomSheetScaffoldState
-import androidx.compose.material3.rememberStandardBottomSheetState
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
@@ -35,7 +29,7 @@ import com.petukji.matrimonialapp.bottom_nav.components.BottomNav
 import com.petukji.matrimonialapp.bottom_nav.components.NavigationForHome
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Master
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
-import com.petukji.matrimonialapp.bottom_nav.domain.StatusViewModel
+import com.petukji.matrimonialapp.bottom_nav.nav_items.status.domain.StatusViewModel
 import com.petukji.matrimonialapp.ui.theme.MarriagePortalTheme
 import kotlinx.coroutines.launch
 

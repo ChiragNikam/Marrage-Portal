@@ -145,7 +145,6 @@ fun LoginScreen(
                     }
                 }
             }
-            navController.navigate("personal_details")  // if login successful navigate to the next screen
         }) {
             Text(text = "Login")
         }
@@ -191,6 +190,7 @@ fun requestOtp(phoneNumber: String, activity: Activity, viewModel: PersonalDetai
                 //     detect the incoming verification SMS and perform verification without
                 //     user action.
                 // Here, you can handle the verification completed event.
+                Log.d("verification", "Verification Completed")
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
