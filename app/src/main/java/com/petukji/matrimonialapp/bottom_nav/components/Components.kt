@@ -271,7 +271,6 @@ fun SingleGirlView(
                 .background(
                     transientWhite, RoundedCornerShape(30.dp)
                 )
-                .height(45.dp)
                 .padding(horizontal = 18.dp, vertical = 5.dp),
             text = "${data.firstName + " " + data.lastName}, ${data.age}\n${data.correspondenceCity}, ${data.correspondenceCountry}",
             textAlign = TextAlign.Center,

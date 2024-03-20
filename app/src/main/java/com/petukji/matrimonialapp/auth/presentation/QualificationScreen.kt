@@ -29,12 +29,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 import com.petukji.matrimonialapp.bottom_nav.presentation.HomeActivity
 
 @Composable
-fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
+fun QualificationScreen(navController: NavController, viewModel: PersonalDetailsViewModel) {
 
     val context = LocalContext.current
 
@@ -158,7 +160,7 @@ fun QualificationScreen(viewModel: PersonalDetailsViewModel) {
                 colorResource(id = R.color.lightRed)
             ),
             onClick = {
-                context.startActivity(Intent(context, HomeActivity::class.java))
+                navController.navigate("uploadImage")
             }
         ) {
             Text(text = "Next")
@@ -197,5 +199,5 @@ fun OccupationRadioGroup(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun QualificationScreenPreview() {
-    QualificationScreen(PersonalDetailsViewModel())
+    QualificationScreen(rememberNavController(),PersonalDetailsViewModel())
 }

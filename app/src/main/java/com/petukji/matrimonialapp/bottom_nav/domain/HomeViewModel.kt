@@ -23,6 +23,14 @@ class HomeViewModel : ViewModel() {
     private val _userProfile = MutableStateFlow(UserProfile())
     val userProfile get() = _userProfile
 
+    // loading status for user profile
+    private val _isUserProfileLoading = MutableStateFlow(true)
+    val isUserProfileLoading get() = _isUserProfileLoading
+
+    // loading status for user preference data
+    private val _isUserPreferenceLoading = MutableStateFlow(true)
+    val isUserPreferenceLoading = _isUserPreferenceLoading
+
     // store the current bottom navigation route
     private val _currentDestinationBottomNav = MutableStateFlow("")
     val currentDestinationBottomNav get() = _currentDestinationBottomNav
@@ -86,6 +94,7 @@ class HomeViewModel : ViewModel() {
             if (finalUserPreference.isSuccessful) {
                 if (finalUserPreference.body() != null)
                     _userPreferenceData.value = finalUserPreference.body()!!.usersPreference.toMutableList()
+                _isUserPreferenceLoading.value = false
             } else {
                 Log.e("user_preference", finalUserPreference.errorBody().toString())
             }
@@ -96,6 +105,7 @@ class HomeViewModel : ViewModel() {
                 if (finalUserProfile.body() != null){
                     _userProfile.value = finalUserProfile.body()!![profileKeyId]!!
                 }
+                _isUserProfileLoading.value = false
             } else{
                 Log.e("user_profile", finalUserProfile.errorBody().toString())
             }

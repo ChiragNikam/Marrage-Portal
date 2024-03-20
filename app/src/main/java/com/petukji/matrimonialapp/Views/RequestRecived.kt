@@ -1,11 +1,16 @@
 package com.petukji.matrimonialapp.Views
 
+import android.provider.MediaStore.Images
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -49,7 +54,7 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewMo
                 modifier = Modifier.padding(vertical = 18.dp, horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                SettingRequestRecived(modifier = Modifier.weight(1f))
+                SettingRequestRecived(modifier = Modifier.weight(1f), tabSelectedState)
                 Icon(
                     modifier = Modifier.weight(0.2f),
                     painter = painterResource(id = R.drawable.ic_gridicon),
@@ -59,10 +64,12 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewMo
             }
             Row(modifier = Modifier.fillMaxWidth()) {
                 Column(
-                    modifier = Modifier.weight(1f).padding(horizontal = 14.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 14.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    when (tabSelectedState){
+                    when (tabSelectedState) {
                         1 -> RequestReceived()
                         2 -> ShortlistedProfiles(viewModel)
                     }
@@ -133,7 +140,7 @@ fun RequestGirlInfoView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SettingRequestRecived(modifier: Modifier = Modifier) {
+fun SettingRequestRecived(modifier: Modifier = Modifier, tabSelectedState: Int) {
 
     Box(
         modifier = modifier
@@ -167,15 +174,18 @@ fun SettingRequestRecived(modifier: Modifier = Modifier) {
                         .padding(3.dp),
                     imageVector = Icons.Filled.Settings,
                     contentDescription = "Settings Icon",
-
-                    )
-
+                )
             }
             Spacer(modifier = modifier.width(4.dp))
 
             Row(modifier = modifier.padding(start = 40.dp, top = 8.dp)) {
                 Text(
-                    text = "Request Received(4)",
+                    text = when (tabSelectedState) {
+                        0 -> "Profile Viewed"
+                        1 -> "Request Received"
+                        2 -> "Shortlisted Profiles"
+                        else -> " "
+                    },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -220,8 +230,8 @@ fun TabRowOptions(modifier: Modifier = Modifier, viewModel: StatusViewModel) {
                 viewModel.updateTabSelectedState(0)
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_info),
-                    contentDescription = "info",
+                    imageVector = Icons.Filled.Face,
+                    contentDescription = "profile viewed",
                     tint = if (tabSelected == 0) MaterialTheme.colorScheme.primary else Color.Black
                 )
             }
@@ -229,8 +239,8 @@ fun TabRowOptions(modifier: Modifier = Modifier, viewModel: StatusViewModel) {
                 viewModel.updateTabSelectedState(1)
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_document),
-                    contentDescription = "info",
+                    imageVector = Icons.Filled.CheckCircle,
+                    contentDescription = "accepted request",
                     tint = if (tabSelected == 1) MaterialTheme.colorScheme.primary else Color.Black
                 )
             }
@@ -238,8 +248,8 @@ fun TabRowOptions(modifier: Modifier = Modifier, viewModel: StatusViewModel) {
                 viewModel.updateTabSelectedState(2)
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.filled_profile),
-                    contentDescription = "info",
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "shortlisted",
                     tint = if (tabSelected == 2) MaterialTheme.colorScheme.primary else Color.Black
                 )
             }

@@ -45,145 +45,152 @@ fun SearchScreen(
     onSearch: () -> Unit
 ) {
     Surface(modifier = modifier) {
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())
-            , horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(modifier = Modifier.height(30.dp))
-            Text(
-                text = "Advance Search",
-                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                fontWeight = FontWeight.ExtraBold
-            )
-            Text(
-                text = "Drag Component",
-                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-            )
 
-            Spacer(modifier = Modifier.height(42.dp))
-
-            Row(
+        DragableScreen {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val searchProperties by viewModel.searchItems.collectAsState()
-                // Drag able Properties : city, state, country, qualification, degree, age, religion, body type
-                Column {
-                    val buttonModifier = Modifier.width(128.dp)
+                Spacer(modifier = Modifier.height(30.dp))
+                Text(
+                    text = "Advance Search",
+                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                    fontWeight = FontWeight.ExtraBold
+                )
+                Text(
+                    text = "Drag Component",
+                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                )
 
-                    // set all the properties to drag after long press
-                    searchProperties.forEach { property ->
-                        DragTarget(dataToDrop = property, viewModel = viewModel) {
-                            SearchPropertiesButtons(
-                                modifier = buttonModifier,
-                                propertyName = property.name
+                Spacer(modifier = Modifier.height(42.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val searchProperties by viewModel.searchItems.collectAsState()
+                    // Drag able Properties : city, state, country, qualification, degree, age, religion, body type
+                    Column {
+                        val buttonModifier = Modifier.width(128.dp)
+
+                        // set all the properties to drag after long press
+                        searchProperties.forEach { property ->
+                            DragTarget(dataToDrop = property, viewModel = viewModel) {
+                                SearchPropertiesButtons(
+                                    modifier = buttonModifier,
+                                    propertyName = property.name
+                                )
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
+                    // Place where to drop the property: user have to pick a property and drag it into this column to use this property for search
+                    Column(verticalArrangement = Arrangement.spacedBy(22.dp)) {
+                        DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
+                            var propertyName by rememberSaveable {
+                                mutableStateOf("")
+                            }
+                            if (personItem != null) {
+                                LaunchedEffect(key1 = personItem) {
+                                    propertyName = personItem.name
+                                    viewModel.addProperty(personItem)
+                                }
+                            }
+                            SearchDropBoxView(
+                                modifier = Modifier.fillMaxWidth(),
+                                propertyName = propertyName,
+                                propertyValue = ""
+                            )
+                        }
+
+                        DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
+                            var propertyName by rememberSaveable {
+                                mutableStateOf("")
+                            }
+                            if (personItem != null) {
+                                LaunchedEffect(key1 = personItem) {
+                                    propertyName = personItem.name
+                                    viewModel.addProperty(personItem)
+                                }
+                            }
+                            SearchDropBoxView(
+                                modifier = Modifier.fillMaxWidth(),
+                                propertyName = propertyName,
+                                propertyValue = ""
+                            )
+                        }
+
+                        DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
+                            var propertyName by rememberSaveable {
+                                mutableStateOf("")
+                            }
+                            if (personItem != null) {
+                                LaunchedEffect(key1 = personItem) {
+                                    propertyName = personItem.name
+                                    viewModel.addProperty(personItem)
+                                }
+                            }
+                            SearchDropBoxView(
+                                modifier = Modifier.fillMaxWidth(),
+                                propertyName = propertyName,
+                                propertyValue = ""
+                            )
+                        }
+
+                        DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
+                            var propertyName by rememberSaveable {
+                                mutableStateOf("")
+                            }
+                            if (personItem != null) {
+                                LaunchedEffect(key1 = personItem) {
+                                    propertyName = personItem.name
+                                    viewModel.addProperty(personItem)
+                                }
+                            }
+                            SearchDropBoxView(
+                                modifier = Modifier.fillMaxWidth(),
+                                propertyName = propertyName,
+                                propertyValue = ""
+                            )
+                        }
+
+                        DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
+                            var propertyName by rememberSaveable {
+                                mutableStateOf("")
+                            }
+                            if (personItem != null) {
+                                LaunchedEffect(key1 = personItem) {
+                                    propertyName = personItem.name
+                                    viewModel.addProperty(personItem)
+                                }
+                            }
+                            SearchDropBoxView(
+                                modifier = Modifier.fillMaxWidth(),
+                                propertyName = propertyName,
+                                propertyValue = ""
                             )
                         }
                     }
                 }
-                Spacer(modifier = Modifier.width(12.dp))
-                Spacer(modifier = Modifier.width(12.dp))
-                // Place where to drop the property: user have to pick a property and drag it into this column to use this property for search
-                Column(verticalArrangement = Arrangement.spacedBy(22.dp)) {
-                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
-                        var propertyName by rememberSaveable {
-                            mutableStateOf("")
-                        }
-                        if (personItem != null) {
-                            LaunchedEffect(key1 = personItem) {
-                                propertyName = personItem.name
-                                viewModel.addProperty(personItem)
-                            }
-                        }
-                        SearchDropBoxView(
-                            modifier = Modifier.fillMaxWidth(),
-                            propertyName = propertyName,
-                            propertyValue = ""
-                        )
-                    }
 
-                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
-                        var propertyName by rememberSaveable {
-                            mutableStateOf("")
-                        }
-                        if (personItem != null) {
-                            LaunchedEffect(key1 = personItem) {
-                                propertyName = personItem.name
-                                viewModel.addProperty(personItem)
-                            }
-                        }
-                        SearchDropBoxView(
-                            modifier = Modifier.fillMaxWidth(),
-                            propertyName = propertyName,
-                            propertyValue = ""
-                        )
-                    }
+                Spacer(modifier = Modifier.height(42.dp))
 
-                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
-                        var propertyName by rememberSaveable {
-                            mutableStateOf("")
-                        }
-                        if (personItem != null) {
-                            LaunchedEffect(key1 = personItem) {
-                                propertyName = personItem.name
-                                viewModel.addProperty(personItem)
-                            }
-                        }
-                        SearchDropBoxView(
-                            modifier = Modifier.fillMaxWidth(),
-                            propertyName = propertyName,
-                            propertyValue = ""
-                        )
-                    }
-
-                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
-                        var propertyName by rememberSaveable {
-                            mutableStateOf("")
-                        }
-                        if (personItem != null) {
-                            LaunchedEffect(key1 = personItem) {
-                                propertyName = personItem.name
-                                viewModel.addProperty(personItem)
-                            }
-                        }
-                        SearchDropBoxView(
-                            modifier = Modifier.fillMaxWidth(),
-                            propertyName = propertyName,
-                            propertyValue = ""
-                        )
-                    }
-
-                    DropItem<SearchFields>(modifier = Modifier) { isInBound, personItem ->
-                        var propertyName by rememberSaveable {
-                            mutableStateOf("")
-                        }
-                        if (personItem != null) {
-                            LaunchedEffect(key1 = personItem) {
-                                propertyName = personItem.name
-                                viewModel.addProperty(personItem)
-                            }
-                        }
-                        SearchDropBoxView(
-                            modifier = Modifier.fillMaxWidth(),
-                            propertyName = propertyName,
-                            propertyValue = ""
-                        )
-                    }
+                Button(
+                    onClick = { onSearch() },
+                    contentPadding = PaddingValues(horizontal = 42.dp, vertical = 12.dp),
+                    elevation = ButtonDefaults.buttonElevation(4.dp)
+                ) {
+                    Text(text = "Search", fontSize = 18.sp)
                 }
+
+                Spacer(modifier = Modifier.height(42.dp))
             }
-
-            Spacer(modifier = Modifier.height(42.dp))
-
-            Button(
-                onClick = { onSearch() },
-                contentPadding = PaddingValues(horizontal = 42.dp, vertical = 12.dp),
-                elevation = ButtonDefaults.buttonElevation(4.dp)
-            ) {
-                Text(text = "Search", fontSize = 18.sp)
-            }
-
-            Spacer(modifier = Modifier.height(42.dp))
         }
+
     }
 }
 
