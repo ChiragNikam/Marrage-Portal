@@ -6,16 +6,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,6 +39,7 @@ import com.petukji.matrimonialapp.bottom_nav.nav_items.status.domain.StatusViewM
 import com.petukji.matrimonialapp.common.GridContentBeforeLoading
 import com.petukji.matrimonialapp.common.ShimmerItem
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewModel) {
 
@@ -67,7 +73,7 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewMo
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(horizontal = 14.dp),
+                        ,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     when (tabSelectedState) {
@@ -89,6 +95,7 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewMo
 
             Spacer(modifier = Modifier.height(30.dp))
         }
+
     }
 }
 
@@ -102,8 +109,7 @@ fun ProfilesViewed(viewModel: StatusViewModel) {
             GridContentBeforeLoading()
         },
         contentAfterLoading = {
-            Log.d("profiles_viewed", "size: ${profiles.size}, $profiles")
-            AvailableGirlsVerticalGrid(gridItems = profiles)
+            AvailableGirlsVerticalGrid(modifier = Modifier.padding(horizontal = 14.dp), gridItems = profiles)
         })
 }
 
@@ -117,7 +123,7 @@ fun ShortlistedProfiles(viewModel: StatusViewModel) {
             GridContentBeforeLoading()
         },
         contentAfterLoading = {
-            AvailableGirlsVerticalGrid(gridItems = profiles)
+            AvailableGirlsVerticalGrid(modifier = Modifier.padding(horizontal = 14.dp), gridItems = profiles)
         })
 }
 

@@ -36,6 +36,9 @@ class StatusViewModel : ViewModel() {
         MutableStateFlow(mutableListOf<SingleUserPreference>())
     val profilesDataViewedProfiles get() = _profilesDataViewedProfiles
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing get() = _isRefreshing
+
     // selected statue for tab row
     private val _tabSelectedState = MutableStateFlow(0)
     val tabSelectedState get() = _tabSelectedState
@@ -44,6 +47,28 @@ class StatusViewModel : ViewModel() {
 
     fun updateTabSelectedState(state: Int) {
         _tabSelectedState.value = state
+    }
+
+    fun updateRefreshStatus(status: Boolean){
+        _isRefreshing.value = status
+    }
+
+    suspend fun refresh(){
+        viewModelScope.launch {
+            // clear the data from the list
+            _shortlistedProfiles.value.clear()
+            _isShortlistedProfilesLoading.value = true
+            _profilesData.value.clear()
+            _viewedProfiles.value.clear()
+            _profilesDataViewedProfiles.value.clear()
+
+            async {
+                getShortListedProfilesByMe("11234567894")
+                getProfilesViewedByMe("11234567894")
+            }
+
+            _isRefreshing.value = false
+        }
     }
 
     suspend fun getShortListedProfilesByMe(userMobile: String) {
