@@ -33,7 +33,7 @@ class MemberCompleteInfoActivity : ComponentActivity() {
             // get profile of the selected user
             viewModel.getSelectedUserProfile(UserProfileRequest(mobileKey = key))
             // set viewed profile to api
-            viewModel.profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
+//            viewModel.profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
 
             viewModel.getShortListedProfilesByMe(userMobile = "11234567894")
             viewModel.isCurrentProfileShortListed()

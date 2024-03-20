@@ -1,5 +1,6 @@
 package com.petukji.matrimonialapp.bottom_nav.nav_items.status.presentation
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -70,6 +71,7 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewMo
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     when (tabSelectedState) {
+                        0 -> ProfilesViewed(viewModel)
                         1 -> RequestReceived()
                         2 -> ShortlistedProfiles(viewModel)
                     }
@@ -88,6 +90,35 @@ fun RequestReceivedScreen(modifier: Modifier = Modifier, viewModel: StatusViewMo
             Spacer(modifier = Modifier.height(30.dp))
         }
     }
+}
+
+@Composable
+fun ProfilesViewed(viewModel: StatusViewModel) {
+    val profiles by viewModel.profilesDataViewedProfiles.collectAsState()
+    val isProfileLoading by viewModel.isShortlistedProfilesLoading.collectAsState()
+
+    ShimmerItem(isLoading = isProfileLoading,
+        contentBeforeLoading = {
+            GridContentBeforeLoading()
+        },
+        contentAfterLoading = {
+            Log.d("profiles_viewed", "size: ${profiles.size}, $profiles")
+            AvailableGirlsVerticalGrid(gridItems = profiles)
+        })
+}
+
+@Composable
+fun ShortlistedProfiles(viewModel: StatusViewModel) {
+    val profiles by viewModel.profilesData.collectAsState()
+    val isProfileLoading by viewModel.isShortlistedProfilesLoading.collectAsState()
+
+    ShimmerItem(isLoading = isProfileLoading,
+        contentBeforeLoading = {
+            GridContentBeforeLoading()
+        },
+        contentAfterLoading = {
+            AvailableGirlsVerticalGrid(gridItems = profiles)
+        })
 }
 
 @Preview
@@ -212,20 +243,6 @@ fun RequestReceived() {
 //
 //                            )
     }
-}
-
-@Composable
-fun ShortlistedProfiles(viewModel: StatusViewModel) {
-    val profiles by viewModel.profilesData.collectAsState()
-    val isProfileLoading by viewModel.isShortlistedProfilesLoading.collectAsState()
-
-    ShimmerItem(isLoading = isProfileLoading,
-        contentBeforeLoading = {
-            GridContentBeforeLoading()
-        },
-        contentAfterLoading = {
-            AvailableGirlsVerticalGrid(gridItems = profiles)
-        })
 }
 
 // tab options row for Request Received Screen

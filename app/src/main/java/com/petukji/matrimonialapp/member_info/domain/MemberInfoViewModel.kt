@@ -77,6 +77,7 @@ class MemberInfoViewModel : ViewModel() {
                     if (finalUserProfile.body() != null) {
                         _userProfileData.value = finalUserProfile.body()!!
                     }
+                    profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
                     Log.d("user_profileData", _userProfileData.value.toString())
                 } else {
                     Log.e("user_profileData", finalUserProfile.errorBody().toString())

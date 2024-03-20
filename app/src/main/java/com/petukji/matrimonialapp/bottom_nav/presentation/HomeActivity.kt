@@ -63,6 +63,7 @@ class HomeActivity : ComponentActivity() {
                 homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
 
                 statusViewModel.getShortListedProfilesByMe("11234567894")
+                statusViewModel.getProfilesViewedByMe("11234567894")
             }
         }
 

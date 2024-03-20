@@ -11,8 +11,10 @@ import com.petukji.matrimonialapp.member_info.data.api_data.ShortlistedProfile
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
 
-class StatusViewModel: ViewModel() {
+class StatusViewModel : ViewModel() {
 
     // shortlisted profiles by me
     private val _shortlistedProfiles = MutableStateFlow(mutableListOf<ShortlistedProfile>())
@@ -25,13 +27,22 @@ class StatusViewModel: ViewModel() {
     private val _profilesData = MutableStateFlow(mutableListOf<SingleUserPreference>())
     val profilesData get() = _profilesData
 
+    // viewed profiles list by me
+    private val _viewedProfiles = MutableStateFlow(mutableListOf<ShortlistedProfile>())
+    val viewedProfiles get() = _viewedProfiles
+
+    // profile data for viewed profiles
+    private val _profilesDataViewedProfiles =
+        MutableStateFlow(mutableListOf<SingleUserPreference>())
+    val profilesDataViewedProfiles get() = _profilesDataViewedProfiles
+
     // selected statue for tab row
     private val _tabSelectedState = MutableStateFlow(0)
     val tabSelectedState get() = _tabSelectedState
 
     val user = Users()
 
-    fun updateTabSelectedState(state: Int){
+    fun updateTabSelectedState(state: Int) {
         _tabSelectedState.value = state
     }
 
@@ -52,13 +63,13 @@ class StatusViewModel: ViewModel() {
 
                 if (finalShortListedProfileRes.isSuccessful) {
                     if (finalShortListedProfileRes.body() != null) {
-                        for (profile in finalShortListedProfileRes.body()!!.data){
+                        for (profile in finalShortListedProfileRes.body()!!.data) {
                             _shortlistedProfiles.value.add(profile)
                         }
                     }
                     Log.d("shortlist", _shortlistedProfiles.value.toString())
 
-                    getDetailsOfShortlistedProfiles()
+                    getDetailsOfShortlistedProfiles(shortlistedProfiles.value)
 
                 } else {
                     Log.e("shortlisted_profiles", "something went wrong while getting profile")
@@ -69,19 +80,23 @@ class StatusViewModel: ViewModel() {
         }
     }
 
-    private fun getDetailsOfShortlistedProfiles(){
+    private fun getDetailsOfShortlistedProfiles(
+        profiles: MutableList<ShortlistedProfile>,
+        type: String = "shortlisted"
+    ) {
         viewModelScope.launch {
-            for (profile in shortlistedProfiles.value){
+            val newDataList = mutableListOf<SingleUserPreference>() // Create a new list to store updated data
+
+            for (profile in profiles) {
                 try {
                     // calling
-                    val userProfileResponse = async { user.service.getSingleUserPreference(UserProfileRequest(mobileKey = profile.to)) }
+                    val userProfileResponse =
+                        async { user.service.getSingleUserPreference(UserProfileRequest(mobileKey = profile.to)) }
 
                     val finalUserProfile = userProfileResponse.await()
                     if (finalUserProfile.isSuccessful) {
-                        if (finalUserProfile.body() != null) {
-                            _profilesData.value.add(finalUserProfile.body()!!.userPreference)
-                            Log.d("shortlisted", finalUserProfile.body().toString())
-                            _isShortlistedProfilesLoading.value = false
+                        finalUserProfile.body()?.let { userPreference ->
+                            newDataList.add(userPreference.userPreference) // Add the userPreference to the new list
                         }
                     } else {
                         Log.e("user_profileData", finalUserProfile.errorBody().toString())
@@ -89,13 +104,57 @@ class StatusViewModel: ViewModel() {
                 } catch (e: Exception) {
                     Log.e("user_profile", e.message.toString())
                 }
+                if (type == "shortlisted") {
+                    _profilesData.value.addAll(newDataList) // Add all userPreferences to the existing list
+                    _isShortlistedProfilesLoading.value = false
+                } else if (type == "viewed_profiles") {
+                    _profilesDataViewedProfiles.value = newDataList // Update the StateFlow with the new list
+                    _isShortlistedProfilesLoading.value = false
+                }
             }
         }
     }
 
-    suspend fun getProfilesViewedByMe(){
+    suspend fun getProfilesViewedByMe(userMobile: String) {
         viewModelScope.launch {
+            try {
+                // calling
+                val viewedProfilesResponse = async {
+                    user.service.getViewedProfiles(
+                        ShortlistReadRequest(
+                            logType = "view",
+                            queryFor = "byme",
+                            userMobile = userMobile,
+                            topQuery = "detail"
+                        )
+                    )
+                }
 
+                val finalViewedProfilesResp = viewedProfilesResponse.await()
+
+                if (finalViewedProfilesResp.isSuccessful) {
+                    _viewedProfiles.value = finalViewedProfilesResp.body()!!.data.toMutableList()
+                    Log.d(
+                        "viewed_profiles",
+                        "size: ${viewedProfiles.value.size}, data: ${viewedProfiles.value}"
+                    )
+                    // get details of single user
+                    getDetailsOfShortlistedProfiles(viewedProfiles.value, "viewed_profiles")
+                } else {
+                    val errorBody = finalViewedProfilesResp.errorBody()?.string()
+                    val errorMessage = try {
+                        JSONObject(errorBody ?: "view").getString("error")
+                    } catch (e: JSONException) {
+                        "Unknown error occurred"
+                    }
+                    Log.e(
+                        "viewed_profiles",
+                        "Registration Failed: ${finalViewedProfilesResp.code()} $errorMessage"
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e("", "error: ${e.message}")
+            }
         }
     }
 }
