@@ -261,6 +261,7 @@ class PersonalDetailsViewModel : ViewModel() {
                     onResult(true)
                 } else {
                     // Sign in failed, display a message and update the UI
+                    Log.d("sign-in", task.exception?.message.toString())
                     onResult(false)
                 }
             }

@@ -136,12 +136,18 @@ fun LoginScreen(
 
         // validate using OTP and login
         Button(onClick = {
-            viewModel.verifyOtp(loginDetails.mobile, otpField) { success ->
-                if (success) {
-                    navController.navigate("personal_details")
-                } else {
-                    coroutineScope.launch {
-                        Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
+            if(otpField.isEmpty()){
+                Toast.makeText(context, "Please enter the Otp ", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                viewModel.verifyOtp(loginDetails.mobile, otpField) { success ->
+                    if (success) {
+                        Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show()
+                        navController.navigate("personal_details")
+                    } else {
+                        coroutineScope.launch {
+                            Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
