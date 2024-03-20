@@ -3,6 +3,7 @@ package com.petukji.matrimonialapp.bottom_nav.nav_items.status.domain
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.SingleUserPreference
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
@@ -63,8 +64,8 @@ class StatusViewModel : ViewModel() {
             _profilesDataViewedProfiles.value.clear()
 
             async {
-                getShortListedProfilesByMe("11234567894")
-                getProfilesViewedByMe("11234567894")
+                getShortListedProfilesByMe(FirebaseAuth.getInstance().currentUser.toString())
+                getProfilesViewedByMe(FirebaseAuth.getInstance().currentUser.toString())
             }
 
             _isRefreshing.value = false
@@ -97,6 +98,16 @@ class StatusViewModel : ViewModel() {
                     getDetailsOfShortlistedProfiles(shortlistedProfiles.value)
 
                 } else {
+                    val errorBody = finalShortListedProfileRes.errorBody()?.string()
+                    val errorMessage = try {
+                        JSONObject(errorBody ?: "").getString("error")
+                    } catch (e: JSONException) {
+                        "Unknown error occurred: ${e.message}"
+                    }
+                    Log.e(
+                        "shortlisted_profiles",
+                        "shortlist: ${finalShortListedProfileRes.code()} $errorMessage"
+                    )
                     Log.e("shortlisted_profiles", "something went wrong while getting profile")
                 }
             } catch (e: Exception) {
@@ -170,11 +181,11 @@ class StatusViewModel : ViewModel() {
                     val errorMessage = try {
                         JSONObject(errorBody ?: "view").getString("error")
                     } catch (e: JSONException) {
-                        "Unknown error occurred"
+                        "Unknown error occurred: ${e.message}"
                     }
                     Log.e(
                         "viewed_profiles",
-                        "Registration Failed: ${finalViewedProfilesResp.code()} $errorMessage"
+                        "Failed: ${finalViewedProfilesResp.code()} $errorMessage"
                     )
                 }
             } catch (e: Exception) {

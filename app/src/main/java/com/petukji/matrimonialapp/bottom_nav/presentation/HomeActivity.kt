@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.petukji.matrimonialapp.NetworkNotAvalbeActivity
 import com.petukji.matrimonialapp.bottom_nav.data.util_data.BottomNavigationItem
 import com.petukji.matrimonialapp.bottom_nav.domain.HomeViewModel
@@ -39,6 +40,10 @@ class HomeActivity : ComponentActivity() {
     private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
 
     private val statusViewModel by lazy { ViewModelProvider(this)[StatusViewModel::class.java] }
+
+    // Firebase
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
 
     override fun onStart() {
         super.onStart()
@@ -61,10 +66,10 @@ class HomeActivity : ComponentActivity() {
 
         if (savedInstanceState == null){
             lifecycleScope.launch {
-                homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = "11234567894")
+                homeViewModel.loadUserPreferenceAndProfileData(profileKeyId = currentUser?.phoneNumber.toString())
 
-                statusViewModel.getShortListedProfilesByMe("11234567894")
-                statusViewModel.getProfilesViewedByMe("11234567894")
+                statusViewModel.getShortListedProfilesByMe(currentUser?.phoneNumber.toString())
+                statusViewModel.getProfilesViewedByMe(currentUser?.phoneNumber.toString())
             }
         }
 

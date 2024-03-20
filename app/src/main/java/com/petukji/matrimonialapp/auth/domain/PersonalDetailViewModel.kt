@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.petukji.matrimonialapp.auth.data.api_data.RegistrationRequestData
+import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +29,11 @@ import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 
 class PersonalDetailsViewModel : ViewModel() {
+
+    // firebase instance
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
+
     private val _personalDetails = mutableStateOf(RegistrationRequestData())
     val personalDetails: State<RegistrationRequestData> = _personalDetails
 
@@ -37,7 +44,24 @@ class PersonalDetailsViewModel : ViewModel() {
     val _verificationId = MutableStateFlow<String?>(null)
     val verificationId: StateFlow<String?> = _verificationId
 
+    // check if user is registered
+    private val _isUserRegistered = MutableStateFlow(false)
+    val isUserRegistered get() = _isUserRegistered
+
     private val firebaseAuth = FirebaseAuth.getInstance()
+
+    fun updateCurrentUserMobile(){
+        if (currentUser != null){
+            _personalDetails.value =  _personalDetails.value.copy(mobile = currentUser.phoneNumber!!)
+            _personalDetails.value = _personalDetails.value.copy(mobileKey = currentUser.phoneNumber!!)
+            _personalDetails.value = _personalDetails.value.copy(userID = currentUser.phoneNumber!!)
+        }
+    }
+
+
+    fun updateUserRegistered(status: Boolean){
+        _isUserRegistered.value = status
+    }
 
     fun updateFirstName(firstName: String) {
         _personalDetails.value = _personalDetails.value.copy(firstName = firstName)
@@ -57,12 +81,6 @@ class PersonalDetailsViewModel : ViewModel() {
 
     fun updateAge(age: String) {
         _personalDetails.value = _personalDetails.value.copy(age = age)
-    }
-
-    fun updatePhoneNo(mobile: String) {
-        _personalDetails.value = _personalDetails.value.copy(mobile = mobile)
-        _personalDetails.value = _personalDetails.value.copy(mobileKey = mobile)
-        _personalDetails.value = _personalDetails.value.copy(userID = mobile)
     }
 
     fun updateEmail(email: String) {
@@ -227,7 +245,37 @@ class PersonalDetailsViewModel : ViewModel() {
         return _personalDetails.value
     }
 
-    fun registerUser() {
+    suspend fun checkUserRegistered(): Boolean {
+        var isUserRegistered = viewModelScope.async {
+            val user = Users()
+            val userProfileResp = async {
+                user.service.getSingleUserData(
+                    UserProfileRequest(
+                        currentUser?.phoneNumber.toString()
+                    )
+                )
+            }
+
+            val finalProfileResponse = userProfileResp.await()
+            if (finalProfileResponse.isSuccessful){
+                return@async true
+            } else{
+                val errorBody = finalProfileResponse.errorBody()?.string()
+                val errorMessage = try {
+                    JSONObject(errorBody ?: "").getString("error")
+                } catch (e: JSONException) {
+                    "Unknown error occurred"
+                }
+                if (errorMessage == "User not found")
+                    return@async false
+                else
+                    return@async true
+            }
+        }
+        return isUserRegistered.await()
+    }
+
+    fun registerUser(isSuccess: (Boolean, String) -> Unit) {
         viewModelScope.launch {
             val user = Users()
             val registrationResponse = async { user.service.registerUser(personalDetails.value) }
@@ -236,6 +284,7 @@ class PersonalDetailsViewModel : ViewModel() {
             if (finalRegistrationResponse.isSuccessful) {
                 Log.d("registration", "Registration Successfully")
                 _isRegistrationSuccess.value = true
+                isSuccess(true, "")
             } else {
                 val errorBody = finalRegistrationResponse.errorBody()?.string()
                 val errorMessage = try {
@@ -243,6 +292,7 @@ class PersonalDetailsViewModel : ViewModel() {
                 } catch (e: JSONException) {
                     "Unknown error occurred"
                 }
+                isSuccess(false, errorMessage)
                 Log.e(
                     "registration",
                     "Registration Failed: ${finalRegistrationResponse.code()} $errorMessage"

@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.member_info.domain.MemberInfoViewModel
 import com.petukji.matrimonialapp.ui.theme.MarriagePortalTheme
@@ -25,6 +26,10 @@ class MemberCompleteInfoActivity : ComponentActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this)[MemberInfoViewModel::class.java] }
 
+    // Firebase
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
@@ -35,7 +40,7 @@ class MemberCompleteInfoActivity : ComponentActivity() {
             // set viewed profile to api
 //            viewModel.profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
 
-            viewModel.getShortListedProfilesByMe(userMobile = "11234567894")
+            viewModel.getShortListedProfilesByMe(userMobile = currentUser?.phoneNumber.toString())
             viewModel.isCurrentProfileShortListed()
         }
     }

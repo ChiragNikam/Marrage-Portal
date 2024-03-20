@@ -3,9 +3,12 @@ package com.petukji.matrimonialapp.auth
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.google.firebase.auth.FirebaseAuth
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
 import com.petukji.matrimonialapp.auth.presentation.AdditionalDetailScreen
 import com.petukji.matrimonialapp.auth.presentation.FamilyDetailScreen
@@ -22,12 +25,16 @@ fun NavigationForAuth(
     navHostController: NavHostController,
     viewModel: PersonalDetailsViewModel
 ) {
-    NavHost(navController = navHostController, startDestination = "login") {
+    val isUserRegistered by viewModel.isUserRegistered.collectAsState()
+    NavHost(
+        navController = navHostController,
+        startDestination = if (!isUserRegistered && FirebaseAuth.getInstance().currentUser != null) "personal_details" else "login"
+    ) {
         composable("login") {
             LoginScreen(
                 navController = navHostController,
                 viewModel = viewModel,
-                onRequestOtp = { /*TODO*/ }) {
+                onRequestOtp = { }) {
 
             }
         }

@@ -6,6 +6,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -133,11 +134,18 @@ fun UploadImage(navController: NavController, viewModel: PersonalDetailsViewMode
 
         Button(
             onClick = {
-                viewModel.registerUser()
+                viewModel.updateCurrentUserMobile()
+                viewModel.registerUser{ success, message ->
+                    if (success){
+                        Toast.makeText(context, "Registration Success", Toast.LENGTH_SHORT).show()
+                    } else{
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    }
+                }
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            Text(text = "Next")
+            Text(text = "Register")
         }
     }
 }

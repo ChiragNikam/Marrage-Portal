@@ -101,10 +101,14 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        var phoneNumber by remember {
+            mutableStateOf("")
+        }
+
         // Phone Number Field
         OutlinedTextField(
-            value = loginDetails.mobile, // Replace with state variable for phone number
-            onValueChange = { viewModel.updatePhoneNo(it) },
+            value = phoneNumber, // Replace with state variable for phone number
+            onValueChange = { phoneNumber = it },
             label = { Text("Phone Number") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -125,7 +129,7 @@ fun LoginScreen(
                 .align(Alignment.End)
                 .height(48.dp),
             onClick = {
-                requestOtp("+91${loginDetails.mobile}", context as Activity, viewModel)
+                requestOtp("+91${phoneNumber}", context as Activity, viewModel)
             },
             enabled = true
         ) {
@@ -140,7 +144,7 @@ fun LoginScreen(
                 Toast.makeText(context, "Please enter the Otp ", Toast.LENGTH_SHORT).show()
             }
             else{
-                viewModel.verifyOtp(loginDetails.mobile, otpField) { success ->
+                viewModel.verifyOtp(phoneNumber, otpField) { success ->
                     if (success) {
                         Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show()
                         navController.navigate("personal_details")

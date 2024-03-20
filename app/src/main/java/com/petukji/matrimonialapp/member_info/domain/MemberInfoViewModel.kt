@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfile
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
@@ -77,7 +78,7 @@ class MemberInfoViewModel : ViewModel() {
                     if (finalUserProfile.body() != null) {
                         _userProfileData.value = finalUserProfile.body()!!
                     }
-                    profileViewedRequest(UserProfileRequest(mobileKey = "11234567894"))
+                    profileViewedRequest(UserProfileRequest(mobileKey = FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()))
                     Log.d("user_profileData", _userProfileData.value.toString())
                 } else {
                     Log.e("user_profileData", finalUserProfile.errorBody().toString())
@@ -118,8 +119,7 @@ class MemberInfoViewModel : ViewModel() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun profileViewedRequest(data: UserProfileRequest) {
+    private fun profileViewedRequest(data: UserProfileRequest) {
         viewModelScope.launch {
 
             try {
