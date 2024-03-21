@@ -172,14 +172,14 @@ fun LoginScreen(
                             )
                         }
                         viewModel.updateVerificationId(id.await())
-                        Log.d("verification_id", verificationId.toString())
                     }
-                    viewModel.verifyOtp(phoneNumber, otpField) { success ->
+                    viewModel.verifyOtp(phoneNumber, otpField) { success, phone ->
                         if (success) {
+                            Log.d("phone", phone)
                             Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show()
                             coroutineScope.launch {
                                 val isUserRegistered =
-                                    coroutineScope.async { viewModel.checkUserRegistered() }.await()
+                                    coroutineScope.async { viewModel.checkUserRegistered(phone) }.await()
                                 if (isUserRegistered) {
                                     viewModel.updateUserRegistered(isUserRegistered)
                                 } else {

@@ -251,13 +251,13 @@ class PersonalDetailsViewModel : ViewModel() {
         return _personalDetails.value
     }
 
-    suspend fun checkUserRegistered(): Boolean {
+    suspend fun checkUserRegistered(phoneNumber: String = currentUser?.phoneNumber.toString()): Boolean {
         val isUserRegister = viewModelScope.async {
             val user = Users()
             val userProfileResp = async {
                 user.service.getSingleUserData(
                     UserProfileRequest(
-                        currentUser?.phoneNumber.toString()
+                        phoneNumber
                     )
                 )
             }
@@ -306,18 +306,20 @@ class PersonalDetailsViewModel : ViewModel() {
         }
     }
 
-    fun verifyOtp(phoneNumber: String, otp: String, onResult: (Boolean) -> Unit) {
+    fun verifyOtp(phoneNumber: String, otp: String, onResult: (Boolean, String) -> Unit) {
         val credential = PhoneAuthProvider.getCredential(verificationId.value!!, otp)
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     val user = task.result?.user
-                    onResult(true)
+                    if (user != null) {
+                        onResult(true, user.phoneNumber.toString())
+                    }
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("sign-in", task.exception?.message.toString())
-                    onResult(false)
+                    onResult(false, "")
                 }
             }
     }
