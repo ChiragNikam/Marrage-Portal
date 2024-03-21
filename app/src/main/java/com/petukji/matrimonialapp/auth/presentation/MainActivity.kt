@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
@@ -34,33 +35,8 @@ class MainActivity : ComponentActivity() {
 
         if (currentUser != null) {
             lifecycleScope.launch {
-                var isUserRegistered = lifecycleScope.async {
-                    val user = Users()
-                    val userProfileResp = async {
-                        user.service.getSingleUserData(
-                            UserProfileRequest(
-                                currentUser.phoneNumber.toString()
-                            )
-                        )
-                    }
-
-                    val finalProfileResponse = userProfileResp.await()
-                    if (finalProfileResponse.isSuccessful){
-                        return@async true
-                    } else{
-                        val errorBody = finalProfileResponse.errorBody()?.string()
-                        val errorMessage = try {
-                            JSONObject(errorBody ?: "").getString("error")
-                        } catch (e: JSONException) {
-                            "Unknown error occurred"
-                        }
-                        if (errorMessage == "User not found")
-                            return@async false
-                        else
-                            return@async true
-                    }
-                }
-                if (isUserRegistered.await()) {
+                val isUserRegistered = lifecycleScope.async { authViewModel.checkUserRegistered() }.await()
+                if (isUserRegistered) {
                     Log.d("user_data", currentUser.phoneNumber.toString())
                     startActivity(Intent(this@MainActivity, HomeActivity::class.java))
                     finish()
@@ -79,8 +55,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             // finish activity if registration successful
             MarriagePortalTheme {
-                val isRegistrationSuccess = authViewModel.isRegistrationSuccess.collectAsState()
-                if (isRegistrationSuccess.value) {
+                val isRegistrationSuccess by authViewModel.isRegistrationSuccess.collectAsState()
+                val isUserRegistered by authViewModel.isUserRegistered.collectAsState()
+                if (isRegistrationSuccess || isUserRegistered) {
                     startActivity(Intent(this, HomeActivity::class.java))
                     finish()
                 }

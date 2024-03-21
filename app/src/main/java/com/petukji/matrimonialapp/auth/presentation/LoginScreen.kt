@@ -3,6 +3,7 @@ package com.petukji.matrimonialapp.auth.presentation
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
@@ -32,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +48,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseException
@@ -57,6 +60,10 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.petukji.matrimonialapp.R
 import com.petukji.matrimonialapp.auth.data.api_data.RegistrationRequestData
 import com.petukji.matrimonialapp.auth.domain.PersonalDetailsViewModel
+import com.petukji.matrimonialapp.bottom_nav.presentation.HomeActivity
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
@@ -129,7 +136,15 @@ fun LoginScreen(
                 .align(Alignment.End)
                 .height(48.dp),
             onClick = {
-                requestOtp("+91${phoneNumber}", context as Activity, viewModel)
+                coroutineScope.launch {
+                    viewModel.updateVerificationId(
+                        requestOtp(
+                            "+91${phoneNumber}",
+                            context as Activity,
+                            viewModel
+                        )
+                    )
+                }
             },
             enabled = true
         ) {
@@ -138,19 +153,43 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        val verificationId by viewModel.verificationId.collectAsState()
+
         // validate using OTP and login
         Button(onClick = {
-            if(otpField.isEmpty()){
+            if (otpField.isEmpty()) {
                 Toast.makeText(context, "Please enter the Otp ", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                viewModel.verifyOtp(phoneNumber, otpField) { success ->
-                    if (success) {
-                        Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show()
-                        navController.navigate("personal_details")
-                    } else {
-                        coroutineScope.launch {
-                            Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
+            } else {
+                coroutineScope.launch {
+                    if (verificationId == null) {
+
+                        Log.d("verification_id", "getting verification id")
+                        val id = async {
+                            requestOtp(
+                                "+91${phoneNumber}",
+                                context as Activity,
+                                viewModel
+                            )
+                        }
+                        viewModel.updateVerificationId(id.await())
+                        Log.d("verification_id", verificationId.toString())
+                    }
+                    viewModel.verifyOtp(phoneNumber, otpField) { success ->
+                        if (success) {
+                            Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show()
+                            coroutineScope.launch {
+                                val isUserRegistered =
+                                    coroutineScope.async { viewModel.checkUserRegistered() }.await()
+                                if (isUserRegistered) {
+                                    viewModel.updateUserRegistered(isUserRegistered)
+                                } else {
+                                    navController.navigate("personal_details")
+                                }
+                            }
+                        } else {
+                            coroutineScope.launch {
+                                Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
@@ -184,8 +223,14 @@ fun LoginScreen(
 
 }
 
-fun requestOtp(phoneNumber: String, activity: Activity, viewModel: PersonalDetailsViewModel) {
+suspend fun requestOtp(
+    phoneNumber: String,
+    activity: Activity,
+    viewModel: PersonalDetailsViewModel
+): String {
     val firebaseAuth = FirebaseAuth.getInstance()
+
+    val deferred = CompletableDeferred<String>()
 
     val options = PhoneAuthOptions.newBuilder(firebaseAuth)
         .setPhoneNumber(phoneNumber)
@@ -208,6 +253,7 @@ fun requestOtp(phoneNumber: String, activity: Activity, viewModel: PersonalDetai
                 // for instance if the the phone number format is not valid.
                 // Depending on the error, you can use some other response codes to
                 // show appropriate error message to the user.
+                deferred.completeExceptionally(e)
             }
 
             override fun onCodeSent(
@@ -218,11 +264,13 @@ fun requestOtp(phoneNumber: String, activity: Activity, viewModel: PersonalDetai
                 // we now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
                 // Save the verification ID somewhere for verification later.
-                viewModel._verificationId.value = verificationId
+                deferred.complete(verificationId)
             }
         })
         .build()
     PhoneAuthProvider.verifyPhoneNumber(options)
+
+    return deferred.await()
 }
 
 

@@ -8,6 +8,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +18,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.petukji.matrimonialapp.auth.data.api_data.RegistrationRequestData
 import com.petukji.matrimonialapp.bottom_nav.data.api_data.user.UserProfileRequest
 import com.petukji.matrimonialapp.bottom_nav.data.api_request.Users
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,6 +51,10 @@ class PersonalDetailsViewModel : ViewModel() {
     val isUserRegistered get() = _isUserRegistered
 
     private val firebaseAuth = FirebaseAuth.getInstance()
+
+    fun updateVerificationId(id: String){
+        _verificationId.value = id
+    }
 
     fun updateCurrentUserMobile(){
         if (currentUser != null){
@@ -246,7 +252,7 @@ class PersonalDetailsViewModel : ViewModel() {
     }
 
     suspend fun checkUserRegistered(): Boolean {
-        var isUserRegistered = viewModelScope.async {
+        val isUserRegister = viewModelScope.async {
             val user = Users()
             val userProfileResp = async {
                 user.service.getSingleUserData(
@@ -258,6 +264,7 @@ class PersonalDetailsViewModel : ViewModel() {
 
             val finalProfileResponse = userProfileResp.await()
             if (finalProfileResponse.isSuccessful){
+                Log.d("user_profile", finalProfileResponse.body().toString())
                 return@async true
             } else{
                 val errorBody = finalProfileResponse.errorBody()?.string()
@@ -266,13 +273,11 @@ class PersonalDetailsViewModel : ViewModel() {
                 } catch (e: JSONException) {
                     "Unknown error occurred"
                 }
-                if (errorMessage == "User not found")
-                    return@async false
-                else
-                    return@async true
+                Log.e("user_exist", errorMessage.toString())
+                return@async errorMessage != "User not found"
             }
         }
-        return isUserRegistered.await()
+        return isUserRegister.await()
     }
 
     fun registerUser(isSuccess: (Boolean, String) -> Unit) {
