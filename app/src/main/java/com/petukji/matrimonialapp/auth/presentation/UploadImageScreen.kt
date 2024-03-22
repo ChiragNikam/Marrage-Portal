@@ -134,7 +134,6 @@ fun UploadImage(navController: NavController, viewModel: PersonalDetailsViewMode
 
         Button(
             onClick = {
-                viewModel.updateCurrentUserMobile()
                 viewModel.registerUser{ success, message ->
                     if (success){
                         Toast.makeText(context, "Registration Success", Toast.LENGTH_SHORT).show()

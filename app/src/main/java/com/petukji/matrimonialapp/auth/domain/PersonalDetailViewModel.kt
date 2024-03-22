@@ -36,7 +36,7 @@ class PersonalDetailsViewModel : ViewModel() {
     val auth = FirebaseAuth.getInstance()
     val currentUser = auth.currentUser
 
-    private val _personalDetails = mutableStateOf(RegistrationRequestData())
+    private val _personalDetails = mutableStateOf(RegistrationRequestData(mobileKey = currentUser?.phoneNumber.toString(), mobile = currentUser?.phoneNumber.toString(), userID = currentUser?.phoneNumber.toString()))
     val personalDetails: State<RegistrationRequestData> = _personalDetails
 
     private val _isRegistrationSuccess = MutableStateFlow(false)
@@ -282,8 +282,13 @@ class PersonalDetailsViewModel : ViewModel() {
 
     fun registerUser(isSuccess: (Boolean, String) -> Unit) {
         viewModelScope.launch {
+            val details = personalDetails.value
+            details.userID = currentUser?.phoneNumber.toString()
+            details.mobile = currentUser?.phoneNumber.toString()
+            details.mobileKey = currentUser?.phoneNumber.toString()
+
             val user = Users()
-            val registrationResponse = async { user.service.registerUser(personalDetails.value) }
+            val registrationResponse = async { user.service.registerUser(details) }
 
             val finalRegistrationResponse = registrationResponse.await()
             if (finalRegistrationResponse.isSuccessful) {
@@ -291,16 +296,16 @@ class PersonalDetailsViewModel : ViewModel() {
                 _isRegistrationSuccess.value = true
                 isSuccess(true, "")
             } else {
-                val errorBody = finalRegistrationResponse.errorBody()?.string()
-                val errorMessage = try {
-                    JSONObject(errorBody ?: "").getString("error")
-                } catch (e: JSONException) {
-                    "Unknown error occurred"
-                }
-                isSuccess(false, errorMessage)
+//                val errorBody = finalRegistrationResponse.errorBody()?.string()
+//                val errorMessage = try {
+//                    JSONObject(errorBody ?: "").getString("error")
+//                } catch (e: JSONException) {
+//                    "Unknown error occurred"
+//                }
+//                isSuccess(false, errorMessage)
                 Log.e(
                     "registration",
-                    "Registration Failed: ${finalRegistrationResponse.code()} $errorMessage"
+                    "Registration Failed: ${finalRegistrationResponse.code()}"
                 )
             }
         }

@@ -1,9 +1,9 @@
 package com.petukji.matrimonialapp.auth.data.api_data
 
 data class RegistrationRequestData(
-    val mobileKey: String="",
-    val userID: String="",
-    val mobile: String="",
+    var mobileKey: String="",
+    var userID: String="",
+    var mobile: String="",
     val email: String="",
     val firstName: String="",
     val lastName: String="",

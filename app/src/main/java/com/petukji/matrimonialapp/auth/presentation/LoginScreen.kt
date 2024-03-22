@@ -18,11 +18,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -155,11 +157,16 @@ fun LoginScreen(
 
         val verificationId by viewModel.verificationId.collectAsState()
 
+        var loginProgress by remember {
+            mutableStateOf(false)
+        }
+
         // validate using OTP and login
         Button(onClick = {
             if (otpField.isEmpty()) {
                 Toast.makeText(context, "Please enter the Otp ", Toast.LENGTH_SHORT).show()
             } else {
+                loginProgress = true
                 coroutineScope.launch {
                     if (verificationId == null) {
 
@@ -179,7 +186,8 @@ fun LoginScreen(
                             Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show()
                             coroutineScope.launch {
                                 val isUserRegistered =
-                                    coroutineScope.async { viewModel.checkUserRegistered(phone) }.await()
+                                    coroutineScope.async { viewModel.checkUserRegistered(phone) }
+                                        .await()
                                 if (isUserRegistered) {
                                     viewModel.updateUserRegistered(isUserRegistered)
                                 } else {
@@ -193,9 +201,14 @@ fun LoginScreen(
                         }
                     }
                 }
+                loginProgress = false
             }
         }) {
-            Text(text = "Login")
+            Row {
+                Text(text = "Login")
+                if (loginProgress)
+                    CircularProgressIndicator(modifier = Modifier.size(18.dp), trackColor = Color.White)
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
